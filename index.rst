@@ -18,6 +18,7 @@ Tutorial Parts
     :maxdepth: 1
 
     docs/configuration-and-templating
+    docs/validators-and-forms
     
 Demo Website
 ------------
