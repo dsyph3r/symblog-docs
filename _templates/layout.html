@@ -29,14 +29,14 @@
         <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
         <style type="text/css">
             #header {line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px; width: 100%; height: 100%; color: #000; font-size: 14px; }
-    
+
             html { background: none; }
             a { text-decoration: none !important; color: #F48A00 !important; font-weight: normal !important }
-    
+
             h1, h2, h3, h4, h5, h6 { color: #000 }
-    
+
             #header a:link { font-weight: normal !important; }
-    
+
             #header { border-bottom: 1px solid #ccc; margin-bottom: 20px; }
             #header .top { border-bottom: 1px solid #ccc; margin-bottom: 10px; }
             #header ul.navigation { list-style: none; text-align: right; margin-bottom: 0; }
@@ -45,9 +45,9 @@
             #header h2 { font-family: 'Irish Grover', cursive; font-size: 92px; text-align: center; line-height: 110px; border-bottom: none; margin: 0px; font-weight: normal; }
             #header h2 a { color: #000 !important }
             #header h3 { text-align: center; font-family: 'La Belle Aurore', cursive; font-size: 24px; margin: 0; margin-bottom: 20px; font-weight: normal;  font-weight: normal;}
-    
+
             div.content { font-size: 0.9em; margin: 10px 20px 20px; }
-    
+
             .note, .tip, .warning {
                 border: 1px solid !important;
                 margin: 10px 0px !important;
@@ -58,19 +58,23 @@
             .note {
                 border-color: #00529B !important;
                 background-color: #DBF3FF !important;
-                background-image: url('../_static/note.png') !important;
+                background-image: url('../_static/images/icons/note.png') !important;
             }
             .tip {
                 border-color: #4F8A10 !important;
                 background-color: #E5F2D0 !important;
-                background-image:url('../_static/tip.png') !important;
+                background-image:url('../_static/images/icons/tip.png') !important;
                 }
             .warning {
                 border-color: #9F6000 !important;
                 background-color: #FFF7DB !important;
-                background-image: url('../_static/warning.png') !important;
+                background-image: url('../_static/images/icons/warning.png') !important;
             }
         </style>
+
+        <a href="https://github.com/dsyph3r/symblog-docs">
+            <img style="position: absolute; top: 0; left: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/6429057dfef9e98189338d22e7f6646c6694f032/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub">
+        </a>
 
         <header id="header">
             <div class="top">
@@ -104,4 +108,17 @@
       <div class="bottomnav">
       {{ nav() }}
       </div>
+      <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-17277387-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+      </script>
 {% endblock %}

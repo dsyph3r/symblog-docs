@@ -9,17 +9,17 @@ We will download and configure the Symfony2
 `Standard Distribution <http://symfony.com/doc/current/glossary.html#term-distribution>`_,
 create the Blog bundle and put together the main HTML templates. At the end
 of this chapter you will have configured a Symfony2 website that
-will be available via a local domain, eg ``http://symblog.dev``. The website will
+will be available via a local domain, eg ``http://symblog.dev/``. The website will
 contain the main HTML structure of the blog along with some dummy content.
 
 The following areas will be demonstrated in this chapter:
 
-1. Setting up a Symfony2 application
-2. Configuring a development domain
-3. Symfony2 Bundles
-4. Routing
-5. Controllers
-6. Templating with Twig
+    1. Setting up a Symfony2 application
+    2. Configuring a development domain
+    3. Symfony2 Bundles
+    4. Routing
+    5. Controllers
+    6. Templating with Twig
 
 Download and Setup
 ------------------
@@ -47,7 +47,7 @@ Creating a Development Domain
 -----------------------------
 
 For the purpose of this tutorial we will be using the local domain
-``http://symblog.dev``, however you can choose any domain you want. These
+``http://symblog.dev/``, however you can choose any domain you want. These
 instructions are specific to `Apache <http://httpd.apache.org/>`_ and assume you
 already have Apache setup and running on your machine. If you are comfortable
 with setting up local domains, or use a different web server such as
@@ -59,9 +59,11 @@ with setting up local domains, or use a different web server such as
     path names, etc, may differ depending on your Operating System.
 
 Lets begin by creating a virtual host with Apache. Locate the Apache configuration
-file and append the following settings. The location and name of
+file and append the following settings, making sure to change the ``DocumentRoot``
+and ``Directory`` paths accordingly. The location and name of
 the Apache configuration can vary a lot depending on your OS. In Fedora
-its located at ``/etc/httpd/conf/httpd.conf``.
+its located at ``/etc/httpd/conf/httpd.conf``. You will need to edit this file with
+``sudo`` privileges.
 
 .. code-block:: text
 
@@ -81,7 +83,7 @@ its located at ``/etc/httpd/conf/httpd.conf``.
 
 
 Next add a new domain to the bottom of the host file located at ``/etc/hosts``.
-You will need to edit this file with ``sudo`` privileges.
+Again, you will need to edit this file with ``sudo`` privileges.
 
 .. code-block:: text
 
@@ -95,31 +97,50 @@ updated configuration settings we have made.
 
     $ sudo service httpd restart
 
-You should now be able to visit ``http://symblog.dev/app_dev.php``. If this is
-your first visit to the Symfony2 welcome page, take some time to view the demo
-pages. Each demo page provides code snippets that demonstrate how each page works
-behind the scenes.
-
 .. tip::
 
     If you find yourself creating virtual domains all the time, you can simplify
     this process by using
     `Dynamic virtual hosts <http://blog.dsyph3r.com/2010/11/apache-dynamic-virtual-hosts.html>`_.
 
+You should now be able to visit ``http://symblog.dev/app_dev.php/``.
+
+.. image:: /_static/images/part_1/welcome.jpg
+    :align: center
+    :alt: Symfony2 welcome page
+
+If this is your first visit to the Symfony2 welcome page, take some time to view
+the demo pages. Each demo page provides code snippets that demonstrate how each
+page works behind the scenes.
+
+.. note::
+
+    You will also notice a toolbar at the bottom of the welcome screen. This
+    is the developer toolbar and provides you will invaluable information
+    about the state of the application. Information including the page execution time,
+    memory usage, database queries, authentication state and much more
+    can be viewed from this toolbar. By default the toolbar is only visible when
+    running in the ``dev`` environment, as providing the toolbar in production
+    would be a big security risk as it exposes a lot of the internals of your
+    application. References to the toolbar will be made through this tutorial
+    as we introduce new features.
+
 Configuring Symfony: Web Interface
 ----------------------------------
 
 Symfony2 introduces a web interface to configure various aspects regarding the
 website such as database settings. We require a database for this project so
-lets begin using the configurator. Visit ``http://symblog.dev/app_dev.php`` and
-click the Configure button. Enter the details to setup the database
-(this tutorial assumes the use of MySQL, but you can choose any other database
-you have access to), followed by generating a CSRF token on the next page. You
-will be presented with the parameter settings that Symfony2 has generated.
-Pay attention to the notice on the page, it is likely that your ``app/paramaters.ini``
-file is not writable so you will need to copy and paste the settings to the
-file located at ``app/parameters.ini`` (These settings can replace the
-existing settings in this file).
+lets begin using the configurator.
+
+Visit ``http://symblog.dev/app_dev.php/`` and click the Configure button. Enter
+the details to setup the database (this tutorial assumes the use of MySQL, but
+you can choose any other database you have access to), followed by generating a
+CSRF token on the next page. You will be presented with the parameter settings
+that Symfony2 has generated. Pay attention to the notice on the page, it is
+likely that your ``app/paramaters.ini`` file is not writable so you will need to
+copy and paste the settings to the file located at ``app/parameters.ini`` (These
+settings can replace the existing settings in this file).
+
 
 Bundles: Symfony2 Building Blocks
 ----------------------------------
@@ -201,7 +222,7 @@ Routing
 .......
 
 The bundle routing has been imported into the applications main
-routing file located at ``app/config/routing.yml``. 
+routing file located at ``app/config/routing.yml``.
 
 .. code-block:: yaml
 
@@ -209,7 +230,7 @@ routing file located at ``app/config/routing.yml``.
     BloggerBlogBundle:
         resource: "@BloggerBlogBundle/Resources/config/routing.yml"
         prefix:   /
-        
+
 The prefix option allows us to mount the entire ``BloggerBlogBundle`` routing
 with a prefix. In our case we have opted to mount at the default which is ``/``.
 If for example you would like all routes to be prefixed with ``/blogger`` change
@@ -258,9 +279,9 @@ for pattern matching.
 
 If the route meets all the specified criteria it will be executed by the
 _controller option in defaults. The _controller option specifies the
-``Logical Name`` of the controller which allows Symfony2 to map this to a specific file.
-The above example will cause the ``index`` action in the Default controller at
-``src/Blogger/BlogBundle/Controller/DefaultController.php`` to be executed.
+Logical Name of the controller which allows Symfony2 to map this to a specific file.
+The above example will cause the ``index`` action in the ``Default`` controller
+located at ``src/Blogger/BlogBundle/Controller/DefaultController.php`` to be executed.
 
 The Controller
 ..............
@@ -269,23 +290,32 @@ The controller in this example is very simple. The ``DefaultController`` class
 extends the ``Controller`` class which provides some helpful methods such as the ``render``
 method used below. As our route defines a placeholder it is passed into the
 action as the argument ``$name``. The action does nothing more than
-call the ``render`` method specify the ``index.html.twig`` template
-in the ``BloggerBlogBundle`` Default view folder to be rendered.
-The ``$name`` variable is made available to the template via the ``array``
+call the ``render`` method specifying the ``index.html.twig`` template
+in the ``BloggerBlogBundle`` Default view folder to be rendered. The
+format of the template name is ``bundle:controller:template``. In
+our example this is ``BloggerBlogBundle:Default:index.html.twig``
+which maps to the ``index.html.twig`` template, in the ``Default``
+views folder of the ``BloggerBlogBundle``, or physically to the file
+``src/Blogger/BlogBundle/Resources/views/Default/index.html.twig``. Different
+variations of the template format can be used to render templates
+at different locations with the application and its bundles. We will see
+this later in the chapter.
+
+We also pass over the``$name`` variable to the template via the ``array``
 options.
 
 .. code-block:: php
 
     <?php
     // src/Blogger/BlogBundle/Controller/DefaultController.php
-    
+
     namespace Blogger\BlogBundle\Controller;
-    
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    
+
     class DefaultController extends Controller
     {
-        
+
         public function indexAction($name)
         {
             return $this->render('BloggerBlogBundle:Default:index.html.twig', array('name' => $name));
@@ -347,8 +377,8 @@ As Twig supports template inheritance, we are going to use the
 approach. This approach allows us to modify the view at 3 distinct levels within the
 application, giving us plenty of room for customisations.
 
-Main Layout - Level 1
-.....................
+Main Template - Level 1
+.......................
 
 Lets start by creating our basic block level template for symblog. We need 2
 files here, the template and the CSS. As Symfony2 supports
@@ -360,10 +390,10 @@ files here, the template and the CSS. As Symfony2 supports
     <!DOCTYPE html>
     <html>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
             <title>{% block title %}symblog{% endblock %} - symblog</title>
             <!--[if lt IE 9]>
-                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js></script>
+                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
             <![endif]-->
             {% block stylesheets %}
                 <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
@@ -373,7 +403,7 @@ files here, the template and the CSS. As Symfony2 supports
             <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         </head>
         <body>
-    
+
             <section id="wrapper">
                 <header id="header">
                     <div class="top">
@@ -387,27 +417,27 @@ files here, the template and the CSS. As Symfony2 supports
                             </nav>
                         {% endblock %}
                     </div>
-    
+
                     <hgroup>
                         <h2>{% block blog_title %}<a href="#">symblog</a>{% endblock %}</h2>
                         <h3>{% block blog_tagline %}<a href="#">creating a blog in Symfony2</a>{% endblock %}</h3>
                     </hgroup>
                 </header>
-    
+
                 <section class="main-col">
                     {% block body %}{% endblock %}
                 </section>
                 <aside class="sidebar">
                     {% block sidebar %}{% endblock %}
                 </aside>
-    
+
                 <div id="footer">
                     {% block footer %}
                         Symfony2 blog tutorial - created by <a href="https://github.com/dsyph3r">dsyph3r</a>
                     {% endblock %}
                 </div>
             </section>
-    
+
             {% block javascripts %}{% endblock %}
         </body>
     </html>
@@ -418,12 +448,12 @@ files here, the template and the CSS. As Symfony2 supports
     The JavaScript file fixes the lack of support in IE browsers pre version
     9. The 2 CSS files import fonts from
     `Google Web font <http://www.google.com/webfonts>`_.
-    
+
 This template marks up the main structure of our blogging website. Most
 of the template consists of HTML, with the odd Twig directive. Its these
 Twig directives that we will examine now.
 
-We will start by focusing on the document ``HEAD``. Lets look at the title:
+We will start by focusing on the document HEAD. Lets look at the title:
 
 .. code-block:: html
 
@@ -439,7 +469,7 @@ title does 2 things; It sets the block identifier to title, and provides a
 default output between the block and endblock directives. By defining a block we
 can take advantage of Twig's inheritance model. For example, on a page to
 display a blog post we would want the page title to reflect the title of the
-blog. We can achieve this extending the template and overriding the title block.
+blog. We can achieve this by extending the template and overriding the title block.
 
 .. code-block:: html
 
@@ -447,8 +477,14 @@ blog. We can achieve this extending the template and overriding the title block.
 
     {% block title %}The blog title goes here{% endblock %}
 
-In the above example we have extended the base template that first
-defined the title block. Next we have defined another title block and put in some
+In the above example we have extended the applications base template that first
+defined the title block. You'll notice the template format used with the
+``extends`` directive is missing the ``Bundle`` and the ``Controller`` parts.
+Remember the template format is ``bundle:controller:template``. By excluding the
+``Bundle`` and the ``Controller`` parts we are specifiying the use of the application
+level templates defined at ``app/Resources/views/``.
+
+Next we have defined another title block and put in some
 content, in this case the blog title. As the parent template already
 contains a title block, it is overridden by our new one. The title would now
 output as 'The blog title goes here - symblog'. This functionality provided by
@@ -475,7 +511,7 @@ printing.
 For a full list of filters check the
 `Twig Documentation <http://www.twig-project.org/doc/templates.html#list-of-built-in-filters>`_.
 
-The last Twig tag, which we have not used in our template is the comment tag ``{#``.
+The last Twig tag, which we have not seen in the templates is the comment tag ``{#``.
 Its usage is as follows:
 
 .. code-block:: html
@@ -492,13 +528,13 @@ the following content. This will add styles for the main template.
 
     html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
 
-    body {line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px; width: 100%; height: 100%; color: #000; font-size: 14px; }
+    body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px; width: 100%; height: 100%; color: #000; font-size: 14px; }
     .clear { clear: both; }
-    
+
     #wrapper { margin: 10px auto; width: 1000px; }
     #wrapper a { text-decoration: none; color: #F48A00; }
     #wrapper span.highlight { color: #F48A00; }
-    
+
     #header { border-bottom: 1px solid #ccc; margin-bottom: 20px; }
     #header .top { border-bottom: 1px solid #ccc; margin-bottom: 10px; }
     #header ul.navigation { list-style: none; text-align: right; }
@@ -507,25 +543,24 @@ the following content. This will add styles for the main template.
     #header h2 { font-family: 'Irish Grover', cursive; font-size: 92px; text-align: center; line-height: 110px; }
     #header h2 a { color: #000; }
     #header h3 { text-align: center; font-family: 'La Belle Aurore', cursive; font-size: 24px; margin-bottom: 20px; font-weight: normal; }
-    
+
     .main-col { width: 700px; display: inline-block; float: left; border-right: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
     .sidebar { width: 239px; padding: 10px; display: inline-block; }
-    
+
     .main-col a { color: #F48A00; }
     .main-col h1,
     .main-col h2
         { line-height: 1.2em; font-size: 32px; margin-bottom: 10px; font-weight: normal; color: #F48A00; }
-    .main-col p
-        { line-height: 1.5em; margin-bottom: 20px; }
-    
+    .main-col p { line-height: 1.5em; margin-bottom: 20px; }
+
     #footer { border-top: 1px solid #ccc; clear: both; text-align: center; padding: 10px; color: #aaa; }
 
-Bundle Layout - Level 2
-.......................
+Bundle Template - Level 2
+.........................
 
 We now move onto creating the layout for the Blog bundle. Create a file located at
 ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` and add the
-following content:
+following content.
 
 .. code-block:: html
 
@@ -537,24 +572,24 @@ following content:
     {% endblock %}
 
 At a first glance this template may seem a little simple, but its simplicity is
-the key. Firstly it extends the apps base template that we created earlier.
+the key. Firstly it extends the applications base template that we created earlier.
 Secondly it overrides the parent sidebar block with some dummy content. As the
 sidebar will be present on all pages of our blog it makes sense to perform the
 customisation at this level. You may ask why don't we just put the customisation
-in the app template as it will be present on all pages. This is simple, the app
-knows nothing about the Bundle and shouldn't. The Bundle should self contain all
-its functionality and rendering the sidebar is part of this functionality. OK,
-so why don't we just place the sidebar in each of the page templates? Again this
-is simple, we would have to duplicate the sidebar each time we added a page.
-Further this level 2 template gives us the flexibility in the future to add
-other customisations that all children templates will inherit. For example, we
-may want to change to footer copy on all pages, this would be a great place to do
-this.
+in the application template as it will be present on all pages. This is simple,
+the application knows nothing about the Bundle and shouldn't. The Bundle should
+self contain all its functionality and rendering the sidebar is part of this
+functionality. OK, so why don't we just place the sidebar in each of the page
+templates? Again this is simple, we would have to duplicate the sidebar each
+time we added a page. Further this level 2 template gives us the flexibility in
+the future to add other customisations that all children templates will inherit.
+For example, we may want to change the footer copy on all pages, this would be a
+great place to do this.
 
-View Layout - Level 3
-.....................
+Page Template - Level 3
+.......................
 
-Finally we are ready for the view layout. These layouts will commonly be
+Finally we are ready for the controller layout. These layouts will commonly be
 related to a controller action, i.e., the blog show action will have a
 blog show template.
 
@@ -567,7 +602,7 @@ the following:
 
     <?php
     // src/Blogger/BlogBundle/Controller/PageController.php
-    
+
     namespace Blogger\BlogBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -581,7 +616,7 @@ the following:
     }
 
 Now create the template for this action. As you can see in the controller action
-we are going to render the Page index view template. Create the template at
+we are going to render the Page index template. Create the template at
 ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig``
 
 .. code-block:: html
@@ -593,22 +628,36 @@ we are going to render the Page index view template. Create the template at
         Blog homepage
     {% endblock %}
 
+This introduces the final template format we can specify. In this example
+the template ``BloggerBlogBundle::layout.html.twig`` is extended where
+the ``Controller`` part of the template name is ommitted. By excluding the
+``Controller`` part we are specifiying the use of the Bundle level template
+created at ``src/Blogger/BlogBundle/Resources/views/layout.html.twig``.
+
 Now lets add a route for our homepage. Update the Bundle routing config located
 at ``src/Blogger/BlogBundle/Resources/config/routing.yml``.
 
 .. code-block:: yaml
 
     # src/Blogger/BlogBundle/Resources/config/routing.yml
-    homepage:
+    BloggerBlogBundle_homepage:
         pattern:  /
         defaults: { _controller: BloggerBlogBundle:Page:index }
+        requirements:
+            _method:  GET
 
 Lastly we need to remove the default route for the Symfony2 welcome screen.
 Remove the ``_welcome`` route at the top of the ``dev`` routing file located at
 ``app/config/routing_dev.yml``.
 
 We are now ready to view our blogger template. Point your browser to
-``http://symblog.dev/app_dev.php/``. You should see the basic layout of the blog, with
+``http://symblog.dev/app_dev.php/``.
+
+.. image:: /_static/images/part_1/homepage.jpg
+    :align: center
+    :alt: symblog main template layout
+
+You should see the basic layout of the blog, with
 the main content and sidebar reflecting the blocks we have overridden in the relevant
 templates.
 
@@ -630,32 +679,34 @@ rule.
 .. code-block:: yaml
 
     # src/Blogger/BlogBundle/Resources/config/routing.yml
-    about:
+    BloggerBlogBundle_about:
         pattern:  /about
         defaults: { _controller: BloggerBlogBundle:Page:about }
+        requirements:
+            _method:  GET
 
 The Controller
 ~~~~~~~~~~~~~~
 
-Next open the Page controller located at
+Next open the ``Page`` controller located at
 ``src/Blogger/BlogBundle/Controller/PageController.php`` and add the action
 to handle the about page.
 
 .. code-block:: php
-    
+
     // src/Blogger/BlogBundle/Controller/PageController.php
     class PageController extends Controller
     {
         //  ..
-        
+
         public function aboutAction()
         {
             return $this->render('BloggerBlogBundle:Page:about.html.twig');
         }
-        
+
         // ..
     }
-    
+
 The View
 ~~~~~~~~
 
@@ -667,9 +718,9 @@ following content.
 
     {# src/Blogger/BlogBundle/Resources/views/Page/about.html.twig #}
     {% extends 'BloggerBlogBundle::layout.html.twig' %}
-    
+
     {% block title %}About{% endblock%}
-    
+
     {% block body %}
         <header>
             <h1>About symblog</h1>
@@ -697,12 +748,14 @@ We now have the about page ready to go. Have a look at ``http://symblog.dev/app_
 to see this. As it stands there is no way for a user of your blog to view the about page,
 short of typing in the full URL just like we did. As you'd expect Symfony2 provides both
 sides to the routing equation. It can match routes as we have seen, and can also
-generate URLs for these routes. You should always use the routing functions provided
+generate URLs from these routes. You should always use the routing functions provided
 by Symfony2. Never in your application should you be tempted to put the following.
 
-.. code-block:: html
+.. code-block:: html+php
 
     <a href="/contact">Contact</a>
+
+    <?php $this->redirect("/contact"); ?>
 
 You maybe wondering whats wrong with this approach, it maybe the way you always
 link your pages together. However, there are a number of problems with this approach.
@@ -710,7 +763,7 @@ link your pages together. However, there are a number of problems with this appr
 1. It uses a hard link and ignores the Symfony2 routing system entirely. If you wanted to change
    the location of the contact page at any point you would have to find all references to the hard
    link and change them.
-2. It will ignore your environment controllers. Environments is something we haven't come across yet
+2. It will ignore your environment controllers. Environments is something we haven't really explained yet
    but you have been using them. The ``app_dev.php`` front controller provides us access to our application
    in the ``dev`` environment. If you were to replace the ``app_dev.php`` with ``app.php`` you will be
    running the application in the ``prod`` environment. The significance of these environments will
@@ -720,7 +773,7 @@ link your pages together. However, there are a number of problems with this appr
 
 The correct way to link pages together is with the ``path`` and ``url`` methods provided by Twig. They are
 both very similar, except the ``url`` method will provide us with absolute URLs. Lets
-update the main app template located at ``app/Resources/views/base.html.twig`` to link
+update the main application template located at ``app/Resources/views/base.html.twig`` to link
 to the about page and homepage together.
 
 .. code-block:: html
@@ -729,8 +782,8 @@ to the about page and homepage together.
     {% block navigation %}
         <nav>
             <ul class="navigation">
-                <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li><a href="{{ path('about') }}">About</a></li>
+                <li><a href="{{ path('BloggerBlogBundle_homepage') }}">Home</a></li>
+                <li><a href="{{ path('BloggerBlogBundle_about') }}">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
