@@ -794,6 +794,17 @@ for the pages you will notice the link has been prefixed with ``/app_dev.php/``.
 is the front controller I was explaining above, and as you can see the use of ``path`` has maintained
 it.
 
+Finally lets update the logo links to redirect you back to the homepage. Update the
+template located at ``app/Resources/views/base.html.twig``.
+
+.. code-block:: html
+
+    <!-- app/Resources/views/base.html.twig -->
+    <hgroup>
+        <h2>{% block blog_title %}<a href="{{ path('BloggerBlogBundle_homepage') }}">symblog</a>{% endblock %}</h2>
+        <h3>{% block blog_tagline %}<a href="{{ path('BloggerBlogBundle_homepage') }}">creating a blog in Symfony2</a>{% endblock %}</h3>
+    </hgroup>
+    
 Conclusion
 ----------
 
