@@ -1,5 +1,5 @@
-symblog - Creating a blog in Symfony2
-=====================================
+Creating a blog in Symfony2
+===========================
 
 Introduction
 ------------
@@ -9,7 +9,9 @@ blogging website using `Symfony2 <http://symfony.com/>`_. The Standard
 Distribution of the Symfony2 framework will be used, which includes the main
 components you will need when building your own websites. The tutorial is split
 into a number of parts, each part covering different aspects of Symfony2 and its
-components.
+components. This tutorial is aimed to be worked through similar to the
+symfony 1 `Jobeet <http://www.symfony-project.org/jobeet/1_4/Doctrine/en/>`_
+tutorial.
 
 Tutorial Parts
 ~~~~~~~~~~~~~~
@@ -19,7 +21,8 @@ Tutorial Parts
 
     docs/configuration-and-templating
     docs/validators-and-forms
-    
+    docs/doctrine-2-the-blog-model
+
 Demo Website
 ------------
 
