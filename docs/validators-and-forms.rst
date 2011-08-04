@@ -906,5 +906,5 @@ by other parts of the application (such as the Model). We were also introduced t
 setting custom configuration settings that can be read into our application.
 
 Next we will look at a big part of this tutorial, The Model. We will introduce
-Doctrine 2 and use it to define the blog Model. We will also explore the concept
-of Database migrations and Data fixtures.
+Doctrine 2 and use it to define the blog Model. We will also build the show blog
+page and explore the concept of Data fixtures .
