@@ -896,6 +896,50 @@ of ``.php`` would use PHP to render the template instead.
 When you now submit an enquiry, an email will be sent to the address set in the
 ``blogger_blog.emails.contact_email`` parameter.
 
+.. tip::
+
+    Symfony2 allows us to configure the behavior of the Swift Mailer library
+    while operating in different Symfony2 environments. We can already see this
+    in use for the ``test`` environment. By default, the Symfony 2 Standard
+    Distribution configures Swift Mailer to not send emails when running in the ``test``
+    environment. This is set in the test configuration file located at
+    ``app/config/config_test.yml``.
+    
+    .. code-block:: yaml
+        
+        # app/config/config_test.yml
+        swiftmailer:
+            disable_delivery: true
+            
+    It could be useful to duplicate this functionality for the ``dev`` environment.
+    After all, you don't want to accidentally send an email to the wrong email address
+    while developing. To achieve this, add the above configuration to the
+    ``dev`` configuration file located at ``app/config/config_dev.yml``.
+    
+    You maybe wondering how you can now test that the emails are being sent, and
+    more specifically the content of them, seeing as they will no longer be delivered
+    to an actual email address. Symfony2 has a solution for this via the developer
+    toolbar. When an email is sent an email notification icon will appear in the toolbar
+    that has all the information about the email that Swift Mailer would have delivered.
+    
+    .. image:: /_static/images/part_2/email_notifications.jpg
+        :align: center
+        :alt: Symfony2 toolbar show email notifications
+    
+    If you perform a redirect after sending an email, like we do for the contact form,
+    you will need to set the ``intercept_redirects`` setting in ``app/config/config_dev.yml``
+    to true in order to see the email notification in the toolbar.
+    
+    We could have instead configured Swift Mailer to send all emails to a specific
+    email address in the ``dev`` environment by placing the following
+    setting in the ``dev`` configuration file located at ``app/config/config_dev.yml``.
+    
+    .. code-block:: yaml
+    
+        # app/config/config_dev.yml
+        swiftmailer:
+            delivery_address:  development@symblog.dev
+            
 Conclusion
 ----------
 

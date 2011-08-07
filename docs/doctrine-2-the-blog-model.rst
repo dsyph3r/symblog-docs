@@ -523,7 +523,9 @@ As you'd expect we begin by extending the ``BloggerBlogBundle`` main layout.
 Next we override the page title with the title of the blog. This will
 be useful for SEO as the page title of the blog is more descriptive
 than the default title that is set. Lastly we override
-the body block to output the ``Blog`` entity conent.
+the body block to output the ``Blog`` entity conent. We use the ``asset`` function
+again here to render the blog image. The blog images should be placed in the
+``web/images`` folder.
 
 CSS
 ...
@@ -821,9 +823,9 @@ This is done using metadata on the entity. Update the ``Blog`` entity located at
         // ..
     }
 
-Now lets add 2 methods in the ``Blog`` entity that register for ``prePersit``
-and ``preUpdate`` events. We also add a constructor to set default values
-for the ``created`` and ``updated`` members.
+Now lets add a method in the ``Blog`` entity that registers for the ``preUpdate``
+event. We also add a constructor to set default values for the ``created`` and
+``updated`` members.
 
 .. code-block:: php
 
@@ -848,15 +850,6 @@ for the ``created`` and ``updated`` members.
         }
 
         /**
-         * @ORM\prePersist
-         */
-        public function setCreatedValue()
-        {
-            $this->setCreated(new \DateTime());
-            $this->setUpdated(new \DateTime());
-        }
-
-        /**
          * @ORM\preUpdate
          */
         public function setUpdatedValue()
@@ -867,9 +860,8 @@ for the ``created`` and ``updated`` members.
         // ..
     }
 
-We register the ``Blog`` entity to be notified on the ``prePersist`` and
-``preUpdate`` events to set the ``created`` and ``updated`` member values
-respectfully. Now when you re-run the load fixtures task you will notice the
+We register the ``Blog`` entity to be notified on the ``preUpdate`` event to set the
+``updated`` member value. Now when you re-run the load fixtures task you will notice the
 ``created`` and ``updated`` members are set automatically.
 
 .. tip::

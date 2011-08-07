@@ -22,12 +22,13 @@ Tutorial Parts
     docs/configuration-and-templating
     docs/validators-and-forms
     docs/doctrine-2-the-blog-model
+    docs/extending-the-model-blog-comments
 
 Demo Website
 ------------
 
 The symblog website can be viewed at
-`http://symblog.co.uk <http://symblog.co.uk/>`_. The source code is
+`http://symblog.co.uk <http://symblog.co.uk/>`_ [coming soon]. The source code is
 available via `Github <https://github.com/dsyph3r/symblog>`_. It follows
 along with each part of the tutorial
 
@@ -68,13 +69,20 @@ If other people would like to contribute to the completion of alternative method
 simply fork the repository on `Github <https://github.com/dsyph3r/symblog-docs>`_
 and send over the pull requests :)
 
+Author
+------
+
+This tutorial is being created by `dsyph3r <http://twitter.com/#!/dsyph3r>`_.
+
 Contributing
 ------------
 
 The `source <https://github.com/dsyph3r/symblog-docs>`_ for this tutorial is available on
 Github. If you would like to improve and extend this tutorial simply fork the
 project and send over the pull requests. You can also raise issues using the
-`GitHub Issue Tracker <https://github.com/dsyph3r/symblog-docs/issues>`_.
+`GitHub Issue Tracker <https://github.com/dsyph3r/symblog-docs/issues>`_. If any
+one is interested in creating a much more visually pleasing design please get in
+`touch <http://twitter.com/#!/dsyph3r>`_!
 
 Credits
 -------
