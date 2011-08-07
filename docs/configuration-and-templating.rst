@@ -298,10 +298,10 @@ which maps to the ``index.html.twig`` template, in the ``Default``
 views folder of the ``BloggerBlogBundle``, or physically to the file
 ``src/Blogger/BlogBundle/Resources/views/Default/index.html.twig``. Different
 variations of the template format can be used to render templates
-at different locations with the application and its bundles. We will see
+at different locations within the application and its bundles. We will see
 this later in the chapter.
 
-We also pass over the``$name`` variable to the template via the ``array``
+We also pass over the ``$name`` variable to the template via the ``array``
 options.
 
 .. code-block:: php
@@ -315,7 +315,6 @@ options.
 
     class DefaultController extends Controller
     {
-
         public function indexAction($name)
         {
             return $this->render('BloggerBlogBundle:Default:index.html.twig', array('name' => $name));
@@ -445,7 +444,7 @@ files here, the template and the CSS. As Symfony2 supports
 .. note::
 
     There are 3 external files pulled into the template, 1 JavaScript and 2 CSS.
-    The JavaScript file fixes the lack of support in IE browsers pre version
+    The JavaScript file fixes the lack of HTML5 support in IE browsers pre version
     9. The 2 CSS files import fonts from
     `Google Web font <http://www.google.com/webfonts>`_.
 
@@ -460,8 +459,8 @@ We will start by focusing on the document HEAD. Lets look at the title:
     <title>{% block title %}symblog{% endblock %} - symblog</title>
 
 The first thing you'll notice is the alien ``{%`` tag. Its not HTML, and its
-definitely not PHP. This is one of the 3 Twig tags. This tag is the Twig 'Do
-something' tag. It is used to execute statements such as control statements and
+definitely not PHP. This is one of the 3 Twig tags. This tag is the Twig
+``Do something`` tag. It is used to execute statements such as control statements and
 for defining block elements. A full list of
 `control structures <http://www.twig-project.org/doc/templates.html#list-of-control-structures>`_
 can be found in the Twig Documentation. The Twig block we have defined in the
@@ -479,8 +478,8 @@ blog. We can achieve this by extending the template and overriding the title blo
 
 In the above example we have extended the applications base template that first
 defined the title block. You'll notice the template format used with the
-``extends`` directive is missing the ``Bundle`` and the ``Controller`` parts.
-Remember the template format is ``bundle:controller:template``. By excluding the
+``extends`` directive is missing the ``Bundle`` and the ``Controller`` parts,
+remember the template format is ``bundle:controller:template``. By excluding the
 ``Bundle`` and the ``Controller`` parts we are specifiying the use of the application
 level templates defined at ``app/Resources/views/``.
 
@@ -491,14 +490,14 @@ output as 'The blog title goes here - symblog'. This functionality provided by
 Twig will be used extensively when creating templates.
 
 In the stylesheets block we are introduced to the next Twig tag, the ``{{`` tag,
-or the 'Say something' tag.
+or the ``Say something`` tag.
 
 .. code-block:: html
 
     <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
 
 This tag is used to print the value of variable or expression. In the above example
-it prints out the return value of the ``asset`` function, which provides us
+it prints out the return value of the ``asset`` function, which provides us with
 a portable way to link to the application assets, such as CSS, JavaScript, and images.
 
 The ``{{`` tag can also be combined with filters to manipulate the output before
@@ -703,8 +702,6 @@ to handle the about page.
         {
             return $this->render('BloggerBlogBundle:Page:about.html.twig');
         }
-
-        // ..
     }
 
 The View
