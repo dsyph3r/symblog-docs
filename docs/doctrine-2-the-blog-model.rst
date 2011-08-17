@@ -45,7 +45,7 @@ substituted.
     user table, it probably has fields like username, password, first_name,
     last_name, email and dob. With an ORM this becomes a class with members username,
     password, first_name, etc which allows us to call methods such as ``getUsername()`` and
-    ``setPassword()``. ORM's goes much further than this though, they are also able to
+    ``setPassword()``. ORM's go much further than this though, they are also able to
     retrieve related tables for us, either at the same time as we retrieve the user object, or
     lazily later on. Now consider our user has some friends related to it. This would
     be a friends table, storing the primary key of the user table within it. Using
