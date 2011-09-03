@@ -137,7 +137,7 @@ familiar with the following PHP snippet.
 The Twig ``for..else..endfor`` control structure is a much cleaner way of
 achieving this task. Most of the code within the homepage template is concerned with
 outputting the blog information in HTML. However, there are a few things we need
-to note. Firstly, me make use of the TWIG ``path`` function to generate the
+to note. Firstly, we make use of the Twig ``path`` function to generate the
 routes for the blog show page. As the blog show page requires a blog ``ID`` to
 be present in the URL, we need to pass this as an argument into the ``path``
 function. This can be seen with the following.
