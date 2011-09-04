@@ -512,7 +512,7 @@ and paste in the following.
                 <div class="date"><time datetime="{{ blog.created|date('c') }}">{{ blog.created|date('l, F j, Y') }}</time></div>
                 <h2>{{ blog.title }}</h2>
             </header>
-            <img src="{{ asset(['/images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" class="large" />
+            <img src="{{ asset(['images/', blog.image]|join) }}" alt="{{ blog.title }} image not found" class="large" />
             <div>
                 <p>{{ blog.blog }}</p>
             </div>
