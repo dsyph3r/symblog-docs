@@ -51,10 +51,6 @@
     #header h2 a { color: #000 !important }
     #header h3 { text-align: center; font-family: 'La Belle Aurore', cursive; font-size: 24px; margin: 0; margin-bottom: 20px; font-weight: normal;  font-weight: normal;}
 
-    .social { float: right;  }
-    .social div { display: inline-block }
-    .social .google div { width: 80px !important; }
-
     div.content { font-size: 0.9em; margin: 10px 20px 20px; }
 
     .note, .tip, .warning {
@@ -84,10 +80,6 @@
 
 {% block content %}
 
-    <a href="https://github.com/dsyph3r/symblog-docs">
-        <img style="position: absolute; top: 0; left: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/6429057dfef9e98189338d22e7f6646c6694f032/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub">
-    </a>
-
     <header id="header">
         <div class="top">
             <nav>
@@ -109,14 +101,6 @@
   {{ nav() }}
   </div>
   <div class="content">
-    <div class="social">
-        <!-- Place this tag where you want the +1 button to render -->
-        <div class="google">
-            <g:plusone></g:plusone>
-        </div>
-
-        <a href="http://twitter.com/share" class="twitter-share-button" data-text="Learning #symfony2 with the #symblog blogging tutorial" data-count="horizontal" data-via="dsyph3r">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    </div>
     
     {#{%- if display_toc %}
     <div id="toc">
@@ -129,17 +113,4 @@
   <div class="bottomnav">
   {{ nav() }}
   </div>
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-17277387-2']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
 {% endblock %}
