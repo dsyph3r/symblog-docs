@@ -23,6 +23,7 @@ Tutorial Parts
     docs/validators-and-forms
     docs/doctrine-2-the-blog-model
     docs/extending-the-model-blog-comments
+    docs/customising-the-view-more-with-twig
 
 Demo Website
 ------------
