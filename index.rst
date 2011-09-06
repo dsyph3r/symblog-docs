@@ -29,7 +29,7 @@ Demo Website
 ------------
 
 The symblog website can be viewed at
-`http://symblog.co.uk <http://symblog.co.uk/>`_ [coming soon]. The source code is
+`http://symblog.co.uk <http://symblog.co.uk/>`_. The source code is
 available via `Github <https://github.com/dsyph3r/symblog>`_. It follows
 along with each part of the tutorial
 
