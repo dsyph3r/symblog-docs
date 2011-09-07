@@ -20,7 +20,7 @@ The first 4 parts are currently available:
 Demo site
 ---------
 
-The demo site for this project can be found at http://symblog.co.uk [coming soon]
+The demo site for this project can be found at http://symblog.co.uk
 
 Contributing
 ------------
