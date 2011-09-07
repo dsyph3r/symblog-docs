@@ -1083,7 +1083,7 @@ as production and development configurations of servers can differ.
 
 While creating a new environment is a simple task, it is outside the scope of this
 tutorial. There is an excellent
-`article <http://symfony.com/doc/current/cookbook/configuration/environments.html`_
+`article <http://symfony.com/doc/current/cookbook/configuration/environments.html>`_
 in the Symfony2 cookbook that covers this.
 
 Assetic
