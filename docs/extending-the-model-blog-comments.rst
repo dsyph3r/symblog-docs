@@ -1170,6 +1170,48 @@ everything was covered in chapter 2 when we created the contact form. However,
 before moving on make sure you fully understand what is happening in the
 ``Comment`` controller.
 
+Form Validation
+~~~~~~~~~~~~~~~
+
+We don't want users to be able to submit blogs comments with blank ``user`` or
+``comment`` values. To achieve this we look back to the validators we were
+introduced to in part 2 when creating the enquiry form. Update the ``Comment``
+entity located at ``src/Blogger/BlogBundle/Entity/Comment.php`` with the
+following.
+
+.. code-block:: php
+    
+    <?php
+    // src/Blogger/BlogBundle/Entity/Comment.php
+    
+    // ..
+    
+    use Symfony\Component\Validator\Mapping\ClassMetadata;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+    
+    // ..
+    class Comment
+    {
+        // ..
+        
+        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        {
+            $metadata->addPropertyConstraint('user', new NotBlank(array(
+                'message' => 'You must enter your name'
+            )));
+            $metadata->addPropertyConstraint('comment', new NotBlank(array(
+                'message' => 'You must enter a comment'
+            )));
+        }
+        
+        // ..
+    }
+
+The constraints ensure that both the user and comment members must not be blank.
+We have also set the ``message`` option for both constraints to override the
+default ones. Remember to add the namespace for ``ClassMetadata`` and
+``NotBlank`` as shown above.
+
 The view
 ~~~~~~~~
 
