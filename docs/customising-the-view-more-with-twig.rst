@@ -1,5 +1,5 @@
-[Part 5] - Customising the view: Twig extensions, The sidebar and Assetics
-==========================================================================
+[Part 5] - Customising the view: Twig extensions, The sidebar and Assetic
+=========================================================================
 
 Overview
 --------
@@ -10,10 +10,10 @@ with addressing SEO by adding the blog title to the URL. We will also begin work
 on the sidebar to add 2 common blog components; The Tag Cloud and the Latest
 Comments. We will explore the various environments in Symfony2 and learn how to
 run symblog in the production environment. The Twig templating engine will be
-extended to provide a new filter, and we introduce Assetics to manage the
+extended to provide a new filter, and we introduce Assetic to manage the
 website asset files. At the end of this chapter you will have integrated
 comments into the homepage, have a Tag Cloud and Latest Comments component on the
-sidebar and will have used Assetics to manage the asset files. You will also have seen
+sidebar and will have used Assetic to manage the asset files. You will also have seen
 symblog running in the production environment.
 
 The Homepage - Blogs and Comments
@@ -1083,19 +1083,19 @@ as production and development configurations of servers can differ.
 
 While creating a new environment is a simple task, it is outside the scope of this
 tutorial. There is an excellent
-`article <http://symfony.com/doc/current/cookbook/configuration/environments.html`_
+`article <http://symfony.com/doc/current/cookbook/configuration/environments.html>`_
 in the Symfony2 cookbook that covers this.
 
 Assetic
 -------
 
 The Symfony2 Standard Distribution is bundled with a library for assets
-management called `Assetics <https://github.com/kriswallsmith/assetic>`_. The library was
+management called `Assetic <https://github.com/kriswallsmith/assetic>`_. The library was
 developed by `Kris Wallsmith <https://twitter.com/#!/kriswallsmith>`_ and was
 inspired by the Python library `webassets
 <http://elsdoerfer.name/files/docs/webassets/>`_.
 
-Assetics deals with 2 parts of asset management, the assets such as images,
+Assetic deals with 2 parts of asset management, the assets such as images,
 stylesheets and JavaScript and the filters that can be applied to these assets.
 These filters are able to perform useful tasks such as minifying your CSS and
 JavaScript, passing `CoffeeScript <http://jashkenas.github.com/coffee-script/>`_
@@ -1109,12 +1109,12 @@ the template as follows.
     
     <link href="{{ asset('bundles/bloggerblog/css/blog.css') }}" type="text/css" rel="stylesheet" />
 
-The calls to the ``asset`` function will be replaced by Assetics.
+The calls to the ``asset`` function will be replaced by Assetic.
 
 Assets
 ~~~~~~
 
-The Assetics library describes an asset as follows:
+The Assetic library describes an asset as follows:
 
 `An Assetic asset is something with filterable content that can be loaded and
 dumped. An asset also includes metadata, some of which can be manipulated and
@@ -1149,8 +1149,8 @@ with the following.
     
     {# .. #}
 
-We have replaced the 2 previous links for CSS files with some Assetics
-functionality. Using ``stylesheets`` from Assetics we have specified that all CSS
+We have replaced the 2 previous links for CSS files with some Assetic
+functionality. Using ``stylesheets`` from Assetic we have specified that all CSS
 files in the location ``src/Blogger/BlogBundle/Resources/public/css`` should be
 combined into 1 file and then output. Combining files is a very simple but
 effective way to optimise your website frontend by reducing the number of files
@@ -1179,7 +1179,7 @@ each file individually as follows.
     
 The end result in both cases is the same. The first option using the ``*`` ensures
 that when new CSS files are added to the directory, they will always be included in the combined CSS
-file by Assetics. This may not be the desired functionality for your website, so
+file by Assetic. This may not be the desired functionality for your website, so
 use either method above to suit your needs.
     
 If you have a look at the HTML output via ``http://symblog.dev/app_dev.php/``
@@ -1191,9 +1191,9 @@ are running back in the ``development`` environment again).
     <link href="/app_dev.php/css/d8f44a4_part_1_blog_1.css" rel="stylesheet" media="screen" />
     <link href="/app_dev.php/css/d8f44a4_part_1_sidebar_2.css" rel="stylesheet" media="screen" />
     
-Firstly you maybe wondering why there are 2 files. Above it was stated that Assetics
+Firstly you maybe wondering why there are 2 files. Above it was stated that Assetic
 would combine the files into 1 CSS file. This is because we are running symblog
-in the ``development`` environment. We can ask Assetics to run in non-debug mode
+in the ``development`` environment. We can ask Assetic to run in non-debug mode
 by setting the debug flag to false as follows.
 
 .. code-block:: html
@@ -1219,7 +1219,7 @@ Now if you look at the rendered HTML you will see something like this.
     
 If you view the contents of this file you will see the 2 CSS files, ``blog.css``
 and ``sidebar.css`` have been combined into 1 file. The filename given to the generated
-CSS file is randomly generated by Assetics. If you would like to control the name
+CSS file is randomly generated by Assetic. If you would like to control the name
 given to the generated file use the ``output`` option as follows.
 
 .. code-block:: html
@@ -1259,7 +1259,7 @@ JavaScripts
 ...........
 
 While we currently don't have any JavaScipt files in our application, its usage in
-Assetics is much the same as using stylesheets.
+Assetic is much the same as using stylesheets.
 
 .. code-block:: html
 
@@ -1272,7 +1272,7 @@ Assetics is much the same as using stylesheets.
 Filters
 ~~~~~~~
 
-The real power in Assetics comes from the filters. Filters can be applied to assets
+The real power in Assetic comes from the filters. Filters can be applied to assets
 or collections of assets. There are a large number of filters
 provided within the core of the library including the following common filters:
 
@@ -1283,7 +1283,7 @@ provided within the core of the library including the following common filters:
 5. ``CoffeeScriptFilter``: compiles CoffeeScript into JavaScript
 
 There is a full list of available filters in the
-`Assetics Readme <https://github.com/kriswallsmith/assetic/blob/master/README.md>`_.
+`Assetic Readme <https://github.com/kriswallsmith/assetic/blob/master/README.md>`_.
 
 Many of these filters pass the actual task onto another program or library, such
 as YUI Compressor, so you may need to install/configure the appropriate libraries
@@ -1294,7 +1294,7 @@ the archive and copy the file located in the ``build`` directory to
 ``app/Resources/java/yuicompressor-2.4.6.jar``. This assumes you downloaded the
 ``2.4.6`` version of the YUI Compressor. If not change your version number accordingly.
 
-Next we will configure an Assetics filter to minify the CSS using the YUI Compressor.
+Next we will configure an Assetic filter to minify the CSS using the YUI Compressor.
 Update the application config located at ``app/config/config.yml`` with the following.
 
 .. code-block:: yaml
@@ -1332,7 +1332,7 @@ to apply the ``yui_css`` filter.
 
     {# .. #}
 
-Now if you refresh the symblog website and view the files output by Assetics you
+Now if you refresh the symblog website and view the files output by Assetic you
 will notice they have been minified. While minification is great for production
 servers, it can make debugging difficult, especially when JavaScript is
 minified. We can disable the minification when running in the ``development``
@@ -1351,11 +1351,11 @@ environment by prefixing the filter with a ``?`` as follows.
 Dumping the assets for production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In production we can dump the asset files using Assetics so they become actual
+In production we can dump the asset files using Assetic so they become actual
 resources on disk ready to be served by the web server. The process of creating
-the assets through Assetics with every page request can be quite slow,
+the assets through Assetic with every page request can be quite slow,
 especially when filters are being applied to the assets. Dumping the assets
-for ``production`` ensures that Assetics is not used to serve the assets and instead
+for ``production`` ensures that Assetic is not used to serve the assets and instead
 the pre-processed asset files are served directly by the web server. Run the following
 task to create dump the asset files.
 
@@ -1372,12 +1372,12 @@ from this folder.
 
     If you dump the asset files to disk and want to revert back to the
     ``development`` environment, you will need to clean up the created asset
-    files in ``web/`` to allow Assetics to recreate them.
+    files in ``web/`` to allow Assetic to recreate them.
 
 Additional Reading
 ~~~~~~~~~~~~~~~~~~
 
-We have only scratched the surface at what Assetics can perform. There are more resources
+We have only scratched the surface at what Assetic can perform. There are more resources
 available online especially in the Symfony2 cookbook including:
 
 `How to Use Assetic for Asset Management <http://symfony.com/doc/current/cookbook/assetic/asset_management.html>`_
@@ -1401,12 +1401,12 @@ including:
 
     Its worth mentioning here that Richard Miller has a collection of excellent articles
     regarding a number of Symfony2 areas on his site including Dependency Injection,
-    Services and the above mentioned Assetics guides. Just search for posts
+    Services and the above mentioned Assetic guides. Just search for posts
     tagged with `symfony2 <http://miller.limethinking.co.uk/tag/symfony2/>`_
 
 Conclusion
 ----------
 
 We have covered a number of new areas with regards to Symfony2 including
-the Symfony2 environments and how to use the Assetics asset library. We also
+the Symfony2 environments and how to use the Assetic asset library. We also
 made improvements to the homepage and added some components to the sidebar.
