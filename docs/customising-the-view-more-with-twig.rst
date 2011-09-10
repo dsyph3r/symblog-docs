@@ -521,7 +521,7 @@ the following content.
         {
             $delta = time() - $dateTime->getTimestamp();
             if ($delta < 0)
-                throw new Exception("createdAgo is unable to handle dates in the future");
+                throw new \Exception("createdAgo is unable to handle dates in the future");
 
             $duration = "";
             if ($delta < 60)
