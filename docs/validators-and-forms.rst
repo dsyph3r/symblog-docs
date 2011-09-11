@@ -877,7 +877,7 @@ the following.
 .. code-block:: text
 
     {# src/Blogger/BlogBundle/Resources/view/Page/contactEmail.txt.twig #}
-    A contact enquiry was made by {{ enquiry.name }} at {{ date("Y-m-d H:i") }}.
+    A contact enquiry was made by {{ enquiry.name }} at {{ "now" | date("Y-m-d H:i") }}.
 
     Reply-To: {{ enquiry.email }}
     Subject: {{ enquiry.subject }}
