@@ -1208,4 +1208,5 @@ We have seen how to simulate browser requests and how to use the Symfony2 ``Craw
 class to check the Response from these requests.
 
 Next we will look at the Symfony2 security component, and more specifically how to use it
-for user management. We will integrate the FOSUserBundle.
+for user management. We will also integrate the FOSUserBundle ready for us to work on the
+symblog admin section.
