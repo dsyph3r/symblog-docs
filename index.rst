@@ -24,6 +24,7 @@ Tutorial Parts
     docs/doctrine-2-the-blog-model
     docs/extending-the-model-blog-comments
     docs/customising-the-view-more-with-twig
+    docs/testing-unit-and-functional-phpunit
 
 Demo Website
 ------------
