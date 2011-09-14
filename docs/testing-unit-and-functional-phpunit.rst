@@ -4,17 +4,17 @@
 Overview
 --------
 
-So far we have covered a good amount of ground looking at a number of core
+So far we have explored a good amount of ground looking at a number of core
 concepts with regards to Symfony2 development. Before we continue adding
 features its time to introduce testing. We will look at how to test individual
 functions with unit testing and how to ensure multiple components are working
 correctly together with functional testing. The PHP testing library `PHPUnit
 <http://www.phpunit.de/manual/current/en/>`_ will be covered as this library is
-at the core of the Symfony2 tests. As testing is a large topic it will also be
+at the centre of the Symfony2 tests. As testing is a large topic it will also be
 covered in later chapters. By the end of this chapter you will have written a
 number of tests covering both unit and functional testing. You will have simulated
 browser requests, populated forms with data, and checked responses to ensure
-your pages are outputting correctly. You will also have checked how much coverage
+the website pages are outputting correctly. You will also have checked how much coverage
 your tests have on your applications code base.
 
 Testing in Symfony2
@@ -24,7 +24,7 @@ Testing in Symfony2
 standard" for writing tests in PHP, so learning it will benefit you in all your
 PHP projects. Lets also not forget that most of the topics covered in this
 chapter are language independent and so can be transferred to other languages
-you write in. 
+you. 
 
 .. tip::
 
@@ -45,12 +45,12 @@ case B should not depend on the result of test case A. It is useful when unit te
 to be able to create mock objects that allow you to easily unit test
 functions that have external dependencies. Mocking allows you to simulate a function
 call instead of actually executing it. An example of this
-would be unit testing a class that wraps up an external API. Your API class may
-have use a transport layer for communicating with the external API. We could
-mock the request method of the transport layer to return the results we specify,
-rather than actually hitting the external API. Unit testing does not test that
-components of an application function correctly together, the is covered by the next
-topic, functional testing.
+would be unit testing a class that wraps up an external API. The API class may
+use a transport layer for communicating with the external API. We could mock the
+request method of the transport layer to return the results we specify, rather
+than actually hitting the external API. Unit testing does not test that the
+components of an application function correctly together, this is covered by the
+next topic, functional testing.
 
 Functional Testing
 ~~~~~~~~~~~~~~~~~~
@@ -59,10 +59,10 @@ Functional testing checks the integration of different components within the
 application, such as routing, controllers, and views. Functional tests are
 similar to the manual tests you would run yourself in the browser such as requesting
 the homepage, clicking a blog link and checking the correct blog is shown.
-Functional testing provides us with the ability to automate this process.
+Functional testing provides you with the ability to automate this process.
 Symfony2 comes complete with a number of useful classes that assist in functional testing
-including a client that is able to requests pages and submit forms and DOM crawler
-that we can use to traverse the response from the client.
+including a ``Client`` that is able to requests pages and submit forms and DOM ``Crawler``
+that we can use to traverse the ``Response`` from the client.
 
 .. tip::
 
@@ -78,13 +78,43 @@ that we can use to traverse the response from the client.
 PHPUnit
 -------
 
-As stated above, Symfony2 tests are written using PHPUnit. The tests we write will
-also use this library. In order to use PHPUnit you need to install it. Symfony2
-requires PHPUnit 3.5.11 or later to work. Refer to the
-`installation <http://www.phpunit.de/manual/current/en/installation.html>`_
-instructions on the PHPUnit website. PHPUnit is a very large testing library, so
-references to the official documentation will be made where additional reading
-can be found.
+As stated above, Symfony2 tests are written using PHPUnit. You will need to
+install PHPUnit in order to run these tests and the tests from this chapter.
+For detailed `installation instructions
+<http://www.phpunit.de/manual/current/en/installation.html>`_ refer to the
+official documentation on the PHPUnit website. To run the tests in Symfony2 you
+need to install PHPUnit 3.5.11 or later. PHPUnit is a very large testing library, so references
+to the official documentation will be made where additional reading can be
+found. 
+
+Assertions
+~~~~~~~~~~
+
+Writing tests is concerened with checking that the actual test result is equal
+to the expected test result. There are a number of assertion methods available
+in PHPUnit to assist you with this task. Some of the common assertion
+methods you will use are listed below.
+
+.. code-block:: php
+
+    // Check 1 === 1 is true
+    $this->assertTrue(1 === 1);
+
+    // Check 1 === 2 is false
+    $this->assertFalse(1 === 2);
+
+    // Check 'Hello' equals 'Hello'
+    $this->assertEquals('Hello', 'Hello');
+
+    // Check array has key 'language'
+    $this->assertArrayHasKey('language', array('language' => 'php', 'size' => '1024'));
+
+    // Check array contains value 'php'
+    $this->assertContains('php', array('php', 'ruby', 'c++', 'JavaScript'));
+
+A full list of
+`assertions <http://www.phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.assertions>`_
+is available in the PHPUnit documentation.
 
 Running Symfony2 Tests
 ----------------------
@@ -92,14 +122,14 @@ Running Symfony2 Tests
 Before we begin writing some tests, lets look at how we run tests in Symfony2. PHPUnit
 can be set to execute using a configuration file. In our Symfony2 project this
 file is located at ``app/phpunit.xml.dist``. As this file is suffixed with
-``.dist``, you need to copy its content into a file called ``app/phpunit.xml``.
+``.dist``, you need to copy its contents into a file called ``app/phpunit.xml``.
 
 .. tip::
 
     If you are using a VCS such as Git, you should add the new ``app/phpunit.xml``
     file to the VCS ignore list.
 
-If we have a look at the contents of the PHPUnit configuration file we see the
+If you have a look at the contents of the PHPUnit configuration file you will see the
 following.
 
 .. code-block:: xml
@@ -113,10 +143,10 @@ following.
         </testsuite>
     </testsuites>
 
-The following options setup some directories that are part of our test suite.
-When running PHPUnit it will look in the above directories for tests to run. We
+The following settings configure some directories that are part of our test suite.
+When running PHPUnit it will look in the above directories for tests to run. You
 can also pass additional command line arguments to PHPUnit to run tests in
-specific directories, instead of the test suite files. We will see how to
+specific directories, instead of the test suite tests. You will see how to
 achieve this later.
 
 You will also notice the configuration is specifying the bootstrap file located at
@@ -149,9 +179,9 @@ specifies that PHPUnit should load its configuration from the ``app`` directory.
 
     $ phpunit -c app
 
-Once the testing has completed you should be notified the that the tests failed.
-If we look at the ``DefaultControllerTest`` class located at
-``src/Blogger/BlogBundle/Tests/Controller/DefaultControllerTest.php`` we see
+Once the testing has completed you should be notified that the tests failed.
+If you look at the ``DefaultControllerTest`` class located at
+``src/Blogger/BlogBundle/Tests/Controller/DefaultControllerTest.php`` you will see
 the following content.
 
 .. code-block:: php
@@ -184,7 +214,7 @@ above test makes a request to the same URL, it will also get the same response,
 hence why the test fails. Functional testing is a large part of this chapter and
 will be covered in detail later.
 
-As the ``DefaultController`` class has been removed, we can also remove this test
+As the ``DefaultController`` class has been removed, you can also remove this test
 class. Delete the ``DefaultControllerTest`` class located at
 ``src/Blogger/BlogBundle/Tests/Controller/DefaultControllerTest.php``.
 
@@ -192,8 +222,8 @@ Unit Testing
 ------------
 
 As explained previously, unit testing is concerned with testing individual units
-of you application in isolation. When writing unit tests it is recommend that you
-replicate the Bundle structure under the Tests folder. For example, if we wanted
+of your application in isolation. When writing unit tests it is recommend that you
+replicate the Bundle structure under the Tests folder. For example, if you wanted
 to test the ``Blog`` entity class located at
 ``src/Blogger/BlogBundle/Entity/Blog.php`` the test file would reside at
 ``src/Blogger/BlogBundle/Tests/Entity/BlogTest.php``. An example folder layout

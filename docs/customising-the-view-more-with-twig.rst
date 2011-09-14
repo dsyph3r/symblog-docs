@@ -1414,3 +1414,9 @@ Conclusion
 We have covered a number of new areas with regards to Symfony2 including
 the Symfony2 environments and how to use the Assetic asset library. We also
 made improvements to the homepage and added some components to the sidebar.
+
+In the next chapter we will move on to testing. We will explore both unit
+and functional testing using PHPUnit. We will see how Symfony2 comes complete
+with a number of classes to assist in writing functional tests that simulate
+web requests, allow us to populate forms and click links and then inspect the
+returned response.
