@@ -71,6 +71,16 @@ If other people would like to contribute to the completion of alternative method
 simply fork the repository on `Github <https://github.com/dsyph3r/symblog-docs>`_
 and send over the pull requests :)
 
+Translations
+------------
+
+Spanish
+~~~~~~~
+
+Symblog has been translated to `Spanish <http://udelabs.com/symfony/symblog/index.html>`_ thanks to the contribution by
+`Lisper <https://twitter.com/#!/esymfony>`_.
+
+
 Author
 ------
 
