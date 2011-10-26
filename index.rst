@@ -77,7 +77,7 @@ Translations
 Spanish
 ~~~~~~~
 
-Symblog has been translated to `Spanish <http://udelabs.com/symfony/symblog/index.html>`_ thanks to the contribution by
+Symblog has been translated into `Spanish <http://udelabs.com/symfony/symblog/index.html>`_ thanks to the contribution by
 `Lisper <https://twitter.com/#!/esymfony>`_.
 
 
@@ -102,6 +102,8 @@ Credits
 Special thanks to all the contributors of the
 `Official Symfony2 documentation <http://symfony.com/doc/current/>`_. This
 provided an invaluable resource of information.
+
+Flag Icons sourced from `famfamfam <http://www.famfamfam.com/lab/icons/flags/>`_.
 
 Searching
 ---------
