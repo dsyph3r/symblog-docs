@@ -1082,7 +1082,7 @@ a new route to  the routing file located at
         defaults: { _controller: BloggerBlogBundle:Comment:create }
         requirements:
             _method:  POST
-            id: \d+
+            blog_id: \d+
         
 The controller
 ~~~~~~~~~~~~~~
