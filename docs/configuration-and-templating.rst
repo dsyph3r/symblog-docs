@@ -137,8 +137,8 @@ the details to setup the database (this tutorial assumes the use of MySQL, but
 you can choose any other database you have access to), followed by generating a
 CSRF token on the next page. You will be presented with the parameter settings
 that Symfony2 has generated. Pay attention to the notice on the page, it is
-likely that your ``app/paramaters.ini`` file is not writable so you will need to
-copy and paste the settings to the file located at ``app/parameters.ini`` (These
+likely that your ``app/config/parameters.ini`` file is not writable so you will need to
+copy and paste the settings to the file located at ``app/config/parameters.ini`` (These
 settings can replace the existing settings in this file).
 
 

@@ -292,7 +292,7 @@ Creating the database
 
 If you followed along in chapter 1 of the tutorial, you should have
 used the web configurator to set the database settings. If you didn't, update the
-``database_*`` options in the parameters file located at ``app/parameters.ini``.
+``database_*`` options in the parameters file located at ``app/config/parameters.ini``.
 
 Its now time to create the database using another Doctrine 2 task. This task only
 creates the database, it does not create any tables inside the database.
