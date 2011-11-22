@@ -660,7 +660,7 @@ Configure Swift Mailer settings
 
 Swift Mailer is already configured out of the box to work in the Symfony2 Standard
 Distribution, however we need to configure some settings regarding sending methods,
-and credentials. Open up the parameters file located at ``app/parameters.ini`` and
+and credentials. Open up the parameters file located at ``app/config/parameters.ini`` and
 find the settings prefixed with ``mailer_``.
 
 .. code-block:: text
@@ -690,11 +690,11 @@ substituting your username and password where necessary.
     your project, especially if you repository is publicly accessible as your
     GMail username and password will be committed to the repository and will be
     available for anybody to see. You should make sure the file
-    ``app/parameters.ini`` is added to the ignore list of your VCS. A common
+    ``app/config/parameters.ini`` is added to the ignore list of your VCS. A common
     approach to this problem is to suffix the file name of the file
-    that has sensitive information such as ``app/parameters.ini`` with ``.dist``.
+    that has sensitive information such as ``app/config/parameters.ini`` with ``.dist``.
     You then provide sensible defaults for the settings in this file and add the
-    actual file, i.e. ``app/parameters.ini`` to you VCS ignore list.
+    actual file, i.e. ``app/config/parameters.ini`` to you VCS ignore list.
     You can then deploy the ``*.dist`` file with your project and allow the developer to
     remove the ``.dist`` extension and fill in the required settings.
 
@@ -788,7 +788,7 @@ reuse this value in other places without code duplication. Further, when your
 blog has generated you so much traffic the enquiries become too much for you
 to deal with you can easily update the email address to pass the emails
 onto your assistant. Create a new file at
-``src/Blogger/BlogBundle/Resources/config/config.yml`` and paste in the 
+``src/Blogger/BlogBundle/Resources/config/config.yml`` and paste in the
 following.
 
 .. code-block:: yaml
@@ -904,42 +904,42 @@ When you now submit an enquiry, an email will be sent to the address set in the
     Distribution configures Swift Mailer to not send emails when running in the ``test``
     environment. This is set in the test configuration file located at
     ``app/config/config_test.yml``.
-    
+
     .. code-block:: yaml
-        
+
         # app/config/config_test.yml
         swiftmailer:
             disable_delivery: true
-            
+
     It could be useful to duplicate this functionality for the ``dev`` environment.
     After all, you don't want to accidentally send an email to the wrong email address
     while developing. To achieve this, add the above configuration to the
     ``dev`` configuration file located at ``app/config/config_dev.yml``.
-    
+
     You maybe wondering how you can now test that the emails are being sent, and
     more specifically the content of them, seeing as they will no longer be delivered
     to an actual email address. Symfony2 has a solution for this via the developer
     toolbar. When an email is sent an email notification icon will appear in the toolbar
     that has all the information about the email that Swift Mailer would have delivered.
-    
+
     .. image:: /_static/images/part_2/email_notifications.jpg
         :align: center
         :alt: Symfony2 toolbar show email notifications
-    
+
     If you perform a redirect after sending an email, like we do for the contact form,
     you will need to set the ``intercept_redirects`` setting in ``app/config/config_dev.yml``
     to true in order to see the email notification in the toolbar.
-    
+
     We could have instead configured Swift Mailer to send all emails to a specific
     email address in the ``dev`` environment by placing the following
     setting in the ``dev`` configuration file located at ``app/config/config_dev.yml``.
-    
+
     .. code-block:: yaml
-    
+
         # app/config/config_dev.yml
         swiftmailer:
             delivery_address:  development@symblog.dev
-            
+
 Conclusion
 ----------
 
