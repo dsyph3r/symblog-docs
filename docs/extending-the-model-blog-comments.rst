@@ -946,12 +946,12 @@ Comment show template
 The ``BloggerBlogBundle:Comment:index.html.twig`` we are including above does
 not exist yet so we need to create it. As this is just a template, we don't need
 to create a route or a controller for this, we only need the template file. Create
-a new file located at ``src/Blogger/BlogBundle/Resources/public/views/Comment/index.html.twig``
+a new file located at ``src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig ``
 and paste in the following.
 
 .. code-block:: html
 
-    {# src/Blogger/BlogBundle/Resources/public/views/Comment/index.html.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig  #}
     
     {% for comment in comments %}
         <article class="comment {{ cycle(['odd', 'even'], loop.index0) }}" id="comment-{{ comment.id }}">
