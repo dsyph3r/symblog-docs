@@ -991,6 +991,16 @@ located at ``src/Blogger/BlogBundle/Resorces/public/css/blog.css`` with the foll
     .comments h3 { background: #eee; padding: 10px; font-size: 20px; margin-bottom: 20px; clear: both; }
     .comments .previous-comments { margin-bottom: 20px; }
 
+.. note::
+
+    If you are not using the symlink method for referencing bundle assets into the
+    ``web`` folder you must re-run the assets install task now to copy over the
+    changes to your CSS.
+
+    .. code-block:: bash
+
+        $ php app/console assets:install web
+        
 If you now have a look at one of the blog show pages, eg
 ``http://symblog.dev/app_dev.php/2`` you should see the blog comments output.
 
