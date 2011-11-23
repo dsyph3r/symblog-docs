@@ -915,12 +915,12 @@ directly in the blog show template, but as comments are their own entity, it wou
 be better to separate the rendering into another template, and include that
 template. This would allow us to reuse the comment rendering template elsewhere in the
 application. Update the blog show template located at
-``src/Blogger/BlogBundle/Resources/public/views/Blog/show.html.twig`` with the
+``src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig`` with the
 following.
 
 .. code-block:: html
 
-    {# src/Blogger/BlogBundle/Resources/public/views/Blog/show.html.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig #}
     
     {# .. #}
     
@@ -1217,12 +1217,12 @@ The view
 
 Next we need to create the 2 templates for the ``new`` and ``create`` controller
 actions. First create  a new file
-located at ``src/Blogger/BlogBundle/Resources/public/views/Comment/form.html.twig``
+located at ``src/Blogger/BlogBundle/Resources/views/Comment/form.html.twig``
 and paste in the following.
 
 .. code-block:: html
     
-    {# src/Blogger/BlogBundle/Resources/public/views/Comment/form.html.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Comment/form.html.twig #}
     
     <form action="{{ path('BloggerBlogBundle_comment_create', { 'blog_id' : comment.blog.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
         {{ form_widget(form) }}
@@ -1236,7 +1236,7 @@ also notice the ``action`` of the form is to ``POST`` to the new route we create
 ``BloggerBlogBundle_comment_create``.
 
 Next lets add the template for the ``create`` view. Create a new file located at
-``src/Blogger/BlogBundle/Resources/public/views/Comment/create.html.twig``
+``src/Blogger/BlogBundle/Resources/views/Comment/create.html.twig``
 and paste in the following.
 
 .. code-block:: html
@@ -1256,12 +1256,12 @@ form. We reuse the ``BloggerBlogBundle:Comment:form.html.twig`` to render the
 actual form to prevent code duplication.
 
 Now lets update the blog show template to render the add blog form. Update the
-template located at ``src/Blogger/BlogBundle/Resources/public/views/Blog/show.html.twig``
+template located at ``src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig``
 with the following.
 
 .. code-block:: html
 
-    {# src/Blogger/BlogBundle/Resources/public/views/Blog/show.html.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig #}
     
     {# .. #}
     
