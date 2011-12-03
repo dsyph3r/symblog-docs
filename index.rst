@@ -80,6 +80,11 @@ Spanish
 Symblog has been translated into `Spanish <http://udelabs.com/symfony/symblog/index.html>`_ thanks to the contribution by
 `Lisper <https://twitter.com/#!/esymfony>`_.
 
+French
+~~~~~~~
+
+Symblog has been translated into `French <http://keiruaprod.fr/symblog-fr/>`_ thanks to the contribution by
+`Clement Keirua <https://twitter.com/clemkeirua>`_.
 
 Author
 ------
