@@ -77,7 +77,7 @@ Translations
 Spanish
 ~~~~~~~
 
-Symblog has been translated into `Spanish <http://udelabs.com/symfony/symblog/index.html>`_ thanks to the contribution by
+Symblog has been translated into `Spanish <http://symblog.site90.net/>`_ thanks to the contribution by
 `Lisper <https://twitter.com/#!/esymfony>`_.
 
 French
