@@ -871,12 +871,12 @@ Create the Email template
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The body of the email is set to render a template. Create this template at
-``src/Blogger/BlogBundle/Resources/view/Page/contactEmail.txt.twig`` and add
+``src/Blogger/BlogBundle/Resources/views/Page/contactEmail.txt.twig`` and add
 the following.
 
 .. code-block:: text
 
-    {# src/Blogger/BlogBundle/Resources/view/Page/contactEmail.txt.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Page/contactEmail.txt.twig #}
     A contact enquiry was made by {{ enquiry.name }} at {{ "now" | date("Y-m-d H:i") }}.
 
     Reply-To: {{ enquiry.email }}
