@@ -5,7 +5,7 @@ Overview
 --------
 
 This chapter will build on the blog model we defined in the previous chapter. We
-will create the comment model, which will handle comments for blog posts. Will
+will create the comment model, which will handle comments for blog posts. We
 will be introduced to creating relationships between models, as a blog post can
 contain many comments. We will use the Doctrine 2 QueryBuilder and Doctrine 2
 Repository classes to retrieve entities from the database. The concept of
@@ -286,7 +286,7 @@ We have created the method ``getLatestBlogs`` which will return the
 latest blog entries, much in the same way the controller ``QueryBuilder`` code did.
 In the repository class we have direct access to the ``QueryBuilder`` via the
 ``createQueryBuilder()`` method. We have also added a default ``$limit`` parameter
-so we can limit the number of results to return. The reset of the query
+so we can limit the number of results to return. The result of the query
 is much the same as it was in the controller. You may have noticed that we did not
 need to specify the entity to use via the ``from()`` method. That's because we
 are within the ``BlogRepository`` which is associated with the ``Blog`` entity.
