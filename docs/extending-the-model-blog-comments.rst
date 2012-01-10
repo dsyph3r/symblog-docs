@@ -476,7 +476,7 @@ task as before to achieve this.
     $ php app/console doctrine:generate:entities Blogger
     
 Both entities should now be up-to-date with the correct accessor methods. You will
-also notice the ``CommentReposity`` class has been created at
+also notice the ``CommentRepository`` class has been created at
 ``src/Blogger/BlogBundle/Repository/CommentRepository.php`` as we specified this in the
 metadata.
 
@@ -819,7 +819,7 @@ Displaying Comments
 -------------------
 
 We can now display the comments related to each blog post. We begin by
-updating the ``CommentReposity`` with a method to retrieve the latest approved
+updating the ``CommentRepository`` with a method to retrieve the latest approved
 comments for a blog post.
 
 Comment Repository
@@ -903,7 +903,7 @@ the comments for the blog. Update the ``Blog`` controller located at
         ));
     }
 
-We use the new method on the ``CommentReposity`` to retrieve the approved comments
+We use the new method on the ``CommentRepository`` to retrieve the approved comments
 for the blog. The ``$comments`` collection is also passed into the template.
 
 Blog show template
