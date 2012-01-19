@@ -6,7 +6,7 @@ Overview
 
 So far we have explored a good amount of ground looking at a number of core
 concepts with regards to Symfony2 development. Before we continue adding
-features its time to introduce testing. We will look at how to test individual
+features it is time to introduce testing. We will look at how to test individual
 functions with unit testing and how to ensure multiple components are working
 correctly together with functional testing. The PHP testing library `PHPUnit
 <http://www.phpunit.de/manual/current/en/>`_ will be covered as this library is

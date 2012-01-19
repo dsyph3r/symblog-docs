@@ -463,7 +463,7 @@ use another helper method of the ``Symfony\Bundle\FrameworkBundle\Controller\Con
 class to get the Doctrine2 Entity Manager. The job of the
 `Entity Manager <http://www.doctrine-project.org/docs/orm/2.0/en/reference/working-with-objects.html>`_
 is handle the retrieval and persistence of objects to and from the database. We
-then use the ``EntityManger`` object to get the Doctrine2 ``Repository`` for the
+then use the ``EntityManager`` object to get the Doctrine2 ``Repository`` for the
 ``BloggerBlogBundle:Blog`` entity. The syntax specified here is simply
 a short cut that can be used with Doctrine 2 instead of specifying the full
 entity name, i.e. ``Blogger\BlogBundle\Entity\Blog``. With the repository object
