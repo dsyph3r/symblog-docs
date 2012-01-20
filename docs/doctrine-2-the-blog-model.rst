@@ -39,7 +39,7 @@ substituted.
     "virtual object database" that can be used from within the programming
     language."
     
-    What the ORM facilitates is transtaling the data from a relational database
+    What the ORM facilitates is translating the data from a relational database
     such as MySQL into PHP objects that we can manipulate. This allows us to
     encapsuate the functionality we require on a table within a class. Think of a
     user table, it probably has fields like username, password, first_name,
@@ -50,9 +50,9 @@ substituted.
     lazily later on. Now consider our user has some friends related to it. This would
     be a friends table, storing the primary key of the user table within it. Using
     the ORM we could now make a call such as ``$user->getFriends()`` to retrieve objects
-    of the friends table. If thats not enough, the ORM also deals with persitance
+    of the friends table. If thats not enough, the ORM also deals with persitence
     so we can create objects in PHP, call a method such as ``save()`` and let the ORM
-    deal with the details of actually persiting the data to the database. As we are
+    deal with the details of actually persisting the data to the database. As we are
     using the Doctrine 2 ORM library, you will become much more familiar with
     what an ORM is as we progress through this tutorial.
 
