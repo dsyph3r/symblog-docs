@@ -527,14 +527,14 @@ install them to the required locations.
     the current version of the package from GitHub and extract to the following location
     ``vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle``.
 
-Next update the ``app/autoloader.php`` file to register the new namespace.
+Next update the ``app/autoload.php`` file to register the new namespace.
 As Doctrine 2 Migrations are also in the ``Doctrine\DBAL`` namespace they must be placed above the existing
 ``Doctrine\DBAL`` setting as they specify a new path. Namespaces are checked from top
 to bottom so more specific namespaces need to be registered before less specific ones.
 
 .. code-block:: php
 
-    // app/autoloader.php
+    // app/autoload.php
     // ...
     $loader->registerNamespaces(array(
     // ...
