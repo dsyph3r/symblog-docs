@@ -657,11 +657,12 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
     namespace Blogger\BlogBundle\DataFixtures\ORM;
     
     use Doctrine\Common\DataFixtures\FixtureInterface;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Blogger\BlogBundle\Entity\Blog;
     
     class BlogFixtures implements FixtureInterface
     {
-        public function load($manager)
+        public function load(ObjectManager $manager)
         {
             $blog1 = new Blog();
             $blog1->setTitle('A day with Symfony2');
