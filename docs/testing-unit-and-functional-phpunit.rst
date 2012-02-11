@@ -480,7 +480,7 @@ update with the following content.
             $this->assertEquals("2 hours ago", $blog->createdAgo($this->getDateTime(-7200)));
 
             // Cannot create time in the future
-            $this->setExpectedException('\Exception');
+            $this->setExpectedException('\InvalidArgumentException');
             $blog->createdAgo($this->getDateTime(60));
         }
 
