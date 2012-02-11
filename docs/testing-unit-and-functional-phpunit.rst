@@ -716,7 +716,7 @@ As your test suite gets large, running tests can be a time consuming tasks.
     $ phpunit -c app/ src/Blogger/BlogBundle/Tests/Controller/PageControllerTest.php
 
 You should be greeted with the message ``OK (1 test, 1 assertion)`` letting us
-know that 1 test (the ``testAboutIndex()``) ran, with 1 assertion (the ``assertEquals()``).
+know that 1 test (the ``testAbout()``) ran, with 1 assertion (the ``assertEquals()``).
 
 Try changing the ``About symblog`` string to ``Contact`` and then re run the test.
 The test will now fail as ``Contact`` wont be found, causing ``asertEquals`` to
@@ -724,8 +724,8 @@ equate to false.
 
 .. code-block:: bash
 
-    1) Blogger\BlogBundle\Tests\Controller\PageControllerTest::testAboutIndex
-    Failed asserting that <boolean:false> is true.
+    1) Blogger\BlogBundle\Tests\Controller\PageControllerTest::testAbout
+    Failed asserting that 0 matches expected 1.
 
 Revert the string back to ``About symblog`` before moving on.
 
