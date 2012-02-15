@@ -966,7 +966,7 @@ was sent to symblog. We already know that emails will not be delivered in the
 We can test the emails were sent using the information gathered by the web profiler.
 This is where the importance of the client not following redirects comes in. The
 check on the profiler needs to be done before the redirect happens, as the information
-in the profiler will be lost. Update the ``testContact()`` message with the following.
+in the profiler will be lost. Update the ``testContact()`` method with the following.
 
 .. code-block:: php
 
