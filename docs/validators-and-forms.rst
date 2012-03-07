@@ -556,12 +556,12 @@ Validators
 
 The Symfony2 validator allows us to perform the task of data validation. Validation
 is a common task when dealing with data from forms. Validation also needs to be
-performed on data before it is submitted to a databases. The Symfony2 validator
+performed on data before it is submitted to a database. The Symfony2 validator
 allows us to separate our validation logic away from the components that may use it,
 such as the Form component or the Database component. This approach means we have one
 set of validation rules for an object.
 
-Lets begin by updating the ``Enquiry`` entity located at
+Let's begin by updating the ``Enquiry`` entity located at
 ``src/Blogger/BlogBundle/Entity/Enquiry.php`` to specify some Validators.
 Ensure you add the 5 new ``use`` statements at the top of the file.
 
@@ -644,16 +644,16 @@ To change the message output by the email validator you would do the following.
     attribute. Client side validation is great in that it doesn't require a round
     trip to the server to validate the form. However, client side validation
     should not be used alone. You should always validate submitted data server
-    side as its quite easy for a user to by-pass the client side validation.
+    side as it's quite easy for a user to by-pass the client side validation.
 
 Sending the email
 -----------------
 
 While our contact form will allow users to submit enquiries, nothing actually happens
-with them yet. Lets update the controller to send an email to the blog webmaster.
-Symfony2 comes completed with the `Swift Mailer <http://swiftmailer.org/>`_
-library for sending emails. Swift Mailer is a very powerful library;
-We will only scratch the surface of what this library can perform.
+with them yet. Let's update the controller to send an email to the blog webmaster.
+Symfony2 comes complete with the `Swift Mailer <http://swiftmailer.org/>`_
+library for sending emails. Swift Mailer is a very powerful library,
+we will only scratch the surface of what this library can perform.
 
 Configure Swift Mailer settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -687,7 +687,7 @@ substituting your username and password where necessary.
 .. warning::
 
     Be careful if you are using a Version Control System (VCS) like Git for
-    your project, especially if you repository is publicly accessible as your
+    your project, especially if your repository is publicly accessible as your
     GMail username and password will be committed to the repository and will be
     available for anybody to see. You should make sure the file
     ``app/config/parameters.ini`` is added to the ignore list of your VCS. A common
@@ -730,7 +730,7 @@ with the content below.
         // ..
     }
 
-When have used the Swift Mailer library to create a ``Swift_Message`` instance,
+When you have used the Swift Mailer library to create a ``Swift_Message`` instance,
 that can be sent as an email.
 
 .. note::
@@ -785,8 +785,8 @@ Symfony2 provides a configuration system that we can use to define our own
 settings. We will use this system to set the webmaster email address rather
 than hard coding the address in the controller above. That way we can easily
 reuse this value in other places without code duplication. Further, when your
-blog has generated you so much traffic the enquiries become too much for you
-to deal with you can easily update the email address to pass the emails
+blog has generated so much traffic the enquiries become too much for you
+to deal with, you can easily update the email address to pass the emails
 onto your assistant. Create a new file at
 ``src/Blogger/BlogBundle/Resources/config/config.yml`` and paste in the
 following.
@@ -807,7 +807,7 @@ This allows us to logically group parameters together.
 
 In order for the Symfony2 application to use the new parameters, we need to import
 the config into the main application config file located at ``app/config/config.yml``.
-To achieve this update the ``imports`` directive at the top of the file to the following.
+To achieve this, update the ``imports`` directive at the top of the file to the following.
 
 .. code-block:: yaml
 
@@ -820,7 +820,7 @@ The import path is the physical location of the file on disk. The
 ``@BloggerBlogBundle`` directive will resolve to the path of the
 ``BloggerBlogBundle`` which is ``src/Blogger/BlogBundle``.
 
-Finally lets update the contact action to use the parameter.
+Finally let's update the contact action to use the parameter.
 
 .. code-block:: php
 
@@ -916,7 +916,7 @@ When you now submit an enquiry, an email will be sent to the address set in the
     while developing. To achieve this, add the above configuration to the
     ``dev`` configuration file located at ``app/config/config_dev.yml``.
 
-    You maybe wondering how you can now test that the emails are being sent, and
+    You may be wondering how you can now test that the emails are being sent, and
     more specifically the content of them, seeing as they will no longer be delivered
     to an actual email address. Symfony2 has a solution for this via the developer
     toolbar. When an email is sent an email notification icon will appear in the toolbar
@@ -943,8 +943,8 @@ When you now submit an enquiry, an email will be sent to the address set in the
 Conclusion
 ----------
 
-We have demonstrated the concepts behind creating the one of most fundamental part of any
-website; forms. Symfony2 comes complete with an excellent Validator and Form library
+We have demonstrated the concepts behind creating one of the most fundamental part of any
+website: forms. Symfony2 comes complete with an excellent Validator and Form library
 that allows us to separate validation logic out of the form so it can be used
 by other parts of the application (such as the Model). We were also introduced to
 setting custom configuration settings that can be read into our application.
