@@ -754,7 +754,7 @@ by Symfony2. Never in your application should you be tempted to put the followin
 
     <?php $this->redirect("/contact"); ?>
 
-You maybe wondering whats wrong with this approach, it maybe the way you always
+You may be wondering what's wrong with this approach, it may be the way you always
 link your pages together. However, there are a number of problems with this approach.
 
 1. It uses a hard link and ignores the Symfony2 routing system entirely. If you wanted to change
@@ -764,7 +764,7 @@ link your pages together. However, there are a number of problems with this appr
    but you have been using them. The ``app_dev.php`` front controller provides us access to our application
    in the ``dev`` environment. If you were to replace the ``app_dev.php`` with ``app.php`` you will be
    running the application in the ``prod`` environment. The significance of these environments will
-   be explained further in the tutorial but for now its important to note that the hard link
+   be explained further in the tutorial but for now it's important to note that the hard link
    defined above does not maintain the current environment we are in as the front controller is
    not prepended to the URL.
 
