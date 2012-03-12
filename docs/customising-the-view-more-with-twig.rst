@@ -121,11 +121,11 @@ its not always the most efficient way to achieve this task. Doctrine 2 provides 
 to ``join`` related entities together when querying the database. This way we can
 pull the ``Blog`` and related ``Comment`` entities out from the database in one query.
 Update the ``QueryBuilder`` code in the ``BlogRepository`` located at
-``src/Blogger/BlogBundle/Repository/BlogRepositoy.php`` to join on the comments.
+``src/Blogger/BlogBundle/Repository/BlogRepository.php`` to join on the comments.
 
 .. code-block:: php
 
-    // src/Blogger/BlogBundle/Repository/BlogRepositoy.php
+    // src/Blogger/BlogBundle/Repository/BlogRepository.php
 
     public function getLatestBlogs($limit = null)
     {
@@ -525,7 +525,7 @@ the following content.
         {
             $delta = time() - $dateTime->getTimestamp();
             if ($delta < 0)
-                throw new \Exception("createdAgo is unable to handle dates in the future");
+                throw new \InvalidArgumentException("createdAgo is unable to handle dates in the future");
 
             $duration = "";
             if ($delta < 60)

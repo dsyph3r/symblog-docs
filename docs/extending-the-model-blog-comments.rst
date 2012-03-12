@@ -5,7 +5,7 @@ Overview
 --------
 
 This chapter will build on the blog model we defined in the previous chapter. We
-will create the comment model, which will handle comments for blog posts. Will
+will create the comment model, which will handle comments for blog posts. We
 will be introduced to creating relationships between models, as a blog post can
 contain many comments. We will use the Doctrine 2 QueryBuilder and Doctrine 2
 Repository classes to retrieve entities from the database. The concept of
@@ -286,7 +286,7 @@ We have created the method ``getLatestBlogs`` which will return the
 latest blog entries, much in the same way the controller ``QueryBuilder`` code did.
 In the repository class we have direct access to the ``QueryBuilder`` via the
 ``createQueryBuilder()`` method. We have also added a default ``$limit`` parameter
-so we can limit the number of results to return. The reset of the query
+so we can limit the number of results to return. The result of the query
 is much the same as it was in the controller. You may have noticed that we did not
 need to specify the entity to use via the ``from()`` method. That's because we
 are within the ``BlogRepository`` which is associated with the ``Blog`` entity.
@@ -476,7 +476,7 @@ task as before to achieve this.
     $ php app/console doctrine:generate:entities Blogger
     
 Both entities should now be up-to-date with the correct accessor methods. You will
-also notice the ``CommentReposity`` class has been created at
+also notice the ``CommentRepository`` class has been created at
 ``src/Blogger/BlogBundle/Repository/CommentRepository.php`` as we specified this in the
 metadata.
 
@@ -527,14 +527,14 @@ install them to the required locations.
     the current version of the package from GitHub and extract to the following location
     ``vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle``.
 
-Next update the ``app/autoloader.php`` file to register the new namespace.
+Next update the ``app/autoload.php`` file to register the new namespace.
 As Doctrine 2 Migrations are also in the ``Doctrine\DBAL`` namespace they must be placed above the existing
 ``Doctrine\DBAL`` setting as they specify a new path. Namespaces are checked from top
 to bottom so more specific namespaces need to be registered before less specific ones.
 
 .. code-block:: php
 
-    // app/autoloader.php
+    // app/autoload.php
     // ...
     $loader->registerNamespaces(array(
     // ...
@@ -632,11 +632,12 @@ statements to import these classes.
 
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Blogger\BlogBundle\Entity\Blog;
 
     class BlogFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
-        public function load($manager)
+        public function load(ObjectManager $manager)
         {
             // ..
 
@@ -676,12 +677,13 @@ following content:
     
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+    use Doctrine\Common\Persistence\ObjectManager;
     use Blogger\BlogBundle\Entity\Comment;
     use Blogger\BlogBundle\Entity\Blog;
     
     class CommentFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
-        public function load($manager)
+        public function load(ObjectManager $manager)
         {
             $comment = new Comment();
             $comment->setUser('symfony');
@@ -819,7 +821,7 @@ Displaying Comments
 -------------------
 
 We can now display the comments related to each blog post. We begin by
-updating the ``CommentReposity`` with a method to retrieve the latest approved
+updating the ``CommentRepository`` with a method to retrieve the latest approved
 comments for a blog post.
 
 Comment Repository
@@ -903,7 +905,7 @@ the comments for the blog. Update the ``Blog`` controller located at
         ));
     }
 
-We use the new method on the ``CommentReposity`` to retrieve the approved comments
+We use the new method on the ``CommentRepository`` to retrieve the approved comments
 for the blog. The ``$comments`` collection is also passed into the template.
 
 Blog show template

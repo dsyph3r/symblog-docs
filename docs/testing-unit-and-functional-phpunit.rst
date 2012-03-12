@@ -6,7 +6,7 @@ Overview
 
 So far we have explored a good amount of ground looking at a number of core
 concepts with regards to Symfony2 development. Before we continue adding
-features its time to introduce testing. We will look at how to test individual
+features it is time to introduce testing. We will look at how to test individual
 functions with unit testing and how to ensure multiple components are working
 correctly together with functional testing. The PHP testing library `PHPUnit
 <http://www.phpunit.de/manual/current/en/>`_ will be covered as this library is
@@ -480,7 +480,7 @@ update with the following content.
             $this->assertEquals("2 hours ago", $blog->createdAgo($this->getDateTime(-7200)));
 
             // Cannot create time in the future
-            $this->setExpectedException('\Exception');
+            $this->setExpectedException('\InvalidArgumentException');
             $blog->createdAgo($this->getDateTime(60));
         }
 
@@ -716,7 +716,7 @@ As your test suite gets large, running tests can be a time consuming tasks.
     $ phpunit -c app/ src/Blogger/BlogBundle/Tests/Controller/PageControllerTest.php
 
 You should be greeted with the message ``OK (1 test, 1 assertion)`` letting us
-know that 1 test (the ``testAboutIndex()``) ran, with 1 assertion (the ``assertEquals()``).
+know that 1 test (the ``testAbout()``) ran, with 1 assertion (the ``assertEquals()``).
 
 Try changing the ``About symblog`` string to ``Contact`` and then re run the test.
 The test will now fail as ``Contact`` wont be found, causing ``asertEquals`` to
@@ -724,8 +724,8 @@ equate to false.
 
 .. code-block:: bash
 
-    1) Blogger\BlogBundle\Tests\Controller\PageControllerTest::testAboutIndex
-    Failed asserting that <boolean:false> is true.
+    1) Blogger\BlogBundle\Tests\Controller\PageControllerTest::testAbout
+    Failed asserting that 0 matches expected 1.
 
 Revert the string back to ``About symblog`` before moving on.
 
@@ -966,7 +966,7 @@ was sent to symblog. We already know that emails will not be delivered in the
 We can test the emails were sent using the information gathered by the web profiler.
 This is where the importance of the client not following redirects comes in. The
 check on the profiler needs to be done before the redirect happens, as the information
-in the profiler will be lost. Update the ``testContact()`` message with the following.
+in the profiler will be lost. Update the ``testContact()`` method with the following.
 
 .. code-block:: php
 
