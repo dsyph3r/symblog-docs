@@ -19,7 +19,7 @@ Doctrine 2: The Model
 ---------------------
 
 For our blog to function we need a way to persist data. Doctrine 2 provides
-an ORM library designed exactly for this purpose. The Doctrine 2 ORM sits ontop of a
+an ORM library designed exactly for this purpose. The Doctrine 2 ORM sits on top of a
 powerful
 `Database Abstraction Layer <http://www.doctrine-project.org/projects/dbal>`_
 that gives us storage abstraction via the PHP PDO. This allows us to use a number
@@ -29,7 +29,7 @@ substituted.
 
 .. tip::
 
-    If you are not familiar with ORM's, we will explain the basic principle of them.
+    If you are not familiar with ORMs, we will explain the basic principle of them.
     The definition from
     `Wikipedia <http://en.wikipedia.org/wiki/Object-relational_mapping>`_ reads:
 
@@ -45,12 +45,12 @@ substituted.
     user table, it probably has fields like username, password, first_name,
     last_name, email and dob. With an ORM this becomes a class with members username,
     password, first_name, etc which allows us to call methods such as ``getUsername()`` and
-    ``setPassword()``. ORM's go much further than this though, they are also able to
+    ``setPassword()``. ORMs go much further than this though, they are also able to
     retrieve related tables for us, either at the same time as we retrieve the user object, or
     lazily later on. Now consider our user has some friends related to it. This would
     be a friends table, storing the primary key of the user table within it. Using
     the ORM we could now make a call such as ``$user->getFriends()`` to retrieve objects
-    of the friends table. If thats not enough, the ORM also deals with persitence
+    of the friends table. If that's not enough, the ORM also deals with persitence
     so we can create objects in PHP, call a method such as ``save()`` and let the ORM
     deal with the details of actually persisting the data to the database. As we are
     using the Doctrine 2 ORM library, you will become much more familiar with
@@ -113,7 +113,7 @@ paste in the following.
 As you can see this is simple PHP class. It extends no parent and has no
 accessors. Each of the members is declared as protected so we are unable to
 access them when operating on an object of this class. We could declare the
-getters and setters for these attributes our self, but Doctrine 2 provides a
+getters and setters for these attributes ourself, but Doctrine 2 provides a
 task to do this. After all, writing accessors is not the most exhilarating of
 coding tasks.
 
@@ -122,7 +122,7 @@ entity should be mapped to the database. The information is specified as metadat
 using Doctrine 2 mappings. The metadata can be specified in and number of formats
 including ``YAML``, ``PHP``, ``XML`` and ``Annotations``. We will use
 ``Annotations`` in this tutorial. It is important to note that not all members
-in the entity need to be persisted, so we wont provide metadata for these.
+in the entity need to be persisted, so we won't provide metadata for these.
 This gives us the flexibility to choose only the members we require Doctrine 2 to
 map to the database. Replace the content of the ``Blog`` entity class located at
 ``src/Blogger/BlogBundle/Entity/Blog.php`` with the following.
@@ -188,7 +188,7 @@ map to the database. Replace the content of the ``Blog`` entity class located at
     }
 
 
-Firstly we import and alias the Doctrine 2 ORM Mappings namespace. This allows
+First we import and alias the Doctrine 2 ORM Mappings namespace. This allows
 us to use ``annotations`` to describe the metadata for the entity. The
 metadata provides information on how the members should be mapped to the
 database.
@@ -201,7 +201,7 @@ database.
     can be found on the Doctrine 2 website. Other mapping types will
     be introduced later in the tutorial.
 
-The keen eye among you may have noticed that the ``$comments`` member has no
+The keen eyed among you may have noticed that the ``$comments`` member has no
 metadata attached. This is because we don't need this persisted, it will just
 provide a collection of comments related to a blog post. If you think of this without
 the database in mind it makes sense. The following code snippets will demonstrate this.
@@ -235,7 +235,7 @@ as follows.
         }
     }
 
-The ``addComment`` method just adds a new comment object to the blogs ``$comments``
+The ``addComment`` method just adds a new comment object to the blog's ``$comments``
 member. Retrieving the comments would also be simple.
 
 .. code-block:: php
@@ -280,7 +280,7 @@ accessors.
 
         $ php app/console doctrine:mapping:convert --namespace="Blogger\BlogBundle\Entity\Blog" yaml src/Blogger/BlogBundle/Resources/config/doctrine
 
-    This will created a file located at
+    This will create a file located at
     ``src/Blogger/BlogBundle/Resources/config/doctrine/Blogger.BlogBundle.Entity.Blog.orm.yml``
     that will contain the ``blog`` entity mappings in ``yaml`` format.
 
@@ -294,7 +294,7 @@ If you followed along in chapter 1 of the tutorial, you should have
 used the web configurator to set the database settings. If you didn't, update the
 ``database_*`` options in the parameters file located at ``app/config/parameters.ini``.
 
-Its now time to create the database using another Doctrine 2 task. This task only
+It's now time to create the database using another Doctrine 2 task. This task only
 creates the database, it does not create any tables inside the database.
 If a database with the same name already exists the task will throw an error and
 the existing database will be left intact.
@@ -305,7 +305,7 @@ the existing database will be left intact.
 
 We are now ready to create the ``Blog`` entity representation in the database.
 There are 2 ways we can achieve this. We can use the Doctrine 2 schema
-tasks to update the database or we can using the more powerful Doctrine 2
+tasks to update the database or we can use the more powerful Doctrine 2
 migrations. For now we will use the schema task. Doctrine Migrations will
 be introduced in the following chapter.
 
@@ -343,7 +343,7 @@ setup mapping information for.
 Integrating the Model with the View. Showing a blog entry
 ---------------------------------------------------------
 
-Now we have the ``Blog`` entity created, and the database updated to reflect this
+Now we have the ``Blog`` entity created, and the database updated to reflect this,
 we can start integrating the model into the view. We will start by building the
 show page of our blog.
 
@@ -367,7 +367,7 @@ with the following
 
 As the blog ID must be present in the URL, we have specified an ``id`` placeholder.
 This means URLs like ``http://symblog.co.uk/1`` and ``http://symblog.co.uk/my-blog``
-will match this route. However, we know the blog ID must be a integer (its defined this
+will match this route. However, we know the blog ID must be a integer (it's defined this
 way in the entity mappings) so we can add a constraint that specifies this route
 only matches when the ``id`` parameter contains an integer. This is achieved with the
 ``id: \d+`` route requirement. Now only the first URL example of the previous would match,
@@ -462,7 +462,7 @@ Next we need to retrieve the ``Blog`` entity from the database. We first
 use another helper method of the ``Symfony\Bundle\FrameworkBundle\Controller\Controller``
 class to get the Doctrine2 Entity Manager. The job of the
 `Entity Manager <http://www.doctrine-project.org/docs/orm/2.0/en/reference/working-with-objects.html>`_
-is handle the retrieval and persistence of objects to and from the database. We
+is to handle the retrieval and persistence of objects to and from the database. We
 then use the ``EntityManager`` object to get the Doctrine2 ``Repository`` for the
 ``BloggerBlogBundle:Blog`` entity. The syntax specified here is simply
 a short cut that can be used with Doctrine 2 instead of specifying the full
@@ -495,7 +495,7 @@ The View
 
 Now we have built the ``show`` action for the ``Blog`` controller we can focus
 on displaying the ``Blog`` entity. As specified in the ``show`` action the
-template ``BloggerBlogBundle:Blog:show.html.twig`` will be rendered. Lets create
+template ``BloggerBlogBundle:Blog:show.html.twig`` will be rendered. Let's create
 this template located at ``src/Blogger/BlogBundle/Resouces/views/Blog/show.html.twig``
 and paste in the following.
 
@@ -600,7 +600,7 @@ install them to the required location.
 
 .. note::
 
-    If you using a machine that does not have Git installed you will need to manually
+    If you are using a machine that does not have Git installed you will need to manually
     download and install the extension and bundle.
 
     doctrine-fixtures extension: `Download <https://github.com/doctrine/data-fixtures>`_
@@ -627,7 +627,7 @@ to bottom so more specific namespaces need to be registered before less specific
     // ...
     ));
 
-Now lets register the ``DoctrineFixturesBundle`` in the kernel located at
+Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
 ``app/AppKernel.php``
 
 .. code-block:: php
@@ -722,7 +722,7 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
 The fixture file demonstrates a number of important features when using Doctrine 2,
 including how to persist entities to the database.
 
-Lets look at how we create one blog entry.
+Let's look at how we create one blog entry.
 
 .. code-block:: php
 
@@ -740,8 +740,8 @@ Lets look at how we create one blog entry.
     $manager->flush();
 
 We start by creating an object of ``Blog`` and setting some values for its
-members. At this point Doctrine 2 knows nothing about the ``Entity`` object. Its
-only when we make a call to ``$manager->persist($blog1)`` that we inform
+members. At this point Doctrine 2 knows nothing about the ``Entity`` object. It's
+only when we make a call to ``$manager->persist($blog1)`` that we instruct
 Doctrine 2 to start managing this entity object. The ``$manager`` object here
 is an instance of the ``EntityManager`` object we saw earlier when retrieving
 entites from the database. It is important to note that while
@@ -800,7 +800,7 @@ Doctrine 2 comes with an
 `Event System <http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html>`_
 that provides
 `Lifecycle Callbacks <http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-callbacks>`_.
-We can use these callback events to register our entities to be notify of events
+We can use these callback events to register our entities to be notified of events
 during the entity lifetime. Some example of events we can be notified about
 include before an update happens, after a persist happens and after a remove happens.
 In order to use Lifecycle Callbacks on our entity we need to register the entity for them.
@@ -824,7 +824,7 @@ This is done using metadata on the entity. Update the ``Blog`` entity located at
         // ..
     }
 
-Now lets add a method in the ``Blog`` entity that registers for the ``preUpdate``
+Now let's add a method in the ``Blog`` entity that registers for the ``preUpdate``
 event. We also add a constructor to set default values for the ``created`` and
 ``updated`` members.
 
