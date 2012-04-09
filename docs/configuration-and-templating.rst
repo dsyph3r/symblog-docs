@@ -24,24 +24,19 @@ The following areas will be demonstrated in this chapter:
 Download and Setup
 ------------------
 
-As stated above we will be using the Symfony2 Standard Distribution. This
-distribution comes complete with the Symfony2 core libraries and the most common
+The Symfony2 Standard Distribution comes complete with the Symfony2 core libraries and the most common
 bundles required to create websites. You can
-`Download <http://symfony.com/download>`_ the Symfony2 package from the Symfony2 website.
-As I don't want to repeat the excellent documentation provided by the Symfony2 book,
-please refer to the
-`Installing and Configuring Symfony2 <http://symfony.com/doc/current/book/installation.html>`_
-chapter for detailed requirements. This will guide you through the process of
-which package to download, how to install the required vendors, and how to
-correctly permission folders.
+`Download <http://symfony.com/download>`_ the Symfony2 package from the Symfony2 website. There are 2 main
+download options available, one that comes with external vendors and one that excludes them. The simplest option is to
+download the one that comes `with vendors <http://symfony.com/download?v=Symfony_Standard_Vendors_2.0.12.zip>`_.
+Once downloaded, extract the archive to a suitable loaction so it can be configured to run via whichever
+webserver you are using. This tutorial assumes Apache running on Fedora Linux so the archive is extracted to ``/var/www/html/symblog``.
 
-.. warning::
+.. tip::
 
-    It is important to pay special attention to the
-    `Setting up Permissions <http://symfony.com/doc/current/book/installation.html#configuration-and-setup>`_
-    section in the Installation chapter. This explains the various ways you
-    should permission the ``app/cache`` and ``app/logs`` folders so the web
-    server user and command line user have write access to them.
+    If you already have git installed on your machine you could have downloaded the Symfony2 package that
+    excluded the vendor files and pulled them down locally to your machine. More information on this is available
+    via the official documentation in the chapter `Installing and Configuring Symfony2 <http://symfony.com/doc/current/book/installation.html>`_.
 
 Creating a Development Domain
 -----------------------------
@@ -81,7 +76,6 @@ its located at ``/etc/httpd/conf/httpd.conf``. You will need to edit this file w
       </Directory>
     </VirtualHost>
 
-
 Next add a new domain to the bottom of the host file located at ``/etc/hosts``.
 Again, you will need to edit this file with ``sudo`` privileges.
 
@@ -102,6 +96,29 @@ updated configuration settings we have made.
     If you find yourself creating virtual domains all the time, you can simplify
     this process by using
     `Dynamic virtual hosts <http://blog.dsyph3r.com/2010/11/apache-dynamic-virtual-hosts.html>`_.
+
+Symfony2 requires that the ``app/cache`` and ``app/logs`` directory are writable by the webserver and the
+command line user. How this is configured can vary depeding on your OS. For this tutorial we will use the
+simplest of options.
+
+At the top of the files ``app/console`` and ``web/app_dev.php`` there is a commented out section of code
+like the following:
+
+.. code-block:: php
+
+    // if you don't want to setup permissions the proper way, just uncomment the following PHP line
+    // read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
+    //umask(0000);
+
+Simply remove the ``//`` from the line ``//umask(0000);``.
+
+.. warning::
+
+    Setting the persmissions using ``umask()`` is not the prefered way to configured the writable
+    Symfony2 folders. More information is available on this topic in the `Setting up Permissions <http://symfony.com/doc/current/book/installation.html#configuration-and-setup>`_
+    section in the Installation chapter of the official documentation. This explains the various ways you
+    should permission the ``app/cache`` and ``app/logs`` folders so the web
+    server user and command line user have write access to them.
 
 You should now be able to visit ``http://symblog.dev/app_dev.php/``.
 
@@ -132,23 +149,21 @@ Symfony2 introduces a web interface to configure various aspects regarding the
 website such as database settings. We require a database for this project so
 lets begin using the configurator.
 
-Visit ``http://symblog.dev/app_dev.php/`` and click the Configure button. Enter
-the details to setup the database (this tutorial assumes the use of MySQL, but
-you can choose any other database you have access to), followed by generating a
-CSRF token on the next page. You will be presented with the parameter settings
-that Symfony2 has generated. Pay attention to the notice on the page, it is
+Visit ``http://symblog.dev/app_dev.php/`` and click the Configure button. As this tutorial
+assumes the use of SQLite, select it from the Driver dropdown. The rest of the fields on the
+form can be left as thier defaults. Click Next Step and generate a CSRF token, followed by
+clicking Next Step again. Pay attention to the notice at the top of the following page, it is
 likely that your ``app/config/parameters.ini`` file is not writable so you will need to
 copy and paste the settings to the file located at ``app/config/parameters.ini`` (These
 settings can replace the existing settings in this file).
-
 
 Bundles: Symfony2 Building Blocks
 ----------------------------------
 
 Bundles are the basic building block of any Symfony2 application, in fact the
-Symfony2 framework is itself a bundle. Bundles allow us to separate
-functionality to provide reusable units of code. They encapsulate the entire
-needs to support the bundles purpose including the controllers, the model,
+Symfony2 framework is itself a bundle. Bundles allow you to separate
+functionality to provide reusable units of code. They encapsulate everything required
+to support the bundles purpose including the controllers, the model,
 the templates, and the various resources such as images and CSS. We will create
 a bundle for our website in the namespace Blogger. If you are not familiar with
 namespaces in PHP you should spend some time reading up on them as they are
@@ -175,10 +190,10 @@ The default for each prompt should be used.
 
 .. code-block:: bash
 
-    $ php app/console generate:bundle --namespace=Blogger/BlogBundle --format=yml
+    $ php app/console generate:bundle --namespace=Blogger/BlogBundle
 
 Upon completion of the generator Symfony2 will have constructed the basic bundle
-layout. A few important changes need to be noted here.
+layout at ``src/Blogger/BlogBundle``.
 
 .. tip::
 
@@ -187,54 +202,6 @@ layout. A few important changes need to be noted here.
     and files. While it is not mandatory to use the generators, they do provide some benefits
     such as they are quick to use and perform all tasks required to get the bundle
     up and running. One such example is registering the bundle.
-
-Registering the bundle
-......................
-
-Our new bundle ``BloggerBlogBundle`` has been registered in the Kernel located at
-``app/AppKernel.php``. Symfony2 requires us to register all bundles that the application
-needs to use. You will also notice that some bundles are only registered when in
-the ``dev`` or ``test`` environments. Loading these bundles in the ``prod``
-(production) environment would introduce additional overhead for functionality
-that wouldn't be used. The snippet below shows how the ``BloggerBlogBundle`` has
-been registered.
-
-.. code-block:: php
-
-    // app/AppKernel.php
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-            // ..
-                new Blogger\BlogBundle\BloggerBlogBundle(),
-            );
-            // ..
-
-            return $bundles;
-        }
-
-        // ..
-    }
-
-Routing
-.......
-
-The bundle routing has been imported into the applications main
-routing file located at ``app/config/routing.yml``.
-
-.. code-block:: yaml
-
-    # app/config/routing.yml
-    BloggerBlogBundle:
-        resource: "@BloggerBlogBundle/Resources/config/routing.yml"
-        prefix:   /
-
-The prefix option allows us to mount the entire ``BloggerBlogBundle`` routing
-with a prefix. In our case we have opted to mount at the default which is ``/``.
-If for example you would like all routes to be prefixed with ``/blogger`` change
-the prefix to ``prefix: /blogger``.
 
 Default structure
 .................
@@ -252,7 +219,7 @@ The Default Controller
 As part of the bundle generator, Symfony2 has created a default controller. We
 can run this controller by going to
 ``http://symblog.dev/app_dev.php/hello/symblog``. You should see a simple
-greeting page. Try changing the ``symblog`` part of the URL to your name.
+greetings page. Try changing the ``symblog`` part of the URL to your name.
 We can examine at a high level how this page was generated.
 
 Routed
@@ -283,43 +250,49 @@ Logical Name of the controller which allows Symfony2 to map this to a specific f
 The above example will cause the ``index`` action in the ``Default`` controller
 located at ``src/Blogger/BlogBundle/Controller/DefaultController.php`` to be executed.
 
-The Controller
-..............
+The Controller and Routing
+..........................
 
-The controller in this example is very simple. The ``DefaultController`` class
+The controller located at ``src/Blogger/BlogBundle/Controller/DefaultController.php``
+in this example is very simple. The ``DefaultController`` class
 extends the ``Controller`` class which provides some helpful methods such as the ``render``
-method used below. As our route defines a placeholder it is passed into the
-action as the argument ``$name``. The action does nothing more than
-call the ``render`` method specifying the ``index.html.twig`` template
-in the ``BloggerBlogBundle`` Default view folder to be rendered. The
-format of the template name is ``bundle:controller:template``. In
-our example this is ``BloggerBlogBundle:Default:index.html.twig``
-which maps to the ``index.html.twig`` template, in the ``Default``
-views folder of the ``BloggerBlogBundle``, or physically to the file
-``src/Blogger/BlogBundle/Resources/views/Default/index.html.twig``. Different
-variations of the template format can be used to render templates
-at different locations within the application and its bundles. We will see
-this later in the chapter.
+method used below. A method ``indexAction`` is defined within the controller that specifies
+some settings via annotations. Annotations are one of the configuration methods provided
+by Symfony2 and are simply placed within ``/** */`` comment tags.
 
-We also pass over the ``$name`` variable to the template via the ``array``
-options.
+The first annotation directive specifies routing information:
 
 .. code-block:: php
 
-    <?php
-    // src/Blogger/BlogBundle/Controller/DefaultController.php
+    @Route("/hello/{name}")
 
-    namespace Blogger\BlogBundle\Controller;
+This configures a route that will match anything that looks like ``/hello/*``, such as
+``/hello/symblog``. The value that matches the ``{name}`` placeholder will be avilable for use
+in the controller action. We can see this by looking at the action method:
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+.. code-block:: php
 
-    class DefaultController extends Controller
+    public function indexAction($name)
     {
-        public function indexAction($name)
-        {
-            return $this->render('BloggerBlogBundle:Default:index.html.twig', array('name' => $name));
-        }
+        return array('name' => $name);
     }
+
+Notice that the first argument to the method is a variable called ``$name``. This will contain
+the value from the ``{name}}`` place holder in the route.
+
+The second annotation directive specifies templating information:
+
+.. code-block:: php
+
+    @Template()
+
+This configures the controller action to use the default view, which will be a
+template that is named using the controller and action names. Using this information we can determine that
+the template for this action will reside in the file located at
+``src/Blogger/BlogBundle/Resources/views/Default/index.html.twig``. Notice how the template is called ``index.html.twig`` which matches the action method name ``indexAction``, and the file resides in a folder called ``Default`` which matches the ``DefaultController`` controller name.
+
+Lastly, using the template directive we can return an array of key/value pairs from the action that will
+become available to use in the template.
 
 The Template (The View)
 .......................
@@ -331,17 +304,6 @@ by the name argument passed over from the controller.
 
     {# src/Blogger/BlogBundle/Resources/views/Default/index.html.twig #}
     Hello {{ name }}!
-
-Cleaning up
-~~~~~~~~~~~
-
-As we don't need some of the default files created by the generator we can clean
-these up.
-
-The controller file ``src/Blogger/BlogBundle/Controller/DefaultController.php``
-can be deleted, along with the view folder and its content at
-``src/Blogger/BlogBundle/Resources/views/Default/``. Finally remove the route
-defined at ``src/Blogger/BlogBundle/Resources/config/routing.yml``
 
 Templating
 ----------
@@ -458,8 +420,7 @@ We will start by focusing on the document HEAD. Lets look at the title:
 
     <title>{% block title %}symblog{% endblock %} - symblog</title>
 
-The first thing you'll notice is the alien ``{%`` tag. Its not HTML, and its
-definitely not PHP. This is one of the 3 Twig tags. This tag is the Twig
+The first thing you'll notice is the alien ``{%`` tag, this is one of the 3 Twig tags. This tag is the Twig
 ``Do something`` tag. It is used to execute statements such as control statements and
 for defining block elements. A full list of
 `control structures <http://www.twig-project.org/doc/templates.html#list-of-control-structures>`_
@@ -468,26 +429,7 @@ title does 2 things; It sets the block identifier to title, and provides a
 default output between the block and endblock directives. By defining a block we
 can take advantage of Twig's inheritance model. For example, on a page to
 display a blog post we would want the page title to reflect the title of the
-blog. We can achieve this by extending the template and overriding the title block.
-
-.. code-block:: html
-
-    {% extends '::base.html.twig' %}
-
-    {% block title %}The blog title goes here{% endblock %}
-
-In the above example we have extended the applications base template that first
-defined the title block. You'll notice the template format used with the
-``extends`` directive is missing the ``Bundle`` and the ``Controller`` parts,
-remember the template format is ``bundle:controller:template``. By excluding the
-``Bundle`` and the ``Controller`` parts we are specifiying the use of the application
-level templates defined at ``app/Resources/views/``.
-
-Next we have defined another title block and put in some
-content, in this case the blog title. As the parent template already
-contains a title block, it is overridden by our new one. The title would now
-output as 'The blog title goes here - symblog'. This functionality provided by
-Twig will be used extensively when creating templates.
+blog, and so we override the title value.
 
 In the stylesheets block we are introduced to the next Twig tag, the ``{{`` tag,
 or the ``Say something`` tag.
@@ -501,7 +443,7 @@ it prints out the return value of the ``asset`` function, which provides us with
 a portable way to link to the application assets, such as CSS, JavaScript, and images.
 
 The ``{{`` tag can also be combined with filters to manipulate the output before
-printing.
+printing, such as formatting a date:
 
 .. code-block:: html
 
@@ -592,62 +534,47 @@ Finally we are ready for the controller layout. These layouts will commonly be
 related to a controller action, i.e., the blog show action will have a
 blog show template.
 
-Lets start by creating the controller for the homepage and its template. As this
-is the first page we are creating we need to create the controller. Create the
-controller at ``src/Blogger/BlogBundle/Controller/PageController.php`` and add
-the following:
+As we already have a controller created, we will customise this. Open the
+controller at ``src/Blogger/BlogBundle/Controller/DefaultController.php`` and
+update the ``indexAction()`` annotations and method as follows:
 
 .. code-block:: php
 
-    <?php
-    // src/Blogger/BlogBundle/Controller/PageController.php
+    // src/Blogger/BlogBundle/Controller/DefaultController.php
 
-    namespace Blogger\BlogBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class PageController extends Controller
+    /**
+     * @Route("/")
+     * @Template()
+     */
+    public function indexAction()
     {
-        public function indexAction()
-        {
-            return $this->render('BloggerBlogBundle:Page:index.html.twig');
-        }
+        return array();
     }
 
-Now create the template for this action. As you can see in the controller action
-we are going to render the Page index template. Create the template at
-``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig``
+Now update the template for this action that is located at
+``src/Blogger/BlogBundle/Resources/views/Default/index.html.twig``
 
 .. code-block:: html
 
-    {# src/Blogger/BlogBundle/Resources/views/Page/index.html.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Default/index.html.twig #}
     {% extends 'BloggerBlogBundle::layout.html.twig' %}
 
     {% block body %}
         Blog homepage
     {% endblock %}
 
-This introduces the final template format we can specify. In this example
-the template ``BloggerBlogBundle::layout.html.twig`` is extended where
-the ``Controller`` part of the template name is ommitted. By excluding the
-``Controller`` part we are specifiying the use of the Bundle level template
-created at ``src/Blogger/BlogBundle/Resources/views/layout.html.twig``.
-
-Now lets add a route for our homepage. Update the Bundle routing config located
-at ``src/Blogger/BlogBundle/Resources/config/routing.yml``.
+If you try to access the page now, you will notice that the Symfony2 welcome page
+stills displays. To fix this we need to ammend some of the default routes that
+came configured as part of the Symofny2 Standard Distribution. Open the application
+routing file located at ``app/config/routing_dev.yml`` and replace the pattern value
+for the ``_welcome`` routing directive from ``pattern: /`` to ``pattern: /welcome``
+(shown below).
 
 .. code-block:: yaml
 
-    # src/Blogger/BlogBundle/Resources/config/routing.yml
-    BloggerBlogBundle_homepage:
-        pattern:  /
-        defaults: { _controller: BloggerBlogBundle:Page:index }
-        requirements:
-            _method:  GET
-
-Lastly we need to remove the default route for the Symfony2 welcome screen.
-Remove the ``_welcome`` route at the top of the ``dev`` routing file located at
-``app/config/routing_dev.yml``.
+    _welcome:
+        pattern:  /welcome
+        defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
 We are now ready to view our blogger template. Point your browser to
 ``http://symblog.dev/app_dev.php/``.
@@ -660,6 +587,42 @@ You should see the basic layout of the blog, with
 the main content and sidebar reflecting the blocks we have overridden in the relevant
 templates.
 
+.. tip::
+
+    The AcmeDemoBundle that comes supplied as default with the Symfony2 Standard could
+    easily be removed from the application if you no longer require it. To do this delete the
+    folder at ``src/Acme``.
+
+    Next remove the AcmeDemoBundle registration from the AppKernel located at ``app/AppKernel.php``.
+
+    .. code-block:: php
+
+        // app/AppKernel.php
+
+        class AppKernel extends Kernel
+        {
+            public function registerBundles()
+            {
+                // ..
+
+                if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+                    // REMOVE START --
+                    $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
+                    // REMOVE END --
+                    $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+                    $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+                    $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+                }
+
+                // ..
+
+            }
+
+        }
+
+    Finally remove the routes configured in ``app/config/routing_dev.yaml``. There are 3 routes
+    name ``_welcome``, ``_demo_secured`` and ``_demo``.
+
 The About Page
 --------------
 
@@ -667,53 +630,64 @@ The final task in this part of the tutorial will be creating a static page for t
 about page. This will demonstrate how to link pages together, and further enforce the
 Three Level Inheritance approach we have adopted.
 
-The Route
-~~~~~~~~~
-
-When creating a new page, one of the first tasks should be creating the route for it.
-Open up the ``BloggerBlogBundle`` routing file located at
-``src/Blogger/BlogBundle/Resources/config/routing.yml`` and append the following routing
-rule.
-
-.. code-block:: yaml
-
-    # src/Blogger/BlogBundle/Resources/config/routing.yml
-    BloggerBlogBundle_about:
-        pattern:  /about
-        defaults: { _controller: BloggerBlogBundle:Page:about }
-        requirements:
-            _method:  GET
-
 The Controller
 ~~~~~~~~~~~~~~
 
-Next open the ``Page`` controller located at
-``src/Blogger/BlogBundle/Controller/PageController.php`` and add the action
+Open the ``Default`` controller located at
+``src/Blogger/BlogBundle/Controller/DefaultController.php`` and add the action
 to handle the about page.
 
 .. code-block:: php
 
-    // src/Blogger/BlogBundle/Controller/PageController.php
-    class PageController extends Controller
+    // src/Blogger/BlogBundle/Controller/DefaultController.php
+    class DefaultController extends Controller
     {
         //  ..
 
+        /** @Template() */
         public function aboutAction()
         {
-            return $this->render('BloggerBlogBundle:Page:about.html.twig');
+            return array()
         }
     }
+
+The Route
+~~~~~~~~~
+
+Routing is specified via annotation on the controller action.
+
+.. code-block:: php
+
+    // src/Blogger/BlogBundle/Controller/DefaultController.php
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+    class DefaultController extends Controller
+    {
+        //  ..
+
+        /** @Route("/about") @Method("GET") @Template() */
+        public function aboutAction()
+        {
+            return array()
+        }
+    }
+
+First we add a new use statement to enable the use of the ``@Method``
+annotation. Then we add the ``@Route`` annotation configured to match ``/about``
+and set the route to only match HTTP GET requests. You may also notice we specified the
+annotation using the single-line format this time
 
 The View
 ~~~~~~~~
 
 For the view, create a new file located at
-``src/Blogger/BlogBundle/Resources/views/Page/about.html.twig`` and copy in the
+``src/Blogger/BlogBundle/Resources/views/Default/about.html.twig`` and copy in the
 following content.
 
 .. code-block:: html
 
-    {# src/Blogger/BlogBundle/Resources/views/Page/about.html.twig #}
+    {# src/Blogger/BlogBundle/Resources/views/Default/about.html.twig #}
     {% extends 'BloggerBlogBundle::layout.html.twig' %}
 
     {% block title %}About{% endblock%}
@@ -801,7 +775,7 @@ template located at ``app/Resources/views/base.html.twig``.
         <h2>{% block blog_title %}<a href="{{ path('BloggerBlogBundle_homepage') }}">symblog</a>{% endblock %}</h2>
         <h3>{% block blog_tagline %}<a href="{{ path('BloggerBlogBundle_homepage') }}">creating a blog in Symfony2</a>{% endblock %}</h3>
     </hgroup>
-    
+
 Conclusion
 ----------
 
