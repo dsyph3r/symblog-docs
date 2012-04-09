@@ -32,7 +32,7 @@ Demo Website
 The symblog website can be viewed at
 `http://symblog.co.uk <http://symblog.co.uk/>`_. The source code is
 available via `Github <https://github.com/dsyph3r/symblog>`_. It follows
-along with each part of the tutorial
+along with each part of the tutorial.
 
 Coverage
 --------
@@ -81,10 +81,16 @@ Symblog has been translated into `Spanish <http://symblog.site90.net/>`_ thanks 
 `Lisper <https://twitter.com/#!/esymfony>`_.
 
 French
-~~~~~~~
+~~~~~~
 
 Symblog has been translated into `French <http://keiruaprod.fr/symblog-fr/>`_ thanks to the contribution by
 `Clement Keirua <https://twitter.com/clemkeirua>`_.
+
+Japanese
+~~~~~~~~
+
+Symblog has been translated into `Japanese <http://symblog.ganchiku.com/>`_ thanks to the contribution by
+`Shin Ohno <https://twitter.com/#!/ganchiku>`_.
 
 Author
 ------
