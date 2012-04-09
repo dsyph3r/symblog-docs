@@ -27,7 +27,7 @@ The demo site for this project can be found at http://symblog.co.uk
 Symfony2
 --------
 
-symblog is currently under active development and is using Symfony 2.0.3
+symblog is currently under active development and is using Symfony 2.0.12.
 
 Contributing
 ------------
