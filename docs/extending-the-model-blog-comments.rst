@@ -35,7 +35,7 @@ Doctrine 2 provides the
 to achieve this (You can also run raw SQL through Doctrine 2 but this method is
 discouraged as it takes away the database abstraction Doctrine 2 gives us).
 We will use the ``QueryBuilder`` as it provides a nice object oriented way for us to generate
-DQL, which we can use to query the database. Lets update the ``index`` action of the ``Page`` controller
+DQL, which we can use to query the database. Let's update the ``index`` action of the ``Page`` controller
 located at ``src/Blogger/BlogBundle/Controller/PageController.php``
 to pull the blogs from the database.
 
@@ -66,7 +66,7 @@ to pull the blogs from the database.
 
 We begin by getting an instance of the ``QueryBuilder`` from the ``EntityManager``. This
 allows us to start constructing the query using the many methods the ``QueryBuilder``
-provides. The full list of available methods are available via the ``QueryBuilder``
+provides. The full list of available methods is available via the ``QueryBuilder``
 documentation. A good place to start is with the
 `helper methods <http://www.doctrine-project.org/docs/orm/2.1/en/reference/query-builder.html#helper-methods>`_.
 These are the methods we use, such as ``select()``, ``from()`` and ``addOrderBy()``.
@@ -192,7 +192,7 @@ Doctrine 2 provides the Repository classes to facilitate this.
 Doctrine 2 Repositories
 -----------------------
 
-We have already be introduced to the Doctrine 2 Repository classes in the previous
+We have already been introduced to the Doctrine 2 Repository classes in the previous
 chapter when we created the blog show page. We used the default implementation of the
 ``Doctrine\ORM\EntityRepository`` class to retrieve a blog entity from the
 database via the ``find()`` method. As we want to create a custom query, we
@@ -216,7 +216,7 @@ Update the ``Blog`` entity metadata located in the file at
 
 You can see we have specified the namespace location for the ``BlogRepository`` class
 that this entity is associated with. As we have updated the Doctrine 2 metadata
-for the ``Blog`` entity, we need to rerun the ``doctrine:generate:entities`` task
+for the ``Blog`` entity, we need to re-run the ``doctrine:generate:entities`` task
 as follows.
 
 .. code-block:: bash
@@ -247,7 +247,7 @@ Doctrine 2 will have created the shell class for the ``BlogRepository`` located 
     }
 
 The ``BlogRepository`` class extends the  ``EntityRepository``
-class which provides the ``find()`` method we used earlier. Lets update the
+class which provides the ``find()`` method we used earlier. Let's update the
 ``BlogRepository`` class, moving the ``QueryBuilder`` code from the ``Page``
 controller into it.
 
@@ -303,7 +303,7 @@ If we look at the implementation of the ``createQueryBuilder`` method in the
             ->from($this->_entityName, $alias);
     }
 
-Finally lets update the ``Page`` controller ``index`` action to use the ``BlogRepository``.
+Finally let's update the ``Page`` controller ``index`` action to use the ``BlogRepository``.
 
 .. code-block:: php
 
@@ -468,7 +468,7 @@ We do this in the ``constructor``. Also, note the ``use`` statement to import th
 ``ArrayCollection`` class.
 
 As we have now created the ``Comment`` entity, and updated the ``Blog`` entity,
-lets get Doctrine 2 to generate the accessors. Run the following Doctrine 2
+let's get Doctrine 2 to generate the accessors. Run the following Doctrine 2
 task as before to achieve this.
 
 .. code-block:: bash
@@ -511,20 +511,20 @@ Next update the vendors to reflect these changes.
 
     $ php bin/vendors install
 
-This will pull down the latest version of each of the repositories from Github and
+This will pull down the latest version of each of the repositories from GitHub and
 install them to the required locations.
 
 .. note::
 
-    If you using a machine that does not have Git installed you will need to manually
+    If you are using a machine that does not have Git installed you will need to manually
     download and install the extension and bundle.
 
     doctrine-migrations extension: `Download <http://github.com/doctrine/migrations>`_
-    the current version of the package from GitHub and extract to the following location
+    the current version of the package from GitHub and extract to the following location:
     ``vendor/doctrine-migrations``.
 
     DoctrineMigrationsBundle: `Download <http://github.com/symfony/DoctrineMigrationsBundle>`_
-    the current version of the package from GitHub and extract to the following location
+    the current version of the package from GitHub and extract to the following location:
     ``vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle``.
 
 Next update the ``app/autoload.php`` file to register the new namespace.
@@ -543,7 +543,7 @@ to bottom so more specific namespaces need to be registered before less specific
     // ...
     ));
 
-Now lets register the bundle in the kernel located at ``app/AppKernel.php``.
+Now let's register the bundle in the kernel located at ``app/AppKernel.php``.
 
 .. code-block:: php
 
@@ -603,14 +603,14 @@ comment table.
 Data Fixtures: Revisited
 -------------------------
 
-Now we have the ``Comment`` entity created, lets add some fixtures for it.
+Now we have the ``Comment`` entity created, let's add some fixtures for it.
 It is always a good idea to add some fixtures each time you create an entity.
-We know that a comment must have a related ``Blog`` entity set as its setup
-this way in the metadata, therefor when creating fixtures for ``Comment`` entities
+We know that a comment must have a related ``Blog`` entity set as it is setup
+this way in the metadata, therefore when creating fixtures for ``Comment`` entities
 we will need to specify the ``Blog`` entity. We have already created the fixtures
 for the ``Blog`` entity so we could simply update this file to add the ``Comment``
-entities. This maybe manageable for now, but what happens when we later add users,
-blog categories, and a whole load of other entities to our bundle. A better way
+entities. This may be manageable for now, but what happens when we later add users,
+blog categories, and a whole load of other entities to our bundle? A better way
 would be to create a new file for the ``Comment`` entity fixtures. The problem
 with this approach is how do we access the ``Blog`` entities from the blog
 fixtures.
@@ -620,7 +620,7 @@ fixture file that other fixtures can access. Update the ``Blog`` entity
 ``DataFixtures`` located at
 ``src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php`` with the following.
 The changes to note here are the extension of the ``AbstractFixture`` class and
-the implements of the ``OrderedFixtureInterface``. Also note the 2 new use
+the implementation of the ``OrderedFixtureInterface``. Also note the 2 new use
 statements to import these classes.
 
 .. code-block:: php
@@ -875,7 +875,7 @@ instead of setting the values directly in the query like so
     ->where('c.blog = ' . blogId)
 
 In this example the value of ``$blogId`` will not be sanitized and could leave the
-query open to an SQL injection attack.
+query open to an `SQL injection <http://en.wikipedia.org/wiki/SQL_injection>`_ attack.
 
 Blog Controller
 ---------------
@@ -980,7 +980,7 @@ permalinks to created comments.
 Comment show CSS
 ~~~~~~~~~~~~~~~~
 
-Finally lets add some CSS to keep the comments looking stylish. Update the stylesheet
+Finally let's add some CSS to keep the comments looking stylish. Update the stylesheet
 located at ``src/Blogger/BlogBundle/Resorces/public/css/blog.css`` with the following.
 
 .. code-block:: css
@@ -1003,7 +1003,7 @@ located at ``src/Blogger/BlogBundle/Resorces/public/css/blog.css`` with the foll
 
         $ php app/console assets:install web
         
-If you now have a look at one of the blog show pages, eg
+If you now have a look at one of the blog show pages, e.g.
 ``http://symblog.dev/app_dev.php/2`` you should see the blog comments output.
 
 .. image:: /_static/images/part_4/comments.jpg
@@ -1013,8 +1013,8 @@ If you now have a look at one of the blog show pages, eg
 Adding Comments
 ---------------
 
-The last part of the chapter will add the functionality for users to add
-comments to blog post. This will be possible via a form on the blog show page. We
+The last part of this chapter will add the functionality for users to add
+comments to a blog post. This will be possible via a form on the blog show page. We
 have already been introduced to creating forms in Symfony2 when we created the
 contact form. Rather than creating the comment form manually, we can use Symfony2
 to do this for us. Run the following task to generate the ``CommentType`` class for
@@ -1066,7 +1066,7 @@ The generate form task has created the ``CommentType`` class located at
     }
 
 We have already explored what is happening here in the previous ``EnquiryType``
-class. We could begin by customising this class now, but lets move onto displaying
+class. We could begin by customising this class now, but let's move onto displaying
 the form first. 
 
 Displaying the Comment Form
@@ -1185,7 +1185,7 @@ before moving on make sure you fully understand what is happening in the
 Form Validation
 ~~~~~~~~~~~~~~~
 
-We don't want users to be able to submit blogs comments with blank ``user`` or
+We don't want users to be able to submit blog comments with blank ``user`` or
 ``comment`` values. To achieve this we look back to the validators we were
 introduced to in part 2 when creating the enquiry form. Update the ``Comment``
 entity located at ``src/Blogger/BlogBundle/Entity/Comment.php`` with the
@@ -1243,11 +1243,11 @@ and paste in the following.
         </p>
     </form>
 
-The purpose of this template is simple, It just renders the comment form. You'll
+The purpose of this template is simple, it just renders the comment form. You'll
 also notice the ``action`` of the form is to ``POST`` to the new route we created
 ``BloggerBlogBundle_comment_create``.
 
-Next lets add the template for the ``create`` view. Create a new file located at
+Next let's add the template for the ``create`` view. Create a new file located at
 ``src/Blogger/BlogBundle/Resources/views/Comment/create.html.twig``
 and paste in the following.
 
@@ -1267,7 +1267,7 @@ the form, it also needs to be able to display it, as there could be errors in th
 form. We reuse the ``BloggerBlogBundle:Comment:form.html.twig`` to render the
 actual form to prevent code duplication.
 
-Now lets update the blog show template to render the add blog form. Update the
+Now let's update the blog show template to render the add blog form. Update the
 template located at ``src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig``
 with the following.
 
@@ -1302,7 +1302,7 @@ If you now have a look at one of the blog show pages, such as
     
 This exception is being thrown by the ``BloggerBlogBundle:Blog:show.html.twig``
 template. If we look at line 25 of the ``BloggerBlogBundle:Blog:show.html.twig``
-template we can see its the following line showing that the problem actually exists
+template we can see it's the following line showing that the problem actually exists
 in the process of embedding the ``BloggerBlogBundle:Comment:create`` controller.
 
 .. code-block:: html
@@ -1317,10 +1317,10 @@ about the nature of why the exception was caused.
 This is telling us that a choice field that we are trying to render doesn't have
 a ``__toString()`` method set for the entity the choice field is associated with.
 A choice field is a form element that gives the user a number of choices,
-such as a ``select`` (drop down) element. You maybe wondering where are we rendering
+such as a ``select`` (drop down) element. You may be wondering where are we rendering
 a choice field in the comment form? If you look at the comment form template again you will notice
 we render the form using the ``{{ form_widget(form) }}`` Twig function. This
-function outputs the entire form in its basic form. So lets go back to the class
+function outputs the entire form in its basic form. So let's go back to the class
 the form is created from, the ``CommentType`` class. We can see that a number of
 fields are being added to the form via the ``FormBuilder`` object. In particular
 we are adding a ``blog`` field.
@@ -1346,8 +1346,8 @@ method in the ``Blog`` entity.
 
     The Symfony2 error messages are very informative when describing the problem
     that has occurred. Always read the error messages as they will usually make
-    the process of debug a lot easier. The error messages also provide a full
-    stack trace so you can see the steps that were taking to cause the error.
+    the debugging process a lot easier. The error messages also provide a full
+    stack trace so you can see the steps that were taken to cause the error.
     
 Now when you refresh the page you should see the comment form output. You will
 also notice that some undesirable fields have been output such as ``approved``,
@@ -1361,12 +1361,12 @@ the generated ``CommentType`` class earlier.
     the 2 ``DateTime`` fields are a number of ``select`` fields allowing us to specify the
     time, etc.
     
-    This is because of the ``FormBuilders`` ability to guess the type of field
+    This is because of the ability of ``FormBuilder`` to guess the type of field
     the member it is rendering requires. It is able to do this based on the metadata
     you provide. As we have specified quite specific metadata for the ``Comment``
     entity, the ``FormBuilder`` is able to make accurate guesses of the field types.
     
-Lets now update this class located at
+Let's now update this class located at
 ``src/Blogger/BlogBundle/Form/CommentType.php`` to output only the fields we
 need. 
 
@@ -1392,7 +1392,7 @@ need.
 Now when you refresh the page only the user and comment fields are output. If
 you were to submit the form now, the comment would not actually be saved to the
 database. That's because the form controller does nothing with the ``Comment`` entity
-if the form passes validation. So how do we persist the ``Comment`` entity to the database.
+if the form passes validation. So how do we persist the ``Comment`` entity to the database?
 You have already seen how to do this when creating ``DataFixtures``. Update the
 ``create`` action of the ``Comment`` controller to persist the ``Comment`` entity
 to the database.
@@ -1441,7 +1441,7 @@ Conclusion
 
 We have made good progress in this chapter. Our blogging website is starting to
 function more like you'd expect. We now have the basics of the homepage created
-and the comment entity. User can now post comments on blogs and read comments
+and the comment entity. Users can now post comments on blogs and read comments
 left by other user. We saw how to create fixtures that could be referenced
 across multiple fixture files and used Doctrine 2 Migrations to keep the database
 schema inline with the entity changes.
