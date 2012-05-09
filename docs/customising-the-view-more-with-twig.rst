@@ -24,7 +24,7 @@ information regarding the comments for those blogs. Now that we have the
 ``Comment`` entity built we can revisit the homepage to provide this information.
 As we have set up the link between ``Blog`` and ``Comment`` entities we know
 Doctrine 2 will be able to retrieve the comments for a blog (remember we added a
-``$comments`` member to the ``Blog`` entity). Lets update the homepage view template
+``$comments`` member to the ``Blog`` entity). Let's update the homepage view template
 located at ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` with
 the following.
 
@@ -63,7 +63,7 @@ with the following metadata in the ``Blog`` entity located at
 
 So we know Doctrine 2 is aware of the relationship between blogs and comments, but
 how did it populate the ``$comments`` member with the related ``Comment``
-entities. If you remember back to the ``BlogRepository`` method we created (shown
+entities? If you remember back to the ``BlogRepository`` method we created (shown
 below) to get the homepage blogs we made no selection to retrieve the related ``Comment`` entities.
 
 .. code-block:: php
@@ -87,7 +87,7 @@ However, Doctrine 2 uses a process called lazy loading where the ``Comment`` ent
 retrieved from the database as and when required, in our case when the call to
 ``{{ blog.comments|length }}`` is made. We can demonstrate this process using
 the developer toolbar. We have already started to explore the basics of the developer
-toolbar and its now time to introduce one of its most useful features, the Doctrine 2
+toolbar and it's now time to introduce one of its most useful features, the Doctrine 2
 profiler. The Doctrine 2 profiler can be accessed by clicking the last icon in
 the developer toolbar. The number next to this icon shows the number of queries
 executed on the database for the current HTTP request.
@@ -117,7 +117,7 @@ executed, Doctrine 2 has to lazily load the ``Comment`` entities that relate to
 the ``Blog`` entity.
 
 While lazy loading is very effective at retrieving related entities from the database,
-its not always the most efficient way to achieve this task. Doctrine 2 provides the ability
+it's not always the most efficient way to perform this task. Doctrine 2 provides the ability
 to ``join`` related entities together when querying the database. This way we can
 pull the ``Blog`` and related ``Comment`` entities out from the database in one query.
 Update the ``QueryBuilder`` code in the ``BlogRepository`` located at
@@ -149,13 +149,13 @@ Lazy loading and joining related entities are both very powerful concepts but
 they need to be used correctly. The correct balance between the 2 needs to be
 found to ensure your application is running as efficiently as possible. At first
 it might seem great to join on every related entity so you never need to lazy
-load and your database query count will always remain low. However, its
+load and your database query count will always remain low. However, it's
 important to remember that the more information you retrieve from the database,
 the more processing needs to be done by Doctrine 2 to hydrate this into the
 entity objects. More data also means more memory is used by the server to store
 the entity objects.
 
-Before moving on lets make one minor addition to the homepage template for the
+Before moving on let's make one minor addition to the homepage template for the
 number of comments we have just added. Update the homepage template located at
 ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` to add a link to
 show the blog comments.
@@ -185,7 +185,7 @@ Tag Cloud
 
 The Tag Cloud shows tags for each blog emphasized in a way that displays the
 more common tags bolder. To achieve this we need a way to retrieve all the tags
-for all the blogs. Lets create some new methods in the ``BlogRepository`` class
+for all the blogs. Let's create some new methods in the ``BlogRepository`` class
 to do this. Update the ``BlogRepository`` class located at
 ``src/Blogger/BlogBundle/Repository/BlogRepository.php`` with the following.
 
@@ -272,7 +272,7 @@ action in the ``PageController`` located at
     }
 
 The action is very simple, it uses the 2 new ``BlogRepository`` methods to generate
-the Tag Cloud, and passes this over to the view. Now lets create this view located at
+the Tag Cloud, and passes this over to the view. Now let's create this view located at
 ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig``.
 
 .. code-block:: html
@@ -293,7 +293,7 @@ the Tag Cloud, and passes this over to the view. Now lets create this view locat
     </section>
 
 The template is also very simple. It just iterates over the various tags
-setting a class to the weight of the tag. The ``for`` loop does introduce how to
+setting a class to the weight of the tag. The ``for`` loop introduces how to
 access the ``key`` and ``value`` pairs of the array, with ``tag`` being the key
 and ``weight`` being the value. There are a number of variations of how to use
 the ``for`` loop provided in the
@@ -301,7 +301,7 @@ the ``for`` loop provided in the
 
 If you look back at the ``BloggerBlogBundle`` main layout template located at
 ``src/Blogger/BlogBundle/Resources/views/layout.html.twig`` you will notice
-we put a placeholder in for the sidebar block. Lets replace this now by rendering
+we put a placeholder in for the sidebar block. Let's replace this now by rendering
 the new sidebar action. Remember from the previous chapter that the Twig ``render``
 method will render the contents from a controller action, in this case
 the ``sidebar`` action of the ``Page`` controller.
@@ -316,7 +316,7 @@ the ``sidebar`` action of the ``Page`` controller.
         {% render "BloggerBlogBundle:Page:sidebar" %}
     {% endblock %}
 
-Finally lets add the CSS for the tag cloud. Add a new stylesheet located at
+Finally let's add the CSS for the tag cloud. Add a new stylesheet located at
 ``src/Blogger/BlogBundle/Resources/public/css/sidebar.css``.
 
 .. code-block:: css
@@ -372,7 +372,7 @@ the blog fixtures so some tags are used more than others.
 Recent Comments
 ~~~~~~~~~~~~~~~
 
-Now the Tag Cloud is in place, lets also add the Latest Comments component to the
+Now the Tag Cloud is in place, let's also add the Latest Comments component to the
 sidebar.
 
 First we need a way to retrieve the latest comments for the blogs. To do this
@@ -483,7 +483,7 @@ of how long ago the comment was posted, such as `posted 3 hours ago`. We could
 add a method to the ``Comment`` entity to achieve this and change the templates
 to use this method instead of ``{{ comment.created|date('Y-m-d h:iA') }}``.
 
-As we may want to use this functionality else where it would make more sense to
+As we may want to use this functionality elsewhere it would make more sense to
 move it out of the ``Comment`` entity. As transforming the date is specifically
 a view layer task, we should implement this using the Twig templating engine.
 Twig give us this ability by providing an Extension interface.
@@ -589,7 +589,7 @@ Twig extension class we have just created.
 Updating the view
 ~~~~~~~~~~~~~~~~~
 
-The new Twig filter is now ready to be used. Lets update the sidebar Latest Comments
+The new Twig filter is now ready to be used. Let's update the sidebar Latest Comments
 list to use the ``created_ago`` filter. Update the sidebar template located at
 ``src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig`` with the following.
 
@@ -615,7 +615,7 @@ If you now point your browser to ``http://symblog.dev/app_dev.php/`` you will
 see the latest comment dates are using the Twig filter to render the duration
 since the comment was posted.
 
-Lets also update the comments listed on the blog show page to use the new
+Let's also update the comments listed on the blog show page to use the new
 filter. Replace the content in the template located at
 ``src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig`` with the following.
 
@@ -644,9 +644,9 @@ filter. Replace the content in the template located at
 Slugifying the URL
 ------------------
 
-Currently the URL for each blog post only shows the blog Id. While this is
-perfectly acceptable from a functional point of view, its not great for SEO.
-For example, the url ``http://symblog.dev/1`` doesn't give any information away about
+Currently the URL for each blog post only shows the blog ID. While this is
+perfectly acceptable from a functional point of view, it's not great for SEO.
+For example, the URL ``http://symblog.dev/1`` doesn't give any information away about
 the content of the blog, something like ``http://symblog.dev/1/a-day-with-symfony2``
 would be much better. To achieve this we will slugify the blog title and use it
 as part of this URL. Slugifying the title will remove all non ASCII characters
@@ -655,7 +655,7 @@ and replace them with a ``-``.
 Update the routing
 ~~~~~~~~~~~~~~~~~~
 
-To begin lets modify the routing rule for the blog show page to add the slug component.
+To begin let's modify the routing rule for the blog show page to add the slug component.
 Update the routing rule located at ``src/Blogger/BlogBundle/Resources/config/routing.yml``
 
 .. code-block:: yaml
@@ -673,7 +673,7 @@ The controller
 ~~~~~~~~~~~~~~
 
 As with the existing ``id`` component, the new ``slug`` component will be passed
-into the controller action as an argument, so lets update the controller
+into the controller action as an argument, so let's update the controller
 located at ``src/Blogger/BlogBundle/Controller/BlogController.php`` to reflect
 this.
 
@@ -691,7 +691,7 @@ this.
     The order in which the arguments are passed into the controller action
     doesn't matter, only the name of them does. Symfony2 is able to match up the
     routing arguments with the parameter list for us. While we haven't yet used
-    default component values its worth mentioning them here. If we added another
+    default component values it's worth mentioning them here. If we added another
     component onto the routing rule we can specify a default value for the component
     using the ``defaults`` option.
 
@@ -711,7 +711,7 @@ this.
             // ..
         }
 
-    Using this method, request to ``http://symblog.dev/1/symfony2-blog`` would
+    Using this method, a request to ``http://symblog.dev/1/symfony2-blog`` would
     result in ``$comments`` being set to true in the ``showAction``.
 
 Slugifying the title
@@ -724,7 +724,7 @@ but instead we will store the slug in the ``Blog`` entity and persist it to the 
 Updating the Blog entity
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Lets add a new member to the ``Blog`` entity to store the slug. Update the ``Blog``
+Let's add a new member to the ``Blog`` entity to store the slug. Update the ``Blog``
 entity located at ``src/Blogger/BlogBundle/Entity/Blog.php``
 
 .. code-block:: php
@@ -749,7 +749,7 @@ Now generate the accessors for the new ``$slug`` member. As before run the follo
 
     $ php app/console doctrine:generate:entities Blogger
 
-Next, lets update the database schema.
+Next, let's update the database schema.
 
 .. code-block:: bash
 
@@ -830,7 +830,7 @@ Updating the generated routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finally we need to update the existing calls for generating routes to the blog
-show page. There are a number of locations this needs to be updated.
+show page. There are a number of locations where this needs to be updated.
 
 Open the homepage template located at
 ``src/Blogger/BlogBundle/Resources/views/Page/index.html.twig`` and replace its
@@ -929,7 +929,7 @@ By default Symfony2 comes configured with 3 environments:
 
 The purpose of these environments is self explanatory, but what about these environments
 would be configured differently for their individual needs. When developing the
-application its useful to have the developer toolbar on screen with descriptive
+application it's useful to have the developer toolbar on screen with descriptive
 exceptions and errors being displayed, while in production you don't want any
 of this. In fact, having this information displayed would be a security risk as a lot of
 details regarding the internals of the application and the server would be
@@ -949,7 +949,7 @@ Front Controllers
 
 So far through this tutorial we have been using the ``development`` environment
 only. We have been specifying to run in the ``development`` environment by using the
-``app_dev.php`` front controller when making request to symblog, eg
+``app_dev.php`` front controller when making requests to symblog, eg
 ``http://symblog.dev/app_dev.php/about``. If we have a look at the front
 controller located at ``web/app_dev.php`` you will see the following line:
 
@@ -977,8 +977,8 @@ Configuration Settings
 
 We have seen above how the front controllers are utilised to change the environment
 the application runs under. Now we will explore how the various settings are
-modified while running under each environment. If you have a look at the files in
-in ``app/config`` you will see a number of ``config.yml`` files. Specifically
+modified while running under each environment. If you have a look at the files in 
+``app/config`` you will see a number of ``config.yml`` files. Specifically
 there is one main one, called ``config.yml`` and 3 others all suffixed with the
 name of an environment; ``config_dev.yml``, ``config_test.yml`` and ``config_prod.yml``.
 Each of these files is loaded depending on the current environment. If we explore the
@@ -1044,21 +1044,21 @@ exception message are no longer displayed, try going to ``http://symblog.dev/999
     :align: center
     :alt: Production - 404 Error
     
-The detailed exception message has be replaced by a simplified message informing
+The detailed exception message has been replaced by a simplified message informing
 the user of the problem. These exception screens can be customised to match the look
 and feel of your application. We will explore this in later chapters.
 
-Further you'll notice the ``app/logs/prod.log`` file is filling up with logs regarding
+Furthermore, you'll notice the ``app/logs/prod.log`` file is filling up with logs regarding
 the execution of the application. This is a useful point of call when you have
-issues with the application in ``production`` as errors and exceptions wont come
-to screen any more.
+issues with the application in ``production`` as errors and exceptions won't be displayed on
+the screen any more.
 
 .. tip::
 
     How did the request to ``http://symblog.dev/`` end up being routed through the
-    file ``app.php``? I'm sure your all used to creating files such as ``index.html``
-    and ``index.php`` that act as the sites index, but how would ``app.php``
-    become this. This is thanks to a RewriteRule in the file ``web/.htaccess``
+    file ``app.php``? I'm sure you're all used to creating files such as ``index.html``
+    and ``index.php`` that act as the site's index, but how would ``app.php``
+    become this? This is thanks to a RewriteRule in the file ``web/.htaccess``
 
     .. code-block:: text
 
@@ -1067,8 +1067,8 @@ to screen any more.
     We can see that this line has a regular expression that matches any text,
     denoted by ``^(.*)$`` and passes this to ``app.php``.
 
-    You maybe on an Apache server that doesn't have the ``mod_rewrite.c``
-    enable. If this is the case you can simply add ``app.php`` to the URL such as
+    You may be on an Apache server that doesn't have the ``mod_rewrite.c``
+    enabled. If this is the case you can simply add ``app.php`` to the URL such as
     ``http://symblog.dev/app.php/``.
 
 While we have covered the basics of the ``production`` environment, we have not
@@ -1079,7 +1079,7 @@ error pages, and deployment to the ``production`` server using tools such as
 Creating New Environments
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finally its worth noting that you can setup your own environments easily in Symfony2.
+Finally it's worth noting that you can setup your own environments easily in Symfony2.
 For example, you may want a staging environment that would run on the production
 server, but output some of the debugging information such as exceptions. This
 would allow the platform to be tested manually on the actual production server
@@ -1104,7 +1104,7 @@ stylesheets and JavaScript and the filters that can be applied to these assets.
 These filters are able to perform useful tasks such as minifying your CSS and
 JavaScript, passing `CoffeeScript <http://jashkenas.github.com/coffee-script/>`_
 files through the CoffeeScript compiler, and combining asset files together to
-reduce the number of HTTP request made to the server.
+reduce the number of HTTP requests made to the server.
 
 Currently we have been using the Twig ``asset`` function to include assets into
 the template as follows.
@@ -1130,7 +1130,7 @@ and images.
 Stylesheets
 ...........
 
-Lets begin by replacing the current calls to ``asset`` for the stylesheets
+Let's begin by replacing the current calls to ``asset`` for the stylesheets
 in the ``BloggerBlogBundle`` main layout template. Update the content of the template
 located at ``src/Blogger/BlogBundle/Resources/views/layout.html.twig``
 with the following.
@@ -1158,7 +1158,7 @@ functionality. Using ``stylesheets`` from Assetic we have specified that all CSS
 files in the location ``src/Blogger/BlogBundle/Resources/public/css`` should be
 combined into 1 file and then output. Combining files is a very simple but
 effective way to optimise your website frontend by reducing the number of files
-needed. Less files means less HTTP requests to the server. While we used the
+needed. Fewer files means fewer HTTP requests to the server. While we used the
 ``*`` to specify all files in the ``css`` directory we could have simply listed
 each file individually as follows.
 
@@ -1195,7 +1195,7 @@ are running back in the ``development`` environment again).
     <link href="/app_dev.php/css/d8f44a4_part_1_blog_1.css" rel="stylesheet" media="screen" />
     <link href="/app_dev.php/css/d8f44a4_part_1_sidebar_2.css" rel="stylesheet" media="screen" />
     
-Firstly you maybe wondering why there are 2 files. Above it was stated that Assetic
+Firstly you may be wondering why there are 2 files. Above it was stated that Assetic
 would combine the files into 1 CSS file. This is because we are running symblog
 in the ``development`` environment. We can ask Assetic to run in non-debug mode
 by setting the debug flag to false as follows.
@@ -1368,8 +1368,8 @@ task to create dump the asset files.
     $ app/console --env=prod assetic:dump
 
 You will notice a number of CSS files were created at ``web/css`` including the
-combined ``blogger.css`` file. Now if run the symblog website in the ``production``
-environment via ``http://symblog.dev/`` the files will be being served directly
+combined ``blogger.css`` file. Now if you run the symblog website in the ``production``
+environment via ``http://symblog.dev/`` the files will be served directly
 from this folder.
 
 .. note::
@@ -1403,7 +1403,7 @@ including:
 
 .. tip::
 
-    Its worth mentioning here that Richard Miller has a collection of excellent articles
+    It's worth mentioning here that Richard Miller has a collection of excellent articles
     regarding a number of Symfony2 areas on his site including Dependency Injection,
     Services and the above mentioned Assetic guides. Just search for posts
     tagged with `symfony2 <http://miller.limethinking.co.uk/tag/symfony2/>`_
