@@ -86,6 +86,13 @@ French
 Symblog has been translated into `French <http://keiruaprod.fr/symblog-fr/>`_ thanks to the contribution by
 `Clement Keirua <https://twitter.com/clemkeirua>`_.
 
+Portuguese
+~~~~~~~~~
+
+Symblog has been translated into `Brazilian Portuguese <http://symfony2blog.totlab.com.br/>`_  thanks to the contribution by 
+`TotLab - Pesquisa e Desenvolvimento Web <http://totlab.com.br>`_.
+
+
 Author
 ------
 
