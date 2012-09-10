@@ -586,7 +586,7 @@ follows.
         git=http://github.com/doctrine/data-fixtures.git
 
     [DoctrineFixturesBundle]
-        git=http://github.com/symfony/DoctrineFixturesBundle.git
+        git=http://github.com/doctrine/DoctrineFixturesBundle.git
         target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
 
 Next update the vendors to reflect these changes.
