@@ -240,11 +240,11 @@ paste in the following content.
     namespace Blogger\BlogBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class EnquiryType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
             $builder->add('email', 'email');
@@ -258,13 +258,13 @@ paste in the following content.
         }
     }
 
-The ``EnquiryType`` class introduces the ``FormBuilder`` class. The ``FormBuilder`` class
-is your best friend when it comes to creating forms. It is able to simplify the
-process of defining fields based on the metadata the field has. As our
-Enquiry entity is so simple we haven't defined any metadata yet so the ``FormBuilder``
-will default the field type to text input. This is suitable for most of the fields
-except body where we want a ``textarea``, and email where we want to take advantage of the
-new email input type in HTML5.
+The ``EnquiryType`` class introduces the ``FormBuilderInterface`` interface. This interface
+is used by the ``FormBuilder`` class. The ``FormBuilder`` class is your best friend when
+it comes to creating forms. It is able to simplify the process of defining fields based
+on the metadata the field has. As our Enquiry entity is so simple we haven't defined any
+metadata yet so the ``FormBuilder`` will default the field type to text input. This is
+suitable for most of the fields except body where we want a ``textarea``, and email where
+we want to take advantage of the new email input type in HTML5.
 
 .. note::
 
