@@ -660,15 +660,15 @@ Configure Swift Mailer settings
 
 Swift Mailer is already configured out of the box to work in the Symfony2 Standard
 Distribution, however we need to configure some settings regarding sending methods,
-and credentials. Open up the parameters file located at ``app/config/parameters.ini`` and
+and credentials. Open up the parameters file located at ``app/config/parameters.yml`` and
 find the settings prefixed with ``mailer_``.
 
 .. code-block:: text
 
-    mailer_transport="smtp"
-    mailer_host="localhost"
-    mailer_user=""
-    mailer_password=""
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
 
 Swift Mailer provides a number of methods for sending emails, including using an
 SMTP server, using a local install of sendmail, or even using a GMail account.
@@ -677,12 +677,12 @@ substituting your username and password where necessary.
 
 .. code-block:: text
 
-    mailer_transport="gmail"
-    mailer_encryption="ssl"
-    mailer_auth_mode="login"
-    mailer_host="smtp.gmail.com"
-    mailer_user="your_username"
-    mailer_password="your_password"
+    mailer_transport: gmail
+    mailer_encryption: ssl
+    mailer_auth_mode: login
+    mailer_host: smtp.gmail.com
+    mailer_user: your_username
+    mailer_password: your_password
 
 .. warning::
 
