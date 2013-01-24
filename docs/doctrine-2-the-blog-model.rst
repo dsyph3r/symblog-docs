@@ -165,7 +165,7 @@ map to the database. Replace the content of the ``Blog`` entity class located at
         protected $blog;
 
         /**
-         * @ORM\Column(type="string", length="20")
+         * @ORM\Column(type="string", length=20)
          */
         protected $image;
 
