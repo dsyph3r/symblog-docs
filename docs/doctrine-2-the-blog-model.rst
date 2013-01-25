@@ -799,14 +799,14 @@ This is done using metadata on the entity. Update the ``Blog`` entity located at
     /**
      * @ORM\Entity
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
         // ..
     }
 
-Now let's add a method in the ``Blog`` entity that registers for the ``preUpdate``
+Now let's add a method in the ``Blog`` entity that registers for the ``PreUpdate``
 event. We also add a constructor to set default values for the ``created`` and
 ``updated`` members.
 
@@ -820,7 +820,7 @@ event. We also add a constructor to set default values for the ``created`` and
     /**
      * @ORM\Entity
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
@@ -833,7 +833,7 @@ event. We also add a constructor to set default values for the ``created`` and
         }
 
         /**
-         * @ORM\preUpdate
+         * @ORM\PreUpdate
          */
         public function setUpdatedValue()
         {
