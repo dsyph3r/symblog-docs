@@ -1127,6 +1127,19 @@ some of which is immutable.`
 Put simply, the assets are the resources the application uses such as stylesheets
 and images.
 
+To enable Assetic for the ``BloggerBlogBundle`` we have to change the ``app/config/config.yml`` as follows.
+
+.. code-block:: php
+
+    # ..
+    assetic:
+        bundles:    [BloggerBlogBundle]
+    # ..
+
+This will enable Assetic just for the ``BloggerBlogBundle`` and will require adjustments whenever
+a new bundle needs to use Assetic. We can however completely remove the ``bundles`` line and enable
+it for all future bundles aswell.
+
 Stylesheets
 ...........
 
