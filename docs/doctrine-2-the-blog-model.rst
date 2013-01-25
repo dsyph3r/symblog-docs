@@ -576,24 +576,22 @@ Data Fixtures
 We can use fixtures to populate the database with some sample/test data. To do this
 we use the Doctrine Fixtures extension and bundle. The Doctrine Fixtures
 extension and bundle do not come with the Symfony2 Standard Distribution, we need to
-manually install them. Fortunately this is an easy task. Open up the deps file located
+manually install them. Fortunately this is an easy task. Open up the ``composer.json`` file located
 in the project root and add the Doctrine fixtures extension and bundle to it as
 follows.
 
-.. code-block:: text
+.. code-block:: php
 
-    [doctrine-fixtures]
-        git=http://github.com/doctrine/data-fixtures.git
-
-    [DoctrineFixturesBundle]
-        git=http://github.com/doctrine/DoctrineFixturesBundle.git
-        target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
+    "require": {
+            "doctrine/doctrine-fixtures-bundle": "dev-master",
+            "doctrine/data-fixtures" : "dev-master"
+        }
 
 Next update the vendors to reflect these changes.
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    $ php composer.phar update
 
 This will pull down the latest version of each of the repositories from Github and
 install them to the required location.
