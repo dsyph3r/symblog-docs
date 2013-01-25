@@ -221,7 +221,7 @@ as follows.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Blogger\BlugBundle
+    $ php app/console doctrine:generate:entities Blogger\BlogBundle
     
 Doctrine 2 will have created the shell class for the ``BlogRepository`` located at
 ``src/Blogger/BlogBundle/Repository/BlogRepository.php``.
