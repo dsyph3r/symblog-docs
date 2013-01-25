@@ -609,22 +609,6 @@ install them to the required location.
     the current version of the package from GitHub and extract to the following location
     ``vendor/bundles/Symfony/Bundle/DoctrineFixturesBundle``.
 
-Next update the ``app/autoloader.php`` file to register the new namespace.
-As DataFixtures are also in the ``Doctrine\Common`` namespace they must be placed above the existing
-``Doctrine\Common`` directive as they specify a new path. Namespaces are checked from top
-to bottom so more specific namespaces need to be registered before less specific ones.
-
-.. code-block:: php
-
-    // app/autoloader.php
-    // ...
-    $loader->registerNamespaces(array(
-    // ...
-    'Doctrine\\Common\\DataFixtures'    => __DIR__.'/../vendor/doctrine-fixtures/lib',
-    'Doctrine\\Common'                  => __DIR__.'/../vendor/doctrine-common/lib',
-    // ...
-    ));
-
 Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
 ``app/AppKernel.php``
 
@@ -635,7 +619,7 @@ Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
     {
         $bundles = array(
             // ...
-            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             // ...
         );
         // ...
