@@ -221,7 +221,7 @@ as follows.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Blogger
+    $ php app/console doctrine:generate:entities Blogger\BlugBundle
     
 Doctrine 2 will have created the shell class for the ``BlogRepository`` located at
 ``src/Blogger/BlogBundle/Repository/BlogRepository.php``.
@@ -353,7 +353,7 @@ paste in the following.
     /**
      * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\CommentRepository")
      * @ORM\Table(name="comment")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Comment
     {
@@ -434,7 +434,7 @@ entity located at ``src/Blogger/BlogBundle/Entity/Blog.php`` to add this mapping
     /**
      * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
@@ -473,7 +473,7 @@ task as before to achieve this.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Blogger
+    $ php app/console doctrine:generate:entities Blogger\BlogBundle
     
 Both entities should now be up-to-date with the correct accessor methods. You will
 also notice the ``CommentRepository`` class has been created at
