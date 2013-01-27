@@ -221,7 +221,7 @@ as follows.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Blogger
+    $ php app/console doctrine:generate:entities Blogger\BlogBundle
     
 Doctrine 2 will have created the shell class for the ``BlogRepository`` located at
 ``src/Blogger/BlogBundle/Repository/BlogRepository.php``.
@@ -353,7 +353,7 @@ paste in the following.
     /**
      * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\CommentRepository")
      * @ORM\Table(name="comment")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Comment
     {
@@ -434,7 +434,7 @@ entity located at ``src/Blogger/BlogBundle/Entity/Blog.php`` to add this mapping
     /**
      * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
@@ -473,7 +473,7 @@ task as before to achieve this.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Blogger
+    $ php app/console doctrine:generate:entities Blogger\BlogBundle
     
 Both entities should now be up-to-date with the correct accessor methods. You will
 also notice the ``CommentRepository`` class has been created at
@@ -493,23 +493,21 @@ Doctrine 2 Migrations
 
 The Doctrine 2 Migrations extension and bundle do not come with the Symfony2 Standard
 Distribution, we need to manually install them as we did with the Data Fixtures
-extension and bundle. Open up the ``deps`` file located in the project root and add the
+extension and bundle. Open up the ``composer.json`` file located in the project root and add the
 Doctrine 2 Migrations extension and bundle to it as follows.
 
-.. code-block:: text
+.. code-block:: php
     
-    [doctrine-migrations]
-        git=http://github.com/doctrine/migrations.git
-
-    [DoctrineMigrationsBundle]
-        git=http://github.com/symfony/DoctrineMigrationsBundle.git
-        target=/bundles/Symfony/Bundle/DoctrineMigrationsBundle
+    "require": {
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "doctrine/migrations": "dev-master"
+    }
 
 Next update the vendors to reflect these changes.
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    $ php composer.phar update
 
 This will pull down the latest version of each of the repositories from GitHub and
 install them to the required locations.
@@ -526,22 +524,6 @@ install them to the required locations.
     DoctrineMigrationsBundle: `Download <http://github.com/symfony/DoctrineMigrationsBundle>`_
     the current version of the package from GitHub and extract to the following location:
     ``vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle``.
-
-Next update the ``app/autoload.php`` file to register the new namespace.
-As Doctrine 2 Migrations are also in the ``Doctrine\DBAL`` namespace they must be placed above the existing
-``Doctrine\DBAL`` setting as they specify a new path. Namespaces are checked from top
-to bottom so more specific namespaces need to be registered before less specific ones.
-
-.. code-block:: php
-
-    // app/autoload.php
-    // ...
-    $loader->registerNamespaces(array(
-    // ...
-    'Doctrine\\DBAL\\Migrations' => __DIR__.'/../vendor/doctrine-migrations/lib',
-    'Doctrine\\DBAL'             => __DIR__.'/../vendor/doctrine-dbal/lib',
-    // ...
-    ));
 
 Now let's register the bundle in the kernel located at ``app/AppKernel.php``.
 

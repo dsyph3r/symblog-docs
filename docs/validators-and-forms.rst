@@ -240,11 +240,11 @@ paste in the following content.
     namespace Blogger\BlogBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class EnquiryType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
             $builder->add('email', 'email');
@@ -258,13 +258,13 @@ paste in the following content.
         }
     }
 
-The ``EnquiryType`` class introduces the ``FormBuilder`` class. The ``FormBuilder`` class
-is your best friend when it comes to creating forms. It is able to simplify the
-process of defining fields based on the metadata the field has. As our
-Enquiry entity is so simple we haven't defined any metadata yet so the ``FormBuilder``
-will default the field type to text input. This is suitable for most of the fields
-except body where we want a ``textarea``, and email where we want to take advantage of the
-new email input type in HTML5.
+The ``EnquiryType`` class introduces the ``FormBuilderInterface`` interface. This interface
+is used by the ``FormBuilder`` class. The ``FormBuilder`` class is your best friend when
+it comes to creating forms. It is able to simplify the process of defining fields based
+on the metadata the field has. As our Enquiry entity is so simple we haven't defined any
+metadata yet so the ``FormBuilder`` will default the field type to text input. This is
+suitable for most of the fields except body where we want a ``textarea``, and email where
+we want to take advantage of the new email input type in HTML5.
 
 .. note::
 
@@ -660,15 +660,15 @@ Configure Swift Mailer settings
 
 Swift Mailer is already configured out of the box to work in the Symfony2 Standard
 Distribution, however we need to configure some settings regarding sending methods,
-and credentials. Open up the parameters file located at ``app/config/parameters.ini`` and
+and credentials. Open up the parameters file located at ``app/config/parameters.yml`` and
 find the settings prefixed with ``mailer_``.
 
 .. code-block:: text
 
-    mailer_transport="smtp"
-    mailer_host="localhost"
-    mailer_user=""
-    mailer_password=""
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
 
 Swift Mailer provides a number of methods for sending emails, including using an
 SMTP server, using a local install of sendmail, or even using a GMail account.
@@ -677,12 +677,12 @@ substituting your username and password where necessary.
 
 .. code-block:: text
 
-    mailer_transport="gmail"
-    mailer_encryption="ssl"
-    mailer_auth_mode="login"
-    mailer_host="smtp.gmail.com"
-    mailer_user="your_username"
-    mailer_password="your_password"
+    mailer_transport: gmail
+    mailer_encryption: ssl
+    mailer_auth_mode: login
+    mailer_host: smtp.gmail.com
+    mailer_user: your_username
+    mailer_password: your_password
 
 .. warning::
 

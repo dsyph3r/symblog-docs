@@ -165,7 +165,7 @@ map to the database. Replace the content of the ``Blog`` entity class located at
         protected $blog;
 
         /**
-         * @ORM\Column(type="string", length="20")
+         * @ORM\Column(type="string", length=20)
          */
         protected $image;
 
@@ -576,24 +576,22 @@ Data Fixtures
 We can use fixtures to populate the database with some sample/test data. To do this
 we use the Doctrine Fixtures extension and bundle. The Doctrine Fixtures
 extension and bundle do not come with the Symfony2 Standard Distribution, we need to
-manually install them. Fortunately this is an easy task. Open up the deps file located
+manually install them. Fortunately this is an easy task. Open up the ``composer.json`` file located
 in the project root and add the Doctrine fixtures extension and bundle to it as
 follows.
 
-.. code-block:: text
+.. code-block:: php
 
-    [doctrine-fixtures]
-        git=http://github.com/doctrine/data-fixtures.git
-
-    [DoctrineFixturesBundle]
-        git=http://github.com/doctrine/DoctrineFixturesBundle.git
-        target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
+    "require": {
+            "doctrine/doctrine-fixtures-bundle": "dev-master",
+            "doctrine/data-fixtures" : "dev-master"
+        }
 
 Next update the vendors to reflect these changes.
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    $ php composer.phar update
 
 This will pull down the latest version of each of the repositories from Github and
 install them to the required location.
@@ -611,22 +609,6 @@ install them to the required location.
     the current version of the package from GitHub and extract to the following location
     ``vendor/bundles/Symfony/Bundle/DoctrineFixturesBundle``.
 
-Next update the ``app/autoloader.php`` file to register the new namespace.
-As DataFixtures are also in the ``Doctrine\Common`` namespace they must be placed above the existing
-``Doctrine\Common`` directive as they specify a new path. Namespaces are checked from top
-to bottom so more specific namespaces need to be registered before less specific ones.
-
-.. code-block:: php
-
-    // app/autoloader.php
-    // ...
-    $loader->registerNamespaces(array(
-    // ...
-    'Doctrine\\Common\\DataFixtures'    => __DIR__.'/../vendor/doctrine-fixtures/lib',
-    'Doctrine\\Common'                  => __DIR__.'/../vendor/doctrine-common/lib',
-    // ...
-    ));
-
 Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
 ``app/AppKernel.php``
 
@@ -637,7 +619,7 @@ Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
     {
         $bundles = array(
             // ...
-            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             // ...
         );
         // ...
@@ -817,14 +799,14 @@ This is done using metadata on the entity. Update the ``Blog`` entity located at
     /**
      * @ORM\Entity
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
         // ..
     }
 
-Now let's add a method in the ``Blog`` entity that registers for the ``preUpdate``
+Now let's add a method in the ``Blog`` entity that registers for the ``PreUpdate``
 event. We also add a constructor to set default values for the ``created`` and
 ``updated`` members.
 
@@ -838,7 +820,7 @@ event. We also add a constructor to set default values for the ``created`` and
     /**
      * @ORM\Entity
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
@@ -851,7 +833,7 @@ event. We also add a constructor to set default values for the ``created`` and
         }
 
         /**
-         * @ORM\preUpdate
+         * @ORM\PreUpdate
          */
         public function setUpdatedValue()
         {
