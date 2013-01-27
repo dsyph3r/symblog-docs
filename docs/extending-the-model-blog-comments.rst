@@ -48,19 +48,19 @@ to pull the blogs from the database.
         {
             $em = $this->getDoctrine()
                        ->getEntityManager();
-    
+
             $blogs = $em->createQueryBuilder()
                         ->select('b')
                         ->from('BloggerBlogBundle:Blog',  'b')
                         ->addOrderBy('b.created', 'DESC')
                         ->getQuery()
                         ->getResult();
-    
+
             return $this->render('BloggerBlogBundle:Page:index.html.twig', array(
                 'blogs' => $blogs
             ));
         }
-        
+
         // ..
     }
 
@@ -90,7 +90,7 @@ Replace the content of the homepage template located at
 with the following.
 
 .. code-block:: html
-    
+
     {# src/Blogger/BlogBundle/Resources/views/Page/index.html.twig #}
     {% extends 'BloggerBlogBundle::layout.html.twig' %}
 
@@ -101,13 +101,13 @@ with the following.
                 <header>
                     <h2><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id }) }}">{{ blog.title }}</a></h2>
                 </header>
-        
+
                 <img src="{{ asset(['images/', blog.image]|join) }}" />
                 <div class="snippet">
                     <p>{{ blog.blog(500) }}</p>
                     <p class="continue"><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id }) }}">Continue reading...</a></p>
                 </div>
-        
+
                 <footer class="meta">
                     <p>Comments: -</p>
                     <p>Posted by <span class="highlight">{{blog.author}}</span> at {{ blog.created|date('h:iA') }}</p>
@@ -143,9 +143,9 @@ be present in the URL, we need to pass this as an argument into the ``path``
 function. This can be seen with the following.
 
 .. code-block:: html
-    
+
     <h2><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id }) }}">{{ blog.title }}</a></h2>
-    
+
 Secondly we output the blog content using ``<p>{{ blog.blog(500) }}</p>``.
 The ``500`` argument we pass in, is the max length of the blog post we want to
 receive back from the function. For this to work we need to update the
@@ -202,7 +202,7 @@ Update the ``Blog`` entity metadata located in the file at
 
 
 .. code-block:: php
-    
+
     // src/Blogger/BlogBundle/Entity/Blog.php
     /**
      * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Entity\Repository\BlogRepository")
@@ -222,7 +222,7 @@ as follows.
 .. code-block:: bash
 
     $ php app/console doctrine:generate:entities Blogger\BlogBundle
-    
+
 Doctrine 2 will have created the shell class for the ``BlogRepository`` located at
 ``src/Blogger/BlogBundle/Entity/Repository/BlogRepository.php``.
 
@@ -230,7 +230,7 @@ Doctrine 2 will have created the shell class for the ``BlogRepository`` located 
 
     <?php
     // src/Blogger/BlogBundle/Entity/Repository/BlogRepository.php
-    
+
     namespace Blogger\BlogBundle\Entity\Repository;
 
     use Doctrine\ORM\EntityRepository;
@@ -294,7 +294,7 @@ If we look at the implementation of the ``createQueryBuilder`` method in the
 ``EntityRepository`` class we can see the ``from()`` method is called for us.
 
 .. code-block:: php
-    
+
     // Doctrine\ORM\EntityRepository
     public function createQueryBuilder($alias)
     {
@@ -314,15 +314,15 @@ Finally let's update the ``Page`` controller ``index`` action to use the ``BlogR
         {
             $em = $this->getDoctrine()
                        ->getEntityManager();
-                       
+
             $blogs = $em->getRepository('BloggerBlogBundle:Blog')
                         ->getLatestBlogs();
-                       
+
             return $this->render('BloggerBlogBundle:Page:index.html.twig', array(
                 'blogs' => $blogs
             ));
         }
-        
+
         // ..
     }
 
@@ -378,7 +378,7 @@ paste in the following.
          * @ORM\Column(type="boolean")
          */
         protected $approved;
-        
+
         /**
          * @ORM\ManyToOne(targetEntity="Blog", inversedBy="comments")
          * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
@@ -399,7 +399,7 @@ paste in the following.
         {
             $this->setCreated(new \DateTime());
             $this->setUpdated(new \DateTime());
-            
+
             $this->setApproved(true);
         }
 
@@ -439,22 +439,22 @@ entity located at ``src/Blogger/BlogBundle/Entity/Blog.php`` to add this mapping
     class Blog
     {
         // ..
-        
+
         /**
          * @ORM\OneToMany(targetEntity="Comment", mappedBy="blog")
          */
         protected $comments;
-        
+
         // ..
-        
+
         public function __construct()
         {
             $this->comments = new ArrayCollection();
-            
+
             $this->setCreated(new \DateTime());
             $this->setUpdated(new \DateTime());
         }
-        
+
         // ..
     }
 
@@ -474,7 +474,7 @@ task as before to achieve this.
 .. code-block:: bash
 
     $ php app/console doctrine:generate:entities Blogger\BlogBundle
-    
+
 Both entities should now be up-to-date with the correct accessor methods. You will
 also notice the ``CommentRepository`` class has been created at
 ``src/Blogger/BlogBundle/Entity/Repository/CommentRepository.php`` as we specified this in the
@@ -497,7 +497,7 @@ extension and bundle. Open up the ``composer.json`` file located in the project 
 Doctrine 2 Migrations extension and bundle to it as follows.
 
 .. code-block:: php
-    
+
     "require": {
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "doctrine/migrations": "dev-master"
@@ -511,19 +511,6 @@ Next update the vendors to reflect these changes.
 
 This will pull down the latest version of each of the repositories from GitHub and
 install them to the required locations.
-
-.. note::
-
-    If you are using a machine that does not have Git installed you will need to manually
-    download and install the extension and bundle.
-
-    doctrine-migrations extension: `Download <http://github.com/doctrine/migrations>`_
-    the current version of the package from GitHub and extract to the following location:
-    ``vendor/doctrine-migrations``.
-
-    DoctrineMigrationsBundle: `Download <http://github.com/symfony/DoctrineMigrationsBundle>`_
-    the current version of the package from GitHub and extract to the following location:
-    ``vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle``.
 
 Now let's register the bundle in the kernel located at ``app/AppKernel.php``.
 
@@ -540,14 +527,9 @@ Now let's register the bundle in the kernel located at ``app/AppKernel.php``.
         // ...
     }
 
-.. warning::
-
-    The Doctrine 2 Migrations library is still in alpha state so its use on
-    production servers should be discouraged for now.
-
 We are now ready to update the database to reflect the entity changes. This
 is a 2 step process. First we need to get Doctrine 2 Migrations to work out the differences
-between the entities and the current database schema. This is done with the 
+between the entities and the current database schema. This is done with the
 ``doctrine:migrations:diff`` task. Secondly we need to actually perform the migration
 based on the previously created diff. This is done with the
 ``doctrine:migrations:migrate`` task.
@@ -567,7 +549,7 @@ comment table.
     You will also notice a new table in the database called ``migration_versions``.
     This stores the migration version numbers so the migration task is able to
     see what the current version of the database is.
-    
+
 .. tip::
 
     Doctrine 2 Migrations are a great way to update the production database as
@@ -577,11 +559,11 @@ comment table.
     us to roll back the changes as every created Migration has a ``up`` and ``down``
     method. To roll back to a previous version you need to specify the version number
     you would like to roll back to using the following task.
-    
+
     .. code-block:: bash
-    
+
         $ php app/console doctrine:migrations:migrate 20110806183439
-        
+
 Data Fixtures: Revisited
 -------------------------
 
@@ -654,15 +636,15 @@ following content:
 
     <?php
     // src/Blogger/BlogBundle/DataFixtures/ORM/CommentFixtures.php
-    
+
     namespace Blogger\BlogBundle\DataFixtures\ORM;
-    
+
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
     use Doctrine\Common\Persistence\ObjectManager;
     use Blogger\BlogBundle\Entity\Comment;
     use Blogger\BlogBundle\Entity\Blog;
-    
+
     class CommentFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         public function load(ObjectManager $manager)
@@ -672,115 +654,115 @@ following content:
             $comment->setComment('To make a long story short. You can\'t go wrong by choosing Symfony! And no one has ever been fired for using Symfony.');
             $comment->setBlog($manager->merge($this->getReference('blog-1')));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('David');
             $comment->setComment('To make a long story short. Choosing a framework must not be taken lightly; it is a long-term commitment. Make sure that you make the right selection!');
             $comment->setBlog($manager->merge($this->getReference('blog-1')));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Dade');
             $comment->setComment('Anything else, mom? You want me to mow the lawn? Oops! I forgot, New York, No grass.');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Kate');
             $comment->setComment('Are you challenging me? ');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 06:15:20"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Dade');
             $comment->setComment('Name your stakes.');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 06:18:35"));
             $manager->persist($comment);
-            
+
             $comment = new Comment();
             $comment->setUser('Kate');
             $comment->setComment('If I win, you become my slave.');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 06:22:53"));
             $manager->persist($comment);
-            
+
             $comment = new Comment();
             $comment->setUser('Dade');
             $comment->setComment('Your SLAVE?');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 06:25:15"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Kate');
             $comment->setComment('You wish! You\'ll do shitwork, scan, crack copyrights...');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 06:46:08"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Dade');
             $comment->setComment('And if I win?');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 10:22:46"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Kate');
             $comment->setComment('Make it my first-born!');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-23 11:08:08"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Dade');
             $comment->setComment('Make it our first-date!');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-24 18:56:01"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Kate');
             $comment->setComment('I don\'t DO dates. But I don\'t lose either, so you\'re on!');
             $comment->setBlog($manager->merge($this->getReference('blog-2')));
             $comment->setCreated(new \DateTime("2011-07-25 22:28:42"));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Stanley');
             $comment->setComment('It\'s not gonna end like this.');
             $comment->setBlog($manager->merge($this->getReference('blog-3')));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Gabriel');
             $comment->setComment('Oh, come on, Stan. Not everything ends the way you think it should. Besides, audiences love happy endings.');
             $comment->setBlog($manager->merge($this->getReference('blog-3')));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Mile');
             $comment->setComment('Doesn\'t Bill Gates have something like that?');
             $comment->setBlog($manager->merge($this->getReference('blog-5')));
             $manager->persist($comment);
-    
+
             $comment = new Comment();
             $comment->setUser('Gary');
             $comment->setComment('Bill Who?');
             $comment->setBlog($manager->merge($this->getReference('blog-5')));
             $manager->persist($comment);
-    
+
             $manager->flush();
         }
-    
+
         public function getOrder()
         {
             return 2;
         }
     }
-        
+
 As with the modifications we made the ``BlogFixtures`` class, the ``CommentFixtures``
 class also extends the ``AbstractFixture`` class and  implements the ``OrderedFixtureInterface``.
 This means we must also implement the ``getOrder()`` method. This time we set the
@@ -798,7 +780,7 @@ We are now ready to load the fixtures into the database.
 .. code-block:: bash
 
     $ php app/console doctrine:fixtures:load
-    
+
 Displaying Comments
 -------------------
 
@@ -837,21 +819,21 @@ content with the following.
                        ->where('c.blog = :blog_id')
                        ->addOrderBy('c.created')
                        ->setParameter('blog_id', $blogId);
-            
+
             if (false === is_null($approved))
                 $qb->andWhere('c.approved = :approved')
                    ->setParameter('approved', $approved);
-                   
+
             return $qb->getQuery()
                       ->getResult();
         }
     }
-    
+
 The method we have created will retrieve comments for a blog post. To do this
 we need to add a where clause to our query. The where clause uses a named parameter
 that is set using the ``setParameter()`` method. You should always use parameters
 instead of setting the values directly in the query like so
-    
+
 .. code-block:: php
 
     ->where('c.blog = ' . blogId)
@@ -867,9 +849,9 @@ the comments for the blog. Update the ``Blog`` controller located at
 ``src/Blogger/BlogBundle/Controller/BlogController.php`` with the following.
 
 .. code-block:: php
-    
+
     // src/Blogger/BlogBundle/Controller/BlogController.php
-    
+
     public function showAction($id)
     {
         // ..
@@ -877,10 +859,10 @@ the comments for the blog. Update the ``Blog`` controller located at
         if (!$blog) {
             throw $this->createNotFoundException('Unable to find Blog post.');
         }
-        
+
         $comments = $em->getRepository('BloggerBlogBundle:Comment')
                        ->getCommentsForBlog($blog->getId());
-        
+
         return $this->render('BloggerBlogBundle:Blog:show.html.twig', array(
             'blog'      => $blog,
             'comments'  => $comments
@@ -905,12 +887,12 @@ following.
 .. code-block:: html
 
     {# src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig #}
-    
+
     {# .. #}
-    
+
     {% block body %}
         {# .. #}
-    
+
         <section class="comments" id="comments">
             <section class="previous-comments">
                 <h3>Comments</h3>
@@ -918,7 +900,7 @@ following.
             </section>
         </section>
     {% endblock %}
-    
+
 You can see the use of a new Twig tag, the ``include`` tag. This will include the
 content of the template specified by ``BloggerBlogBundle:Comment:index.html.twig``.
 We can also pass over any number of arguments to the template. In this case, we need
@@ -936,7 +918,7 @@ and paste in the following.
 .. code-block:: html
 
     {# src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig #}
-    
+
     {% for comment in comments %}
         <article class="comment {{ cycle(['odd', 'even'], loop.index0) }}" id="comment-{{ comment.id }}">
             <header>
@@ -984,14 +966,14 @@ located at ``src/Blogger/BlogBundle/Resorces/public/css/blog.css`` with the foll
     .. code-block:: bash
 
         $ php app/console assets:install web
-        
+
 If you now have a look at one of the blog show pages, e.g.
 ``http://symblog.dev/app_dev.php/2`` you should see the blog comments output.
 
 .. image:: /_static/images/part_4/comments.jpg
     :align: center
     :alt: symblog show blog comments
-    
+
 Adding Comments
 ---------------
 
@@ -1003,9 +985,9 @@ to do this for us. Run the following task to generate the ``CommentType`` class 
 the ``Comment`` entity.
 
 .. code-block:: bash
-    
+
     $ php app/console generate:doctrine:form BloggerBlogBundle:Comment
-    
+
 You'll notice again here, the use of the short hand version to specify the
 ``Comment`` entity.
 
@@ -1013,7 +995,7 @@ You'll notice again here, the use of the short hand version to specify the
 
     You may have noticed the task ``doctrine:generate:form`` is also available.
     This is the same task just namespaced differently.
-    
+
 The generate form task has created the ``CommentType`` class located at
 ``src/Blogger/BlogBundle/Form/CommentType.php``.
 
@@ -1021,12 +1003,12 @@ The generate form task has created the ``CommentType`` class located at
 
     <?php
     // src/Blogger/BlogBundle/Form/CommentType.php
-    
+
     namespace Blogger\BlogBundle\Form;
-    
+
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
-    
+
     class CommentType extends AbstractType
     {
         public function buildForm(FormBuilder $builder, array $options)
@@ -1040,7 +1022,7 @@ The generate form task has created the ``CommentType`` class located at
                 ->add('blog')
             ;
         }
-    
+
         public function getName()
         {
             return 'blogger_blogbundle_commenttype';
@@ -1049,7 +1031,7 @@ The generate form task has created the ``CommentType`` class located at
 
 We have already explored what is happening here in the previous ``EnquiryType``
 class. We could begin by customising this class now, but let's move onto displaying
-the form first. 
+the form first.
 
 Displaying the Comment Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1077,7 +1059,7 @@ a new route to  the routing file located at
         requirements:
             _method:  POST
             blog_id: \d+
-        
+
 The controller
 ~~~~~~~~~~~~~~
 
@@ -1089,13 +1071,13 @@ paste in the following.
 
     <?php
     // src/Blogger/BlogBundle/Controller/CommentController.php
-    
+
     namespace Blogger\BlogBundle\Controller;
-    
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Blogger\BlogBundle\Entity\Comment;
     use Blogger\BlogBundle\Form\CommentType;
-    
+
     /**
      * Comment controller.
      */
@@ -1104,58 +1086,58 @@ paste in the following.
         public function newAction($blog_id)
         {
             $blog = $this->getBlog($blog_id);
-            
+
             $comment = new Comment();
             $comment->setBlog($blog);
             $form   = $this->createForm(new CommentType(), $comment);
-    
+
             return $this->render('BloggerBlogBundle:Comment:form.html.twig', array(
                 'comment' => $comment,
                 'form'   => $form->createView()
             ));
         }
-    
+
         public function createAction($blog_id)
         {
             $blog = $this->getBlog($blog_id);
-            
+
             $comment  = new Comment();
             $comment->setBlog($blog);
             $request = $this->getRequest();
             $form    = $this->createForm(new CommentType(), $comment);
             $form->bindRequest($request);
-    
+
             if ($form->isValid()) {
                 // TODO: Persist the comment entity
-    
+
                 return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
                     'id' => $comment->getBlog()->getId())) .
                     '#comment-' . $comment->getId()
                 );
             }
-    
+
             return $this->render('BloggerBlogBundle:Comment:create.html.twig', array(
                 'comment' => $comment,
                 'form'    => $form->createView()
             ));
         }
-        
+
         protected function getBlog($blog_id)
         {
             $em = $this->getDoctrine()
                         ->getEntityManager();
-    
+
             $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
-    
+
             if (!$blog) {
                 throw $this->createNotFoundException('Unable to find Blog post.');
             }
-            
+
             return $blog;
         }
-       
+
     }
-    
+
 We create 2 actions in the ``Comment`` controller, one for ``new`` and one for
 ``create``. The ``new`` action is concerned with displaying the comment form,
 the ``create`` action is concerned with processing the submission of the comment
@@ -1174,20 +1156,20 @@ entity located at ``src/Blogger/BlogBundle/Entity/Comment.php`` with the
 following.
 
 .. code-block:: php
-    
+
     <?php
     // src/Blogger/BlogBundle/Entity/Comment.php
-    
+
     // ..
-    
+
     use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints\NotBlank;
-    
+
     // ..
     class Comment
     {
         // ..
-        
+
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
             $metadata->addPropertyConstraint('user', new NotBlank(array(
@@ -1197,7 +1179,7 @@ following.
                 'message' => 'You must enter a comment'
             )));
         }
-        
+
         // ..
     }
 
@@ -1215,9 +1197,9 @@ located at ``src/Blogger/BlogBundle/Resources/views/Comment/form.html.twig``
 and paste in the following.
 
 .. code-block:: html
-    
+
     {# src/Blogger/BlogBundle/Resources/views/Comment/form.html.twig #}
-    
+
     <form action="{{ path('BloggerBlogBundle_comment_create', { 'blog_id' : comment.blog.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
         {{ form_widget(form) }}
         <p>
@@ -1236,12 +1218,12 @@ and paste in the following.
 .. code-block:: html
 
     {% extends 'BloggerBlogBundle::layout.html.twig' %}
-    
+
     {% block title %}Add Comment{% endblock%}
-    
+
     {% block body %}
         <h1>Add comment for blog post "{{ comment.blog.title }}"</h1>
-        {% include 'BloggerBlogBundle:Comment:form.html.twig' with { 'form': form } %}    
+        {% include 'BloggerBlogBundle:Comment:form.html.twig' with { 'form': form } %}
     {% endblock %}
 
 As the ``create`` action of the ``Comment`` controller deals with processing
@@ -1256,23 +1238,23 @@ with the following.
 .. code-block:: html
 
     {# src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig #}
-    
+
     {# .. #}
-    
+
     {% block body %}
-    
+
         {# .. #}
-        
+
         <section class="comments" id="comments">
             {# .. #}
-            
+
             <h3>Add Comment</h3>
             {% render 'BloggerBlogBundle:Comment:new' with { 'blog_id': blog.id } %}
         </section>
     {% endblock %}
 
 We use another new Twig tag here, the ``render`` tag. This tag will render
-the contents of a controller into the template. In our case we render the 
+the contents of a controller into the template. In our case we render the
 contents of the ``BloggerBlogBundle:Comment:new`` controller action.
 
 If you now have a look at one of the blog show pages, such as
@@ -1281,7 +1263,7 @@ If you now have a look at one of the blog show pages, such as
 .. image:: /_static/images/part_4/to_string_error.jpg
     :align: center
     :alt: toString() Symfony2 Exception
-    
+
 This exception is being thrown by the ``BloggerBlogBundle:Blog:show.html.twig``
 template. If we look at line 25 of the ``BloggerBlogBundle:Blog:show.html.twig``
 template we can see it's the following line showing that the problem actually exists
@@ -1290,7 +1272,7 @@ in the process of embedding the ``BloggerBlogBundle:Comment:create`` controller.
 .. code-block:: html
 
     {% render 'BloggerBlogBundle:Comment:create' with { 'blog_id': blog.id } %}
-    
+
 If we look at the exception message further it gives us some more information
 about the nature of why the exception was caused.
 
@@ -1317,7 +1299,7 @@ being thrown. We can fix this problem by implementing the ``__toString()``
 method in the ``Blog`` entity.
 
 .. code-block:: php
-    
+
     // src/Blogger/BlogBundle/Entity/Blog.php
     public function __toString()
     {
@@ -1330,7 +1312,7 @@ method in the ``Blog`` entity.
     that has occurred. Always read the error messages as they will usually make
     the debugging process a lot easier. The error messages also provide a full
     stack trace so you can see the steps that were taken to cause the error.
-    
+
 Now when you refresh the page you should see the comment form output. You will
 also notice that some undesirable fields have been output such as ``approved``,
 ``created``, ``updated`` and ``blog``. This is because we did not customise
@@ -1342,21 +1324,21 @@ the generated ``CommentType`` class earlier.
     The ``user`` fields is an ``text`` field, the ``comment`` field is a ``textarea``,
     the 2 ``DateTime`` fields are a number of ``select`` fields allowing us to specify the
     time, etc.
-    
+
     This is because of the ability of ``FormBuilder`` to guess the type of field
     the member it is rendering requires. It is able to do this based on the metadata
     you provide. As we have specified quite specific metadata for the ``Comment``
     entity, the ``FormBuilder`` is able to make accurate guesses of the field types.
-    
+
 Let's now update this class located at
 ``src/Blogger/BlogBundle/Form/CommentType.php`` to output only the fields we
-need. 
+need.
 
 .. code-block:: php
 
     <?php
     // src/Blogger/BlogBundle/Form/CommentType.php
-    
+
     // ..
     class CommentType extends AbstractType
     {
@@ -1367,7 +1349,7 @@ need.
                 ->add('comment')
             ;
         }
-    
+
         // ..
     }
 
@@ -1383,26 +1365,26 @@ to the database.
 
     <?php
     // src/Blogger/BlogBundle/Controller/CommentController.php
-    
+
     // ..
     class CommentController extends Controller
     {
         public function createAction($blog_id)
         {
             // ..
-            
+
             if ($form->isValid()) {
                 $em = $this->getDoctrine()
                            ->getEntityManager();
                 $em->persist($comment);
                 $em->flush();
-                    
+
                 return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
                     'id' => $comment->getBlog()->getId())) .
                     '#comment-' . $comment->getId()
                 );
             }
-        
+
             // ..
         }
     }
@@ -1417,7 +1399,7 @@ You should now be able to add comments to the blog posts.
 .. image:: /_static/images/part_4/add_comments.jpg
     :align: center
     :alt: symblog add blog comments
-    
+
 Conclusion
 ----------
 
@@ -1432,4 +1414,4 @@ Next we will look at building the sidebar to include The Tag Cloud and Recent
 Comments. We will also extend Twig by creating our own custom filters. Finally
 we will look at using the Assetic asset library to assist us in managing our
 assets.
-    
+
