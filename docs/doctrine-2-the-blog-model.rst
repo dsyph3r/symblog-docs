@@ -25,7 +25,7 @@ powerful
 that gives us storage abstraction via the PHP PDO. This allows us to use a number
 of different storage engines including MySQL, PostgreSQL and SQLite. We will
 use MySQL for our storage engine, but any other engine could easily be
-substituted. 
+substituted.
 
 .. tip::
 
@@ -38,7 +38,7 @@ substituted.
     systems in object-oriented programming languages. This creates, in effect, a
     "virtual object database" that can be used from within the programming
     language."
-    
+
     What the ORM facilitates is translating the data from a relational database
     such as MySQL into PHP objects that we can manipulate. This allows us to
     encapsuate the functionality we require on a table within a class. Think of a
@@ -165,7 +165,7 @@ map to the database. Replace the content of the ``Blog`` entity class located at
         protected $blog;
 
         /**
-         * @ORM\Column(type="string", length="20")
+         * @ORM\Column(type="string", length=20)
          */
         protected $image;
 
@@ -453,7 +453,7 @@ more parameters in the routing rule, they would also be passed in as separate ar
         {
             // ..
         }
-    
+
     Both methods achieve the same task. If your controller did not extend the
     ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` helper class
     you would not be able to use the first method.
@@ -500,7 +500,7 @@ this template located at ``src/Blogger/BlogBundle/Resouces/views/Blog/show.html.
 and paste in the following.
 
 .. code-block:: html
-    
+
     {# src/Blogger/BlogBundle/Resouces/views/Blog/show.html.twig #}
     {% extends 'BloggerBlogBundle::layout.html.twig' %}
 
@@ -576,56 +576,26 @@ Data Fixtures
 We can use fixtures to populate the database with some sample/test data. To do this
 we use the Doctrine Fixtures extension and bundle. The Doctrine Fixtures
 extension and bundle do not come with the Symfony2 Standard Distribution, we need to
-manually install them. Fortunately this is an easy task. Open up the deps file located
+manually install them. Fortunately this is an easy task. Open up the ``composer.json`` file located
 in the project root and add the Doctrine fixtures extension and bundle to it as
 follows.
 
-.. code-block:: text
+.. code-block:: php
 
-    [doctrine-fixtures]
-        git=http://github.com/doctrine/data-fixtures.git
-
-    [DoctrineFixturesBundle]
-        git=http://github.com/symfony/DoctrineFixturesBundle.git
-        target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
+    "require": {
+        // ...
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "doctrine/data-fixtures" : "dev-master"
+    }
 
 Next update the vendors to reflect these changes.
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    $ php composer.phar update
 
 This will pull down the latest version of each of the repositories from Github and
 install them to the required location.
-
-.. note::
-
-    If you are using a machine that does not have Git installed you will need to manually
-    download and install the extension and bundle.
-
-    doctrine-fixtures extension: `Download <https://github.com/doctrine/data-fixtures>`_
-    the current version of the package from GitHub and extract to the following location
-    ``vendor/doctrine-fixtures``.
-
-    DoctrineFixturesBundle: `Download <https://github.com/symfony/DoctrineFixturesBundle>`_
-    the current version of the package from GitHub and extract to the following location
-    ``vendor/bundles/Symfony/Bundle/DoctrineFixturesBundle``.
-
-Next update the ``app/autoloader.php`` file to register the new namespace.
-As DataFixtures are also in the ``Doctrine\Common`` namespace they must be placed above the existing
-``Doctrine\Common`` directive as they specify a new path. Namespaces are checked from top
-to bottom so more specific namespaces need to be registered before less specific ones.
-
-.. code-block:: php
-
-    // app/autoloader.php
-    // ...
-    $loader->registerNamespaces(array(
-    // ...
-    'Doctrine\\Common\\DataFixtures'    => __DIR__.'/../vendor/doctrine-fixtures/lib',
-    'Doctrine\\Common'                  => __DIR__.'/../vendor/doctrine-common/lib',
-    // ...
-    ));
 
 Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
 ``app/AppKernel.php``
@@ -637,7 +607,7 @@ Now let's register the ``DoctrineFixturesBundle`` in the kernel located at
     {
         $bundles = array(
             // ...
-            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             // ...
         );
         // ...
@@ -653,13 +623,13 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
 
     <?php
     // src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php
-    
+
     namespace Blogger\BlogBundle\DataFixtures\ORM;
-    
+
     use Doctrine\Common\DataFixtures\FixtureInterface;
     use Doctrine\Common\Persistence\ObjectManager;
     use Blogger\BlogBundle\Entity\Blog;
-    
+
     class BlogFixtures implements FixtureInterface
     {
         public function load(ObjectManager $manager)
@@ -673,7 +643,7 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
             $blog1->setCreated(new \DateTime());
             $blog1->setUpdated($blog1->getCreated());
             $manager->persist($blog1);
-    
+
             $blog2 = new Blog();
             $blog2->setTitle('The pool on the roof must have a leak');
             $blog2->setBlog('Vestibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque. Na. Cras elementum molestie vestibulum. Morbi id quam nisl. Praesent hendrerit, orci sed elementum lobortis.');
@@ -683,7 +653,7 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
             $blog2->setCreated(new \DateTime("2011-07-23 06:12:33"));
             $blog2->setUpdated($blog2->getCreated());
             $manager->persist($blog2);
-    
+
             $blog3 = new Blog();
             $blog3->setTitle('Misdirection. What the eyes see and the ears hear, the mind believes');
             $blog3->setBlog('Lorem ipsumvehicula nunc non leo hendrerit commodo. Vestibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque.');
@@ -693,7 +663,7 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
             $blog3->setCreated(new \DateTime("2011-07-16 16:14:06"));
             $blog3->setUpdated($blog3->getCreated());
             $manager->persist($blog3);
-    
+
             $blog4 = new Blog();
             $blog4->setTitle('The grid - A digital frontier');
             $blog4->setBlog('Lorem commodo. Vestibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra.');
@@ -703,7 +673,7 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
             $blog4->setCreated(new \DateTime("2011-06-02 18:54:12"));
             $blog4->setUpdated($blog4->getCreated());
             $manager->persist($blog4);
-    
+
             $blog5 = new Blog();
             $blog5->setTitle('You\'re either a one or a zero. Alive or dead');
             $blog5->setBlog('Lorem ipsum dolor sit amet, consectetur adipiscing elittibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque.');
@@ -713,10 +683,10 @@ We are now ready to define some fixtures for our blogs. Create a fixture file at
             $blog5->setCreated(new \DateTime("2011-04-25 15:34:18"));
             $blog5->setUpdated($blog5->getCreated());
             $manager->persist($blog5);
-    
+
             $manager->flush();
         }
-    
+
     }
 
 The fixture file demonstrates a number of important features when using Doctrine 2,
@@ -817,14 +787,14 @@ This is done using metadata on the entity. Update the ``Blog`` entity located at
     /**
      * @ORM\Entity
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
         // ..
     }
 
-Now let's add a method in the ``Blog`` entity that registers for the ``preUpdate``
+Now let's add a method in the ``Blog`` entity that registers for the ``PreUpdate``
 event. We also add a constructor to set default values for the ``created`` and
 ``updated`` members.
 
@@ -838,7 +808,7 @@ event. We also add a constructor to set default values for the ``created`` and
     /**
      * @ORM\Entity
      * @ORM\Table(name="blog")
-     * @ORM\HasLifecycleCallbacks()
+     * @ORM\HasLifecycleCallbacks
      */
     class Blog
     {
@@ -851,7 +821,7 @@ event. We also add a constructor to set default values for the ``created`` and
         }
 
         /**
-         * @ORM\preUpdate
+         * @ORM\PreUpdate
          */
         public function setUpdatedValue()
         {
