@@ -205,7 +205,7 @@ Update the ``Blog`` entity metadata located in the file at
     
     // src/Blogger/BlogBundle/Entity/Blog.php
     /**
-     * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
+     * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Entity\Repository\BlogRepository")
      * @ORM\Table(name="blog")
      * @ORM\HasLifecycleCallbacks()
      */
@@ -224,14 +224,14 @@ as follows.
     $ php app/console doctrine:generate:entities Blogger\BlogBundle
     
 Doctrine 2 will have created the shell class for the ``BlogRepository`` located at
-``src/Blogger/BlogBundle/Repository/BlogRepository.php``.
+``src/Blogger/BlogBundle/Entity/Repository/BlogRepository.php``.
 
 .. code-block:: php
 
     <?php
-    // src/Blogger/BlogBundle/Repository/BlogRepository.php
+    // src/Blogger/BlogBundle/Entity/Repository/BlogRepository.php
     
-    namespace Blogger\BlogBundle\Repository;
+    namespace Blogger\BlogBundle\Entity\Repository;
 
     use Doctrine\ORM\EntityRepository;
 
@@ -254,9 +254,9 @@ controller into it.
 .. code-block:: php
 
     <?php
-    // src/Blogger/BlogBundle/Repository/BlogRepository.php
+    // src/Blogger/BlogBundle/Entity/Repository/BlogRepository.php
 
-    namespace Blogger\BlogBundle\Repository;
+    namespace Blogger\BlogBundle\Entity\Repository;
 
     use Doctrine\ORM\EntityRepository;
 
@@ -351,7 +351,7 @@ paste in the following.
     use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\CommentRepository")
+     * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Entity\Repository\CommentRepository")
      * @ORM\Table(name="comment")
      * @ORM\HasLifecycleCallbacks
      */
@@ -432,7 +432,7 @@ entity located at ``src/Blogger/BlogBundle/Entity/Blog.php`` to add this mapping
     use Doctrine\Common\Collections\ArrayCollection;
 
     /**
-     * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
+     * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Entity\Repository\BlogRepository")
      * @ORM\Table(name="blog")
      * @ORM\HasLifecycleCallbacks
      */
@@ -477,7 +477,7 @@ task as before to achieve this.
     
 Both entities should now be up-to-date with the correct accessor methods. You will
 also notice the ``CommentRepository`` class has been created at
-``src/Blogger/BlogBundle/Repository/CommentRepository.php`` as we specified this in the
+``src/Blogger/BlogBundle/Entity/Repository/CommentRepository.php`` as we specified this in the
 metadata.
 
 Finally we need to update the database to reflect the changes to our entities. We
@@ -810,15 +810,15 @@ Comment Repository
 ~~~~~~~~~~~~~~~~~~
 
 Open the ``CommentRepository`` class located at
-``src/Blogger/BlogBundle/Repository/CommentRepository.php`` and replace its
+``src/Blogger/BlogBundle/Entity/Repository/CommentRepository.php`` and replace its
 content with the following.
 
 .. code-block:: php
 
     <?php
-    // src/Blogger/BlogBundle/Repository/CommentRepository.php
+    // src/Blogger/BlogBundle/Entity/Repository/CommentRepository.php
 
-    namespace Blogger\BlogBundle\Repository;
+    namespace Blogger\BlogBundle\Entity\Repository;
 
     use Doctrine\ORM\EntityRepository;
 
