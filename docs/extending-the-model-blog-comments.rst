@@ -499,6 +499,7 @@ Doctrine 2 Migrations extension and bundle to it as follows.
 .. code-block:: php
 
     "require": {
+        // ...
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "doctrine/migrations": "dev-master"
     }
