@@ -89,7 +89,7 @@ Symblog has been translated into `French <http://keiruaprod.fr/symblog-fr/>`_ th
 Portuguese
 ~~~~~~~~~
 
-Symblog has been translated into `Brazilian Portuguese <http://symfony2blog.totlab.com.br/>`_  thanks to the contribution by 
+Symblog has been translated into `Brazilian Portuguese <http://symfony2blog.totlab.com.br/>`_  thanks to the contribution by
 `TotLab - Pesquisa e Desenvolvimento Web <http://totlab.com.br>`_.
 
 
@@ -107,14 +107,6 @@ project and send over the pull requests. You can also raise issues using the
 `GitHub Issue Tracker <https://github.com/dsyph3r/symblog-docs/issues>`_. If any
 one is interested in creating a much more visually pleasing design please get in
 `touch <http://twitter.com/#!/dsyph3r>`_!
-
-Already a Symfony2 Expert?
---------------------------
-
-Do you already know Symfony2 and want to work with it everyday? Are you an expert
-with PHP, and know how to use JavaScript to build amazing web applications? DeskPRO
-currently has a number of vacancies for PHP and Symfony2 developers. Check out the
-`Jobs <http://www.deskpro.com/jobs>`_ page at DeskPRO for more information.
 
 Credits
 -------
