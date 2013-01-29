@@ -254,7 +254,7 @@ paste in the following content.
 
         public function getName()
         {
-            return 'contact';
+            return 'blogger_blogbundle_enquirytype';
         }
     }
 
