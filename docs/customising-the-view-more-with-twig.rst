@@ -258,7 +258,7 @@ action in the ``PageController`` located at
     public function sidebarAction()
     {
         $em = $this->getDoctrine()
-                   ->getEntityManager();
+                   ->getManager();
 
         $tags = $em->getRepository('BloggerBlogBundle:Blog')
                    ->getTags();

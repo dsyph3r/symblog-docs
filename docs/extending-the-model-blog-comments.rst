@@ -47,7 +47,7 @@ to pull the blogs from the database.
         public function indexAction()
         {
             $em = $this->getDoctrine()
-                       ->getEntityManager();
+                       ->getManager();
 
             $blogs = $em->createQueryBuilder()
                         ->select('b')
@@ -313,7 +313,7 @@ Finally let's update the ``Page`` controller ``index`` action to use the ``BlogR
         public function indexAction()
         {
             $em = $this->getDoctrine()
-                       ->getEntityManager();
+                       ->getManager();
 
             $blogs = $em->getRepository('BloggerBlogBundle:Blog')
                         ->getLatestBlogs();
@@ -1126,7 +1126,7 @@ paste in the following.
         protected function getBlog($blog_id)
         {
             $em = $this->getDoctrine()
-                        ->getEntityManager();
+                        ->getManager();
 
             $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
 
@@ -1376,7 +1376,7 @@ to the database.
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()
-                           ->getEntityManager();
+                           ->getManager();
                 $em->persist($comment);
                 $em->flush();
 
