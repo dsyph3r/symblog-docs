@@ -389,7 +389,7 @@ files here, the template and the CSS. As Symfony2 supports
     <!DOCTYPE html>
     <html>
         <head>
-            <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+            <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
             <title>{% block title %}symblog{% endblock %} - symblog</title>
             <!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
