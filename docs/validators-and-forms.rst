@@ -575,8 +575,7 @@ Ensure you add the 5 new ``use`` statements at the top of the file.
     use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints\NotBlank;
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
-    use Symfony\Component\Validator\Constraints\MaxLength;
+    use Symfony\Component\Validator\Constraints\Length;
 
     class Enquiry
     {
@@ -589,9 +588,13 @@ Ensure you add the 5 new ``use`` statements at the top of the file.
             $metadata->addPropertyConstraint('email', new Email());
 
             $metadata->addPropertyConstraint('subject', new NotBlank());
-            $metadata->addPropertyConstraint('subject', new MaxLength(50));
+            $metadata->addPropertyConstraint('subject', new Length(array(
+                'max' => 50,
+            )));
 
-            $metadata->addPropertyConstraint('body', new MinLength(50));
+            $metadata->addPropertyConstraint('body', new Length(array(
+                'min' => 50,
+            )));
         }
 
         // ..
@@ -608,7 +611,7 @@ not empty. Next we setup validation for the ``email`` member. The Symfony2
 Validator service provides a validator for
 `emails <http://symfony.com/doc/current/reference/constraints/Email.html>`_
 that will even check MX records to ensure the domain is valid. On the ``subject``
-member we want to set a ``NotBlank`` and a ``MaxLength`` constraint.
+member we want to set a ``NotBlank`` and a ``Length`` constraint.
 You can apply as many validators to a member as you wish.
 
 A full list of
