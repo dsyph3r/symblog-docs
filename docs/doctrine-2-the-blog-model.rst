@@ -852,7 +852,7 @@ Conclusion
 ----------
 
 We have covered a number of concepts for dealing with models in Doctrine 2.
-We also looked at defining Data fixtures to provide us will an easy way to get
+We also looked at defining Data fixtures to provide us with an easy way to get
 suitable test data into our application duration development and testing.
 
 Next we will look at extending the model further by adding the comment entity.
